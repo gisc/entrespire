@@ -7,7 +7,7 @@
   var keys = Object.keys(D).sort(function(a,b){ return b.length - a.length; });
   var map = new Map();
   keys.forEach(function(k){ map.set(k, D[k]); });
-  function tr(s){
+  function _tr(s){
     if(!s) return s;
     var t = map.get(s);
     if(t) return t;
@@ -26,6 +26,7 @@
     if(/[一-鿿]/.test(out)){ var o2 = regexTr(out); if(o2!==out) return o2; }
     return out;
   }
+  function tr(s){ return polish(_tr(s)); }
 
   // Pattern post-pass for composed counter/unit strings the dictionary cannot enumerate.
   var RULES = [
@@ -61,6 +62,34 @@
     out = out.replace(/([A-Za-z])量/g, '$1 count');
     out = out.replace(/按(?=")/g, 'By ');
     return out;
+  }
+
+  // Hand-authored meaning overrides (win over dictionary via later Map.set).
+  var OVERRIDES = {
+    '都是被“一个动作”改出来的': 'All come from applying “one action”',
+    '都是被\"一个动作\"改出来的': 'All come from applying “one action”',
+    '这五样东西，': 'These five things - ',
+    '共同点是什么？': 'what do they have in common?',
+    '只需要带来一个问题、一点好奇,或者一个大胆的"如果"。': 'just bring a question, a bit of curiosity, or a bold “what if”.',
+    '“如果”。': 'a bold “what if”.'
+  };
+  Object.keys(OVERRIDES).forEach(function(k){ map.set(k, OVERRIDES[k]); });
+  // Output polish for translated English: punctuation, spacing, brand repair.
+  function polish(out){
+    if(!out || /[一-鿿]/.test(out)) return out;
+    out = out.replace(/\bSend FaXiaoMing\b/g, 'FaXiaoMing');
+    out = out.replace(/\bSent (?:to|by) (?:Fa)?[Xx]iao\s?[Mm]ing\b/g, 'FaXiaoMing');
+    out = out.replace(/([A-Za-z0-9!?)"”])。(?=\s|$)/g, '$1.');
+    out = out.replace(/([a-z]),(?=[A-Z])/g, '$1, ');
+    out = out.replace(/([a-z])"(?=[A-Z“])/g, '$1" ');
+    return out;
+  }
+  // Mobile layout repair for cramped page headers.
+  function injectCss(){
+    if(document.getElementById('i18n-css')) return;
+    var st=document.createElement('style'); st.id='i18n-css';
+    st.textContent='@media (max-width:640px){.bar{flex-wrap:wrap;height:auto;min-height:0;row-gap:4px;padding:6px 10px}.bar .brand small{display:none}.bar .crumb{min-width:0;flex:1 1 auto}.bar .crumb .lt{display:none}.bar .bar-right{margin-left:auto;flex-wrap:nowrap}.bar .auth{font-size:11px;padding:4px 8px}}';
+    (document.head||document.documentElement).appendChild(st);
   }
   var SKIP = {SCRIPT:1,STYLE:1,CODE:1,PRE:1,IFRAME:1,SVG:1,CANVAS:1};
   function walkText(root){
@@ -112,7 +141,7 @@
       if(v && /[一-鿿]/.test(v)){ var nv = tr(v); if(nv!==v) el.value = nv; }
     });
   }
-  function sweep(root){ walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
+  function sweep(root){ injectCss(); walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
   var scheduled=false;
   var mo = new MutationObserver(function(muts){
     if(scheduled) return; scheduled=true;
