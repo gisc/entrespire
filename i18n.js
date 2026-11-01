@@ -55,7 +55,9 @@
     var arr = Array.prototype.slice.call(els).filter(function(el){
       if(SKIP[el.tagName]) return false;
       var tc = (el.textContent||'').trim();
-      return tc && /[一-鿿]/.test(tc) && map.has(tc);
+      if(!(tc && /[一-鿿]/.test(tc) && map.has(tc))) return false;
+      if(el.children.length===0) return true;
+      return /^(H[1-4]|TITLE|HEADER|NAV|FOOTER)$/.test(el.tagName) || /hero|brand|title|logo/i.test(el.className||'');
     });
     arr.sort(function(a,b){ return b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_CONTAINED_BY ? 1 : -1; });
     var done = [];
@@ -72,7 +74,7 @@
       if(v && /[一-鿿]/.test(v)){ var nv = tr(v); if(nv!==v) el.value = nv; }
     });
   }
-  function sweep(root){ walkText(root); walkAttrs(root); walkElements(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
+  function sweep(root){ walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
   var scheduled=false;
   var mo = new MutationObserver(function(muts){
     if(scheduled) return; scheduled=true;
