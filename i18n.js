@@ -22,7 +22,45 @@
       if(k.length >= 2 && out.indexOf(k) !== -1){ out = out.split(k).join(map.get(k)); hit = true; }
       if(out.indexOf('一-鿿')===-1 && !/[一-鿿]/.test(out)) break;
     }
-    return hit ? out : s;
+    if(!hit){ out = regexTr(s); if(out!==s) return out; return s; }
+    if(/[一-鿿]/.test(out)){ var o2 = regexTr(out); if(o2!==out) return o2; }
+    return out;
+  }
+
+  // Pattern post-pass for composed counter/unit strings the dictionary cannot enumerate.
+  var RULES = [
+    [/^\s*序章?\s*$/, 'Prologue'],
+    [/^\s*按\s*$/, 'Press '],
+    [/^\s*班\s*$/, 'Class'],
+    [/^\s*或\s*$/, 'or'],
+    [/^\s*人\s*$/, 'people'],
+    [/^\s*件\s*$/, 'items'],
+    [/^\s*个\s*$/, 'items'],
+    [/^\s*次\s*$/, 'times'],
+    [/^\s*条\s*$/, 'items'],
+    [/^\s*章\s*$/, 'chapters']
+  ];
+  function regexTr(s){
+    for(var i=0;i<RULES.length;i++){ if(RULES[i][0].test(s)) return s.replace(RULES[i][0], RULES[i][1]); }
+    var out = s;
+    out = out.replace(/第\s*(\d+)\s*[/／]\s*(\d+)\s*节/g, 'Lesson $1/$2');
+    out = out.replace(/第\s*(\d+)\s*[/／]\s*(\d+)\s*幕/g, 'Act $1 / $2');
+    out = out.replace(/第\s*(\d+)\s*幕/g, 'Act $1');
+    out = out.replace(/第\s*(\d+)\s*节/g, 'Lesson $1');
+    out = out.replace(/(\d+)\s*节/g, '$1 lessons');
+    out = out.replace(/(\d+)\s*章/g, '$1 chapters');
+    out = out.replace(/(\d+)\s*分/g, '$1 min');
+    out = out.replace(/(\d+)\s*条/g, '$1 items');
+    out = out.replace(/(\d+)\s*源/g, '$1 sources');
+    out = out.replace(/(\d+)\s*人/g, '$1 people');
+    out = out.replace(/(\d+)\s*件/g, '$1 items');
+    out = out.replace(/(\d+)\s*次/g, '$1 times');
+    out = out.replace(/(\d+)\s*个/g, '$1');
+    out = out.replace(/(\d+)\s*[–-]\s*(\d+)\s*岁/g, '$1-$2');
+    out = out.replace(/(\d+)\s*岁/g, 'Ages $1');
+    out = out.replace(/([A-Za-z])量/g, '$1 count');
+    out = out.replace(/按(?=")/g, 'By ');
+    return out;
   }
   var SKIP = {SCRIPT:1,STYLE:1,CODE:1,PRE:1,IFRAME:1,SVG:1,CANVAS:1};
   function walkText(root){
