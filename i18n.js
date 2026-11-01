@@ -142,7 +142,7 @@
       var tc = (el.textContent||'').trim();
       if(!(tc && /[一-鿿]/.test(tc) && map.has(tc))) return false;
       if(el.children.length===0) return true;
-      return /^(H[1-4]|TITLE|HEADER|NAV|FOOTER)$/.test(el.tagName) || /hero|brand|title|logo/i.test(el.className||'');
+      return /^(H[1-4]|TITLE|HEADER|NAV|FOOTER)$/.test(el.tagName) || /hero|title|logo/i.test(el.className||'');
     });
     arr.sort(function(a,b){ return b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_CONTAINED_BY ? 1 : -1; });
     var done = [];
