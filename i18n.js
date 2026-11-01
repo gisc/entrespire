@@ -73,7 +73,23 @@
     '共同点是什么？': 'what do they have in common?',
     '共同点是什么': 'what do they have in common?',
     '只需要带来一个问题、一点好奇,或者一个大胆的"如果"。': 'just bring a question, a bit of curiosity, or a bold “what if”.',
-    '“如果”。': 'a bold “what if”.'
+    '“如果”。': 'a bold “what if”.',
+    '探索者': 'Explorer',
+    '你还没有完成的作品。': 'You do not have a finished invention yet.',
+    '先去发明一件,再回来开讲。': 'Invent one first, then come back to pitch it.',
+    '选一件作品': 'Pick a work',
+    '选一种讲法': 'Pick a style',
+    '⚡ 一键预览': '⚡ One-tap preview',
+    '不提问,直接按风格骨架出稿并进入演示。先看看效果。': 'No questions - a draft is generated straight from the style template and opened as a preview. Try it first.',
+    '推荐': 'Recommended',
+    '✦ 精细打磨': '✦ Careful polish',
+    '逐页审稿:哪一页要补什么,就在那一页下面补,改完再审,直到没问题。': 'Review page by page: add whatever a page needs right below it, then review again until it is clean.',
+    '素材只来自你自己的操作记录：原话逐字引用,方案来自推演记录,数字来自市场模拟。素材里没有的,会做成「待你查证」页。 生成一次讲稿扣 2500 创作币。': 'Material comes only from your own activity: quotes are verbatim, plans come from your reasoning record, numbers from the market simulation. Anything missing becomes a "to be verified" page. Generating one pitch deck costs 2500 creation coins.',
+    '我生成的讲稿': 'My generated pitch decks',
+    '有图': 'with image',
+    '无图': 'no image',
+    '分': 'pts',
+    '加载失败：': 'Load failed: '
   };
   Object.keys(OVERRIDES).forEach(function(k){ map.set(k, OVERRIDES[k]); });
   // Output polish for translated English: punctuation, spacing, brand repair.
@@ -163,11 +179,7 @@
   var scheduled=false;
   var mo = new MutationObserver(function(muts){
     if(scheduled) return; scheduled=true;
-    setTimeout(function(){ scheduled=false; muts.forEach(function(m){
-      m.addedNodes && m.addedNodes.forEach(function(n){ if(n.nodeType===1) sweep(n); else if(n.nodeType===3 && n.nodeValue && /[一-鿿]/.test(n.nodeValue)){ var v=tr(n.nodeValue); if(v!==n.nodeValue)n.nodeValue=v; } });
-      if(m.type==='characterData'){ var v=tr(m.target.nodeValue); if(v!==m.target.nodeValue) m.target.nodeValue=v; }
-      if(m.type==='attributes' && m.target && m.target.getAttribute){ var a=m.attributeName, v=m.target.getAttribute(a); if(v && /[一-鿿]/.test(v)){ var nv=tr(v); if(nv!==v) m.target.setAttribute(a,nv); } }
-    }); }, 120);
+    setTimeout(function(){ scheduled=false; try{ sweep(document.documentElement); }catch(e){} }, 120);
   });
   function start(){ sweep(document.documentElement); mo.observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','alt','aria-label','value']}); document.documentElement.lang='en'; }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
