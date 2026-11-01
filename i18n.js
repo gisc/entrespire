@@ -69,7 +69,9 @@
     '都是被“一个动作”改出来的': 'All come from applying “one action”',
     '都是被\"一个动作\"改出来的': 'All come from applying “one action”',
     '这五样东西，': 'These five things - ',
+    '这 5 件东西，': 'These five things - ',
     '共同点是什么？': 'what do they have in common?',
+    '共同点是什么': 'what do they have in common?',
     '只需要带来一个问题、一点好奇,或者一个大胆的"如果"。': 'just bring a question, a bit of curiosity, or a bold “what if”.',
     '“如果”。': 'a bold “what if”.'
   };
