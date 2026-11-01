@@ -107,7 +107,7 @@
       case path === '/api/entitlement/access':
       case path === '/api/entitlement/tick': return Promise.resolve(json({ ok: true, demo: true }));
       case path === '/api/access/unlock':
-        demoToast('演示模式：章节密码验证已本地放行');
+        demoToast('Demo mode: chapter password check passed locally');
         return Promise.resolve(json({ ok: true, demo: true, token: 'demo-access' }));
       /* 会话:未登录态(页面自带本地登录) */
       case path === '/api/me': return Promise.resolve(json({ ok: false, error: 'demo: no server session' }, 401));
@@ -115,42 +115,53 @@
       case path === '/api/me/spend': return Promise.resolve(json({ ok: true, points: 3000, demo: true }));
       /* AI 对话 → 演示回复(明确标注) */
       case path === '/api/ai/chat':
-        demoToast('演示模式：AI 回复为本地预置文本');
+        demoToast('Demo mode: AI replies are preset local text');
         return Promise.resolve(json({
-          choices: [{ message: { role: 'assistant', content: '【演示模式】这是 GitHub Pages 静态镜像,AI 服务未接入。在正式站点上,这里会由发小明 AI 与你一起打磨创意。你可以继续浏览页面、体验地图与课程,所有数据只保存在本机浏览器中。' } }]
+          choices: [{ message: { role: 'assistant', content: '[Demo mode] This is a static GitHub Pages mirror - the AI service is not connected. On the live site, FaXiaoMing AI would brainstorm and refine ideas with you here. You can keep browsing the pages, the map and the lessons; all data stays in this browser.' } }]
         }));
       /* AI 评委/润色/语音/识图/生图 → 让页面走自带降级或明确报演示 */
       case path === '/api/fxm/turn': return Promise.resolve(json({ ok: false, error: 'demo' }, 404));
-      case path === '/api/roadshow/polish/custom': return Promise.resolve(json({ ok: false, error: '演示模式：AI 润色未接入' }, 503));
-      case path === '/api/tts': return Promise.resolve(json({ ok: false, error: '演示模式：语音合成未接入' }, 503));
-      case path === '/api/asr': return Promise.resolve(json({ ok: false, error: '演示模式：语音识别未接入' }, 503));
-      case path === '/api/gen-image': return Promise.resolve(json({ ok: false, error: '演示模式：AI 生图未接入' }, 503));
+      /* 路演大师 → 本地演示数据(明确标注 demo) */
+      case path === '/api/roadshow/mine':
+        return Promise.resolve(json({
+          works: [{ id: 'demo-work-1', product: 'Solar Schoolbag (demo invention)', hasImg: false, overall: 88 }],
+          styles: [
+            { id: 'story', name: 'Story Pitch', tag: 'Tell it as a story', rule: 'Problem, twist, reveal', pages: 8 },
+            { id: 'investor', name: 'Investor Pitch', tag: 'Numbers first', rule: 'Market, product, ask', pages: 10 }
+          ]
+        }));
+      case path === '/api/roadshow/list': return Promise.resolve(json([]));
+      case /^\/api\/roadshow\/voice\//.test(path): return Promise.resolve(json({ ok: true, demo: true }));
+      case path === '/api/roadshow/polish/custom': return Promise.resolve(json({ ok: false, error: 'Demo mode: AI polish is not connected' }, 503));
+      case path === '/api/tts': return Promise.resolve(json({ ok: false, error: 'Demo mode: voice synthesis is not connected' }, 503));
+      case path === '/api/asr': return Promise.resolve(json({ ok: false, error: 'Demo mode: speech recognition is not connected' }, 503));
+      case path === '/api/gen-image': return Promise.resolve(json({ ok: false, error: 'Demo mode: AI image generation is not connected' }, 503));
       /* 上传 → 不落盘 */
       case path === '/api/upload':
       case path === '/api/roadshow/upload-asset':
-        demoToast('演示模式：文件不会真正上传');
+        demoToast('Demo mode: files are not actually uploaded');
         return Promise.resolve(json({ ok: true, demo: true, url: SIM_URL('/assets/ava-faxiaoming.png'), path: SIM_URL('/assets/ava-faxiaoming.png') }));
       /* 支付/充值/兑换 → 明确演示,不产生任何真实交易 */
       case path === '/api/pay/config': return Promise.resolve(json({ enabled: false, demo: true, creditsPerYuan: 100, presets: [] }));
       case path.indexOf('/api/pay/order') === 0:
       case path === '/api/redeem':
-        demoToast('演示模式：支付/兑换未真正发起');
-        return Promise.resolve(json({ ok: false, error: '演示模式：本站为静态镜像,未接入真实支付', demo: true }, 403));
+        demoToast('Demo mode: no real payment or redemption is made');
+        return Promise.resolve(json({ ok: false, error: 'Demo mode: static mirror, no real payments', demo: true }, 403));
       /* 训练营报名 */
       case path === '/api/camp/book':
-        demoToast('演示模式：报名信息未提交');
+        demoToast('Demo mode: signup was not submitted');
         return Promise.resolve(json({ ok: true, demo: true }));
       /* 登录/后台 → 演示拒绝 */
       case path === '/api/login':
       case path === '/api/pin/login':
       case path === '/api/register':
       case path === '/api/course-admin/login':
-        return Promise.resolve(json({ ok: false, error: '演示模式：请使用页面内的本地注册/登录' }, 401));
+        return Promise.resolve(json({ ok: false, error: 'Demo mode: please use the in-page local register/login' }, 401));
       case path === '/api/report':
       case path.indexOf('/api/report?') === 0:
-        return Promise.resolve(json({ ok: false, error: '演示模式：成长报告需在线服务器' }, 404));
+        return Promise.resolve(json({ ok: false, error: 'Demo mode: growth report needs the live server' }, 404));
       default:
-        return Promise.resolve(json({ ok: false, error: '演示模式：该功能需要在线服务器', demo: true }, 404));
+        return Promise.resolve(json({ ok: false, error: 'Demo mode: this feature needs the live server. Everything here stays on your device.', demo: true }, 404));
     }
   };
 
