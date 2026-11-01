@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" role="img" aria-label="医院身份腕带：戴在手腕上，同时用于身份标识、给药核对与防走失">
+  <defs>
+    <linearGradient id="wbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d141e"/><stop offset="1" stop-color="#080c12"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#41506a"/><stop offset=".45" stop-color="#303d52"/><stop offset="1" stop-color="#202b3c"/>
+    </linearGradient>
+    <linearGradient id="palm" x1="0" y1="0" x2=".2" y2="1">
+      <stop offset="0" stop-color="#4a5a74"/><stop offset="1" stop-color="#283446"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#aebccd"/><stop offset=".35" stop-color="#eaf0f7"/><stop offset=".75" stop-color="#d3dde9"/><stop offset="1" stop-color="#9fadc0"/>
+    </linearGradient>
+    <pattern id="wgrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M30 0H0V30" fill="none" stroke="#1c2635" stroke-width="1" opacity=".55"/>
+    </pattern>
+    <radialGradient id="wglow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#d89a3c" stop-opacity=".13"/><stop offset="1" stop-color="#d89a3c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="900" height="520" fill="url(#wbg)"/>
+  <rect width="900" height="520" fill="url(#wgrid)"/>
+  <ellipse cx="430" cy="285" rx="430" ry="180" fill="url(#wglow)"/>
+
+  <!-- 前臂 -->
+  <path d="M58 246c96-18 214-26 356-22l52 2v84l-52 2c-142 4-260-4-356-22-18-4-26-12-26-22s8-18 26-22z"
+    fill="url(#skin)" stroke="#4d5c74" stroke-width="2"/>
+  <path d="M120 246c70-10 160-14 250-12" stroke="#5f6f88" stroke-width="2" fill="none" opacity=".5"/>
+
+  <!-- 手掌 -->
+  <path d="M472 228h150c30 0 52 22 52 52v30c0 30-22 52-52 52H472z" fill="url(#palm)" stroke="#4d5c74" stroke-width="2"/>
+  <!-- 四指 -->
+  <g fill="url(#palm)" stroke="#4d5c74" stroke-width="2">
+    <rect x="650" y="222" width="178" height="36" rx="18"/>
+    <rect x="660" y="260" width="182" height="34" rx="17"/>
+    <rect x="656" y="296" width="168" height="32" rx="16"/>
+    <rect x="644" y="330" width="146" height="30" rx="15"/>
+  </g>
+  <g stroke="#5f6f88" stroke-width="2" opacity=".55">
+    <path d="M700 240h118M710 277h120M704 312h108M694 345h88"/>
+  </g>
+  <!-- 拇指 -->
+  <path d="M560 348c-8 26 6 46 30 52 22 6 40-6 44-26l6-34z" fill="url(#palm)" stroke="#4d5c74" stroke-width="2"/>
+
+  <!-- 腕带：绕在腕部 -->
+  <g>
+    <rect x="392" y="210" width="104" height="182" rx="22" fill="url(#band)" stroke="#f2f6fb" stroke-opacity=".5"/>
+    <rect x="392" y="210" width="104" height="182" rx="22" fill="none" stroke="#7e8ea6" stroke-dasharray="4 4" opacity=".65"/>
+    <path d="M392 246c-14 30-14 76 0 110" fill="none" stroke="#7e8ea6" stroke-width="1.2" opacity=".5"/>
+    <path d="M496 246c14 30 14 76 0 110" fill="none" stroke="#7e8ea6" stroke-width="1.2" opacity=".5"/>
+
+    <!-- 条码 -->
+    <g fill="#161f2c">
+      <rect x="408" y="228" width="4" height="54"/><rect x="416" y="228" width="2" height="54"/><rect x="422" y="228" width="6" height="54"/>
+      <rect x="432" y="228" width="2" height="54"/><rect x="438" y="228" width="4" height="54"/><rect x="446" y="228" width="2" height="54"/>
+      <rect x="452" y="228" width="6" height="54"/><rect x="462" y="228" width="3" height="54"/><rect x="469" y="228" width="5" height="54"/>
+      <rect x="478" y="228" width="2" height="54"/><rect x="484" y="228" width="4" height="54"/>
+    </g>
+    <!-- 二维码 -->
+    <g fill="#161f2c">
+      <rect x="408" y="294" width="26" height="26" rx="2"/>
+      <rect x="440" y="294" width="8" height="8"/><rect x="454" y="294" width="8" height="8"/><rect x="468" y="294" width="8" height="8"/>
+      <rect x="440" y="308" width="8" height="8"/><rect x="468" y="308" width="8" height="8"/>
+      <rect x="440" y="322" width="8" height="8"/><rect x="454" y="322" width="8" height="8"/><rect x="468" y="322" width="8" height="8"/>
+    </g>
+    <rect x="408" y="304" width="7" height="7" fill="#eaf0f7"/><rect x="417" y="304" width="7" height="7" fill="#eaf0f7"/><rect x="408" y="313" width="7" height="7" fill="#eaf0f7"/>
+    <text x="454" y="364" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="14" letter-spacing="1.5" fill="#161f2c">0417 · A</text>
+    <circle cx="454" cy="378" r="3" fill="#7e8ea6"/>
+  </g>
+
+  <!-- 身份：卡片 -->
+  <g font-family="PingFang SC,Noto Sans SC,sans-serif">
+    <g transform="translate(92 68)">
+      <rect x="0" y="0" width="108" height="74" rx="10" fill="#0b1018" stroke="#8d97aa" stroke-width="1.6"/>
+      <circle cx="31" cy="29" r="11" fill="none" stroke="#c9d2e0" stroke-width="2.6"/>
+      <path d="M16 57c4-10 10-15 15-15s11 5 15 15" fill="none" stroke="#c9d2e0" stroke-width="2.6"/>
+      <path d="M60 25h32M60 37h32M60 49h20" stroke="#5d6b7f" stroke-width="3" stroke-linecap="round"/>
+      <text x="54" y="104" text-anchor="middle" font-size="17" fill="#8d97aa">身份</text>
+    </g>
+    <path d="M176 146c40 26 86 40 156 50" fill="none" stroke="#5d6b7f" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="388" cy="202" r="4" fill="#8d97aa"/>
+
+    <!-- 给药核对：扫描框 -->
+    <g transform="translate(520 58)">
+      <path d="M0 30V8a8 8 0 018-8h24M96 0h16a8 8 0 018 8v22M120 96v14a8 8 0 01-8 8H88M40 118H16a8 8 0 01-8-8V88" fill="none" stroke="#efcb94" stroke-width="3"/>
+      <path d="M18 58h84" stroke="#efcb94" stroke-width="2" stroke-dasharray="6 5" opacity=".9"/>
+      <text x="60" y="152" text-anchor="middle" font-size="17" fill="#8d97aa">给药核对</text>
+    </g>
+    <path d="M570 208c-22-2-42-4-62-8" fill="none" stroke="#d89a3c" stroke-width="1.4" stroke-dasharray="4 5" opacity=".85"/>
+    <circle cx="504" cy="198" r="4" fill="#d89a3c"/>
+
+    <!-- 防走失：定位 -->
+    <g transform="translate(742 338)">
+      <path d="M28 0c15 0 28 13 28 28 0 21-28 52-28 52S0 49 0 28C0 13 13 0 28 0z" fill="none" stroke="#8d97aa" stroke-width="2.6"/>
+      <circle cx="28" cy="27" r="9" fill="none" stroke="#c9d2e0" stroke-width="2.6"/>
+      <text x="28" y="112" text-anchor="middle" font-size="17" fill="#8d97aa">防走失</text>
+    </g>
+    <path d="M680 392c-30 2-52 0-74-6" fill="none" stroke="#5d6b7f" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="600" cy="384" r="4" fill="#8d97aa"/>
+  </g>
+
+  <g font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="18" fill="#5a6679">
+    <text x="52" y="480">一条带子，三个时刻：入院、给药、离开病区</text>
+    <text x="852" y="480" text-anchor="end">不新增第二件设备</text>
+  </g>
+</svg>

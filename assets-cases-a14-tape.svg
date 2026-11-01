@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 470" width="600" height="470" role="img" aria-label="单面胶与双面胶的截面示意">
+  <defs>
+    <pattern id="glue" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="7" height="7" fill="#3A2E12"/>
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#C9A227" stroke-width="2.6" opacity=".8"/>
+    </pattern>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#5B8DEF"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="470" fill="#0B1018"/>
+
+  <!-- ============ 单面胶 ============ -->
+  <text x="26" y="38" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="18" font-weight="600" fill="#C9A227">单面胶 · 只有一面有胶</text>
+  <text x="26" y="58" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="12.5" fill="#5A6679">另一件东西要靠第二卷胶、夹子或钉子固定</text>
+
+  <rect x="52" y="78" width="230" height="30" rx="4" fill="#141C28" stroke="#2A3547"/>
+  <text x="64" y="98" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="13" fill="#8D97AA">A</text>
+
+  <rect x="52" y="108" width="230" height="14" fill="url(#glue)" stroke="#C9A227" stroke-width="1"/>
+  <text x="292" y="119" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="14" fill="#C9A227">粘胶层（原件）</text>
+
+  <rect x="52" y="122" width="230" height="17" rx="2" fill="#1B2534" stroke="#33415A"/>
+  <text x="292" y="135" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="13" fill="#5A6679">纸基</text>
+
+  <line x1="167" y1="143" x2="167" y2="188" stroke="#46536A" stroke-dasharray="3 4"/>
+  <path d="M167 143l-4 7h8z" fill="#46536A"/>
+  <path d="M167 188l-4-7h8z" fill="#46536A"/>
+  <text x="180" y="170" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="12.5" fill="#5A6679">这一面没有胶：另找东西固定</text>
+
+  <rect x="52" y="190" width="230" height="30" rx="4" fill="none" stroke="#46536A" stroke-dasharray="5 4"/>
+  <text x="64" y="210" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="13" fill="#5A6679">B</text>
+
+  <line x1="26" y1="252" x2="574" y2="252" stroke="#1E2634"/>
+
+  <!-- ============ 双面胶 ============ -->
+  <text x="26" y="288" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="18" font-weight="600" fill="#5B8DEF">双面胶 · 复制粘胶层</text>
+  <text x="26" y="308" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="12.5" fill="#5A6679">同一层胶复制到另一面，纸基夹在中间</text>
+
+  <rect x="52" y="326" width="230" height="28" rx="4" fill="#141C28" stroke="#2A3547"/>
+  <text x="64" y="345" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="13" fill="#8D97AA">A</text>
+
+  <rect x="52" y="354" width="230" height="14" fill="url(#glue)" stroke="#C9A227" stroke-width="1"/>
+  <text x="292" y="365" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="14" fill="#C9A227">① 粘胶层</text>
+
+  <rect x="52" y="368" width="230" height="16" rx="2" fill="#1B2534" stroke="#33415A"/>
+
+  <rect x="52" y="384" width="230" height="14" fill="url(#glue)" stroke="#5B8DEF" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="292" y="395" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="14" fill="#5B8DEF">② 粘胶层（复制件）</text>
+
+  <path d="M43 361L43 396" stroke="#5B8DEF" stroke-width="1.5" marker-end="url(#ar)"/>
+  <circle cx="43" cy="361" r="2" fill="#5B8DEF"/>
+
+  <rect x="52" y="398" width="230" height="28" rx="4" fill="#141C28" stroke="#2A3547"/>
+  <text x="64" y="417" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="13" fill="#8D97AA">B</text>
+
+  <text x="26" y="452" font-family="PingFang SC,Noto Sans SC,sans-serif" font-size="12.5" fill="#5A6679">两件东西直接对粘：第二卷胶、夹子、钉子都省掉了</text>
+</svg>
