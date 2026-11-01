@@ -220,11 +220,16 @@
     if(!v || !/[一-鿿]/.test(v)) return;
     var p = n.parentNode;
     if(!p || SKIP[p.tagName]) return;
-    var t = tr(v);
-    if(t === v && p.closest && p.closest('.intro-type')){
-      var pt = typewriterTr(v.trim());
-      if(pt) t = v.replace(v.trim(), pt);
+    // Intro typewriter: a partial typed line must translate as a proportional slice
+    // of the full line's translation, not as a composed substring mix.
+    if(p.closest && p.closest('.intro-type')){
+      var lead = v.match(/^\s*/)[0], trail = v.match(/\s*$/)[0], core = v.trim();
+      var full = map.get(core);
+      if(full){ n.nodeValue = lead + full + trail; return; }
+      var pt = typewriterTr(core);
+      if(pt){ n.nodeValue = lead + pt + trail; return; }
     }
+    var t = tr(v);
     if(t && t !== v) n.nodeValue = t;
   }
   function syncAttr(el, name){
