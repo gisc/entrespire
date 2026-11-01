@@ -103,6 +103,16 @@
     out = out.replace(/([a-z])"(?=[A-Z“])/g, '$1" ');
     return out;
   }
+  // Canvas text (share cards and other exported images) never touches the DOM,
+  // so dictionary sweeps cannot reach it; translate fillText arguments at draw time.
+  try{
+    var _ft = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth){
+      try{ text = tr(String(text)); }catch(e){}
+      return (maxWidth === undefined) ? _ft.call(this, text, x, y) : _ft.call(this, text, x, y, maxWidth);
+    };
+  }catch(e){}
+
   // Mobile layout repair for cramped page headers.
   function injectCss(){
     if(document.getElementById('i18n-css')) return;
@@ -178,7 +188,64 @@
   }
   function sweep(root){ injectCss(); fixImages(root); try{ (root.querySelectorAll?root.querySelectorAll('#rs-body .sc'):[]).forEach(function(el){ el.textContent = el.textContent.replace(/分/g,'pts'); }); }catch(e){} walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
   var scheduled=false;
+  // Flash-free dynamic translation: handle each mutation synchronously (mutation
+  // callbacks run before paint), so injected or per-character typed Chinese never
+  // reaches the screen. The debounced full sweep below stays for element-level fixes.
+  var INTRO_PAIRS = null;
+  function introPairs(){
+    if(INTRO_PAIRS) return INTRO_PAIRS;
+    INTRO_PAIRS = [];
+    var srcs = [
+      '每一个改变世界的产品,都曾经只是一个不被相信的想法。',
+      '今天,让我们陪你,把它变成现实。'
+    ];
+    for(var i=0;i<srcs.length;i++){ var t = map.get(srcs[i]); if(t) INTRO_PAIRS.push([srcs[i], t]); }
+    return INTRO_PAIRS;
+  }
+  function typewriterTr(v){
+    // A typed prefix of a known intro line: show the matching slice of its translation.
+    var pairs = introPairs();
+    for(var i=0;i<pairs.length;i++){
+      var k = pairs[i][0];
+      if(v.length >= 2 && v.length < k.length && k.indexOf(v) === 0){
+        var t = pairs[i][1];
+        var n = Math.max(1, Math.round(t.length * v.length / k.length));
+        return t.slice(0, n);
+      }
+    }
+    return null;
+  }
+  function syncNode(n){
+    var v = n.nodeValue;
+    if(!v || !/[一-鿿]/.test(v)) return;
+    var p = n.parentNode;
+    if(!p || SKIP[p.tagName]) return;
+    var t = tr(v);
+    if(t === v && p.closest && p.closest('.intro-type')){
+      var pt = typewriterTr(v.trim());
+      if(pt) t = v.replace(v.trim(), pt);
+    }
+    if(t && t !== v) n.nodeValue = t;
+  }
+  function syncAttr(el, name){
+    var v = el.getAttribute(name);
+    if(v && /[一-鿿]/.test(v)){ var nv = tr(v); if(nv !== v) el.setAttribute(name, nv); }
+  }
   var mo = new MutationObserver(function(muts){
+    try{
+      for(var i=0;i<muts.length;i++){
+        var m = muts[i];
+        if(m.type === 'characterData'){ syncNode(m.target); }
+        else if(m.type === 'childList'){
+          for(var j=0;j<m.addedNodes.length;j++){
+            var an = m.addedNodes[j];
+            if(an.nodeType === 3) syncNode(an);
+            else if(an.nodeType === 1 && !SKIP[an.tagName]){ walkText(an); walkAttrs(an); }
+          }
+        }
+        else if(m.type === 'attributes' && m.target && m.target.getAttribute){ syncAttr(m.target, m.attributeName); }
+      }
+    }catch(e){}
     if(scheduled) return; scheduled=true;
     setTimeout(function(){ scheduled=false; try{ sweep(document.documentElement); }catch(e){} }, 120);
   });
