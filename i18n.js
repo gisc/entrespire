@@ -207,7 +207,7 @@
     var pairs = introPairs();
     for(var i=0;i<pairs.length;i++){
       var k = pairs[i][0];
-      if(v.length >= 2 && v.length < k.length && k.indexOf(v) === 0){
+      if(v.length >= 1 && v.length < k.length && k.indexOf(v) === 0){
         var t = pairs[i][1];
         var n = Math.max(1, Math.round(t.length * v.length / k.length));
         return t.slice(0, n);
