@@ -1,0 +1,151 @@
+/* A21 · 一专多能：给现有组件一个新任务 */
+
+/* ---------- 案例图 ---------- */
+.a21-fig{margin:0;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:#0F151F;position:relative}
+.a21-fig img{display:block;width:100%;height:210px;object-fit:cover;filter:saturate(.94) contrast(1.02)}
+.a21-fig figcaption{padding:7px 10px 8px;font-size:10px;line-height:1.55;color:var(--faint);border-top:1px solid var(--line)}
+
+/* ---------- 揭晓条 ---------- */
+.a21-reveal{border:1px solid var(--line2);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.75;color:var(--dim);
+  background:#0D131C}
+.a21-reveal b{color:var(--ink);font-weight:600}
+.a21-reveal.ok{border-color:rgba(78,159,110,.4);background:rgba(78,159,110,.06)}
+.a21-reveal.ok b{color:#BFE3CC}
+.a21-reveal.diff{border-color:rgba(216,154,60,.4);background:rgba(216,154,60,.06)}
+.a21-reveal.diff b{color:#EFCB94}
+.a21-reveal-n{display:block;margin-top:7px;padding-top:7px;border-top:1px dashed var(--line2);font-size:10.5px;color:var(--faint)}
+
+/* ---------- 概念：链路图 ---------- */
+.a21-flow{display:block;width:100%;height:auto;color:var(--dim);margin:0 0 8px}
+
+/* ---------- 概念：三种接法 ---------- */
+.a21-conn{display:grid;grid-template-columns:42px minmax(0,1fr);gap:2px 8px;padding:9px 0;border-top:1px solid var(--line)}
+.a21-conn:first-of-type{border-top:0;padding-top:2px}
+.a21-conn b{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--acc);font-weight:500;padding-top:2px}
+.a21-conn span{font-size:11.5px;color:var(--dim);line-height:1.5}
+.a21-conn em{grid-column:2;font-style:normal;font-size:10.5px;color:var(--faint);line-height:1.6}
+
+/* ---------- 什么时候别用 ---------- */
+.a21-warn{margin-top:9px;padding:8px 10px;border-left:2px solid var(--warn);background:rgba(216,154,60,.06);border-radius:0 6px 6px 0}
+.a21-warn b{display:block;font-size:10px;font-family:var(--mono);letter-spacing:.08em;color:#EFCB94;margin-bottom:3px;font-weight:500}
+.a21-warn span{display:block;font-size:10.5px;line-height:1.65;color:var(--faint)}
+
+/* ---------- 配对台：板 ---------- */
+.a21-bench-b{overflow-y:auto;overflow-x:hidden}
+.a21-board{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(34px,6vw,72px);align-items:start}
+.a21-col{display:flex;flex-direction:column;gap:5px;min-width:0;position:relative;z-index:2}
+.a21-col-r{justify-content:center;gap:8px}
+.a21-wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:3}
+.a21-wires path{fill:none;stroke-linecap:round}
+.a21-wires .w-ok{stroke:var(--ok);stroke-width:1.8;opacity:.85}
+.a21-wires .w-wait{stroke:var(--acc);stroke-width:1.5;stroke-dasharray:5 4;opacity:.75}
+.a21-wires .w-drag{stroke:var(--acc);stroke-width:1.5;stroke-dasharray:4 4;opacity:.95}
+
+/* ---------- 配对台：组件卡 / 任务卡 ---------- */
+.a21-comp,.a21-task{position:relative;background:#0F151F;border:1px solid var(--line2);
+  border-radius:8px;text-align:left;transition:.16s var(--ease);width:100%}
+.a21-comp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 9px;min-height:34px;cursor:grab}
+.a21-task{padding:8px 10px;cursor:pointer}
+.a21-task-h{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center}
+.a21-comp:hover,.a21-task:hover{border-color:#3A475E;background:#121A25}
+.a21-comp.sel{border-color:var(--acc);background:rgba(var(--acc-rgb),.09);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.22)}
+.a21-task.over{border-color:var(--acc);background:rgba(var(--acc-rgb),.12);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.22)}
+.a21-meta{min-width:0;display:flex;align-items:baseline;gap:7px}
+.a21-comp .a21-meta b{font-size:11.5px;font-weight:600;color:var(--ink);white-space:nowrap;flex:none}
+.a21-comp .a21-meta em{font-style:normal;font-size:10px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a21-task .a21-meta{display:block}
+.a21-task .a21-meta b{display:block;font-size:12px;font-weight:600;color:var(--ink);line-height:1.35}
+.a21-task .a21-meta em{display:block;font-style:normal;font-size:10px;color:var(--faint);line-height:1.45;margin-top:1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a21-node{width:9px;height:9px;border-radius:50%;border:2px solid #46536A;background:#0B1018;flex:none;transition:.16s}
+.a21-task .a21-node{justify-self:start}
+.a21-comp.sel .a21-node{border-color:var(--acc);background:var(--acc);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.18)}
+.a21-cnt{font-family:var(--mono);font-size:9.5px;color:var(--faint);border:1px solid var(--line2);border-radius:4px;
+  padding:0 5px;min-width:19px;text-align:center;line-height:16px}
+.a21-cnt.on{color:var(--acc2);border-color:rgba(var(--acc-rgb),.4);background:rgba(var(--acc-rgb),.1)}
+
+/* ---------- 配对台：提示条 ---------- */
+.a21-hint{margin-top:9px;font-size:11px;line-height:1.6;color:var(--faint);min-height:18px}
+.a21-hint b{color:var(--acc2);font-weight:500}
+.a21-hint.good b{color:var(--ok)}
+.a21-legend{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px;
+  font-size:9.5px;color:var(--faint);letter-spacing:.04em}
+.a21-legend>span:first-child{font-family:var(--mono);color:var(--acc);letter-spacing:.1em}
+.a21-lg{border:1px dashed var(--line2);border-radius:4px;padding:1px 6px}
+
+/* ---------- 配对台：任务卡里的说明行 ---------- */
+.a21-links{margin-top:2px}
+.a21-lk{display:grid;grid-template-columns:auto minmax(0,1fr) 16px;gap:6px;align-items:center;
+  margin-top:6px;padding-left:7px;border-left:2px solid var(--acc)}
+.a21-lk.ok{border-left-color:var(--ok)}
+.a21-lk-n{font-size:10px;color:var(--dim);white-space:nowrap;font-weight:500}
+.a21-lk.ok .a21-lk-n{color:#BFE3CC}
+.a21-lk input{width:100%;background:#0A0F17;border:1px solid var(--line2);border-radius:5px;
+  padding:3px 7px;font-size:10.5px;line-height:1.5;color:var(--ink);outline:none;transition:.16s}
+.a21-lk input:focus{border-color:var(--acc);background:#0F1621}
+.a21-lk input::placeholder{color:#46505F}
+.a21-lk input.a21-flag{animation:a21flag .7s var(--ease)}
+@keyframes a21flag{0%,100%{background:#0A0F17}40%{background:rgba(var(--acc-rgb),.16)}}
+.a21-x{flex:none;width:16px;height:16px;border-radius:4px;color:var(--faint);font-size:12px;line-height:1;justify-self:end}
+.a21-x:hover{color:var(--bad);background:rgba(199,86,96,.12)}
+
+/* ---------- 在你的事上 ---------- */
+.a21-eg{margin-top:10px;padding:9px 10px;border:1px solid var(--line);border-radius:7px;background:#0D131C}
+.a21-eg b{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--acc);font-weight:500;margin-bottom:4px}
+.a21-eg p{font-size:10.5px;line-height:1.7;color:var(--faint)}
+
+/* ---------- 两问 ---------- */
+.a21-q{margin-bottom:10px}
+.a21-q b{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:1px}
+.a21-q span{display:block;font-size:10.5px;color:var(--faint);margin-bottom:7px}
+.a21-q input{width:100%;background:#0D131C;border:1px solid var(--line2);border-radius:7px;padding:8px 10px;
+  font-size:12px;color:var(--ink);outline:none}
+.a21-q input:focus{border-color:var(--acc);background:#0F1621}
+.a21-scale{display:flex;justify-content:space-between;width:142px;font-size:9px;color:var(--faint);margin-top:4px}
+
+/* ---------- 窄屏 ---------- */
+@media(max-width:1280px){
+  .a21-fig img{height:190px}
+  .a21-board{gap:34px}
+}
+@media(max-width:1100px){
+  .a21-lk input{font-size:11px}
+}
+
+/* ---------- 矮屏（1366×768 一类）压缩概念页 ---------- */
+@media(max-height:820px){
+  .a21-fig img{height:132px}
+  .a21-opts .opt{padding:8px 10px}
+  .a21-conn{padding:7px 0}
+  .a21-warn{margin-top:7px;padding:6px 9px}
+}
+
+/* 评分按钮：比默认更清楚一点 */
+.a21-q .stars button{color:#B9C2D0;font-size:12px;width:30px;height:30px;border-color:#39465C;background:#0F151F}
+.a21-q .stars button:hover{color:var(--ink)}
+.a21-q .stars button.on{color:var(--acc2);font-weight:600}
+.a21-scale{width:162px}
+
+/* 矮屏：配对台再压一档，4 条连线也能整屏放下 */
+@media(max-height:820px){
+  .a21-hint{margin-top:6px}
+  .a21-legend{display:none}
+  .a21-task{padding:6px 9px}
+  .a21-lk{margin-top:4px}
+  .a21-lk input{padding:2px 6px;font-size:10px}
+  .a21-comp{min-height:30px;padding:5px 9px}
+  .a21-col{gap:4px}
+}
+
+@media(max-height:820px){
+  .a21-task .a21-meta{display:flex;align-items:baseline;gap:7px}
+  .a21-task .a21-meta b{flex:none}
+  .a21-task .a21-meta em{margin-top:0;min-width:0}
+  .a21-col-r{gap:6px}
+}
+
+/* 收束页的一句 */
+.a21-quote{background:linear-gradient(160deg,rgba(var(--acc-rgb),.07),transparent 60%)}
+.a21-quote p{font-family:var(--serif);font-size:17px;line-height:1.95;color:var(--dim);letter-spacing:.01em}
+.a21-quote b{color:var(--ink);font-weight:700}

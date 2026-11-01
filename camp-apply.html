@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>假期 5 天特训营 · 预约申请 | 发小明</title>
+<meta name="theme-color" content="#060A18">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060A18;--bg2:#0B122B;--panel:#0E1526;--ink:#F7F2E6;--dim:#A3ABC2;--faint:#6E7690;
+  --gold:#F5C451;--gold2:#FFE3A6;--teal:#4FE0D0;--line:rgba(245,196,81,.16);--line2:rgba(255,255,255,.09);
+  --serif:"Noto Serif SC","Songti SC",serif;--sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --ease:cubic-bezier(.22,.8,.28,1);
+}
+html{-webkit-text-size-adjust:100%}
+body{background:
+  radial-gradient(1100px 520px at 50% -10%,rgba(79,224,208,.10),transparent 62%),
+  radial-gradient(900px 460px at 82% 6%,rgba(245,196,81,.08),transparent 60%),var(--bg);
+  color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1080px,92vw);margin:0 auto}
+/* 顶栏 */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 0;background:rgba(6,10,24,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:15px;letter-spacing:.04em}
+.brand i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold);display:inline-block}
+.top-links{display:flex;gap:8px;flex-wrap:wrap}
+.tbtn{font-size:12.5px;padding:7px 14px;border-radius:99px;border:1px solid var(--line2);color:var(--dim);transition:.2s var(--ease)}
+.tbtn:hover{color:var(--ink);border-color:rgba(245,196,81,.5)}
+.tbtn.gold{border-color:rgba(245,196,81,.55);color:var(--gold2);background:rgba(245,196,81,.1)}
+/* 头部 */
+.hero{padding:52px 0 30px;text-align:center}
+.kicker{font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(30px,5vw,46px);line-height:1.25;margin:14px 0 12px;letter-spacing:.01em}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.hero p{color:var(--dim);font-size:14px;max-width:640px;margin:0 auto}
+.hero .meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .meta span{font-size:11.5px;padding:5px 12px;border-radius:99px;border:1px solid var(--line);color:rgba(245,196,81,.85);background:rgba(245,196,81,.05)}
+/* 课程目录 */
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:26px 0 14px}
+.sec-h h2{font-family:var(--serif);font-size:20px;letter-spacing:.02em}
+.sec-h a{font-size:12.5px;color:var(--teal)}
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.day{display:block;padding:16px 14px;border-radius:14px;border:1px solid var(--line2);
+  background:linear-gradient(170deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:.25s var(--ease)}
+.day:hover{transform:translateY(-3px);border-color:rgba(79,224,208,.5);background:rgba(79,224,208,.06)}
+.day b{display:block;font-family:var(--serif);font-size:15px;margin-bottom:4px}
+.day s{display:block;text-decoration:none;font-size:11.5px;color:var(--faint);line-height:1.6}
+.day i{display:inline-block;font-style:normal;font-size:10px;letter-spacing:.18em;color:rgba(245,196,81,.8);margin-bottom:6px}
+/* 表单 */
+.form-card{margin:34px 0 10px;padding:clamp(18px,3vw,30px);border-radius:18px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(14,21,38,.95),rgba(9,13,26,.95))}
+.form-card h2{font-family:var(--serif);font-size:22px;margin-bottom:6px}
+.form-card .lead{font-size:13px;color:var(--dim);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f.full{grid-column:1/-1}
+.f label{font-size:12.5px;color:var(--dim)}
+.f label b{color:var(--gold);font-weight:600}
+.f input,.f textarea{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line2);
+  background:rgba(255,255,255,.03);color:var(--ink);font-family:var(--sans);font-size:14px;transition:.2s}
+.f input:focus,.f textarea:focus{outline:none;border-color:rgba(79,224,208,.6);background:rgba(79,224,208,.05)}
+.f textarea{min-height:88px;resize:vertical;line-height:1.7}
+.f .tip{font-size:11px;color:var(--faint)}
+.actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 30px;border:none;border-radius:99px;
+  font-family:var(--sans);font-size:14.5px;font-weight:600;cursor:pointer;transition:.22s var(--ease)}
+.btn.primary{background:linear-gradient(135deg,var(--gold),#e8a93a);color:#1a1405;box-shadow:0 14px 34px -18px rgba(245,196,81,.9)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.err{font-size:12.5px;color:#ff9a8a;min-height:18px}
+.ok-card{display:none;padding:22px;border-radius:16px;border:1px solid rgba(79,224,208,.45);background:rgba(79,224,208,.07);margin-top:18px}
+.ok-card b{font-family:var(--serif);font-size:17px}
+.ok-card .code{font-family:ui-monospace,monospace;color:var(--teal);font-size:15px;margin-top:6px}
+.foot{padding:30px 0 60px;text-align:center;font-size:11.5px;color:var(--faint);line-height:1.9}
+.foot a{color:var(--dim);border-bottom:1px solid var(--line2)}
+@media (max-width:860px){
+  .days{grid-template-columns:1fr 1fr}
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:34px}
+}
+@media (max-width:520px){.days{grid-template-columns:1fr}.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><i></i>发小明 · 假期 5 天特训营</div>
+    <div class="top-links">
+      <a class="tbtn" href="index.html">返回学院</a>
+      <a class="tbtn gold" href="#apply">直接报名</a>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="kicker">INVENT FOR ONE · SUMMER CAMP</div>
+    <h1>一个假期，<em>创造改变世界的发明</em></h1>
+    <p>5 天，1 个人，1 个麻烦，1 件能被测试的丑原型，1 条证据线。<br>先把名额约上，开营前我们会联系你确认时间与地点。</p>
+    <div class="meta"><span>混龄 7–13 岁</span><span>线下全天 6 小时</span><span>每天 6–7 幕</span><span>大带小分组</span></div>
+  </header>
+
+  <div class="sec-h">
+    <h2>5 天课程目录</h2>
+    <a href="index.html">查看完整目录 →</a>
+  </div>
+  <div class="days">
+    <a class="day" href="camp-day.html?d=1"><i>DAY 01</i><b>看见问题</b><s>抽一张用户卡，把他的一天摊开，找到真的卡住他的地方。</s></a>
+    <a class="day" href="camp-day.html?d=2"><i>DAY 02</i><b>想出办法</b><s>拆开一个物件，换位置、换时间，再合并、复制，生成 3 个方向。</s></a>
+    <a class="day" href="camp-day.html?d=3"><i>DAY 03</i><b>做出原型</b><s>只用盒子里的材料，做出一个能摸到、能演示的丑原型。</s></a>
+    <a class="day" href="camp-day.html?d=4"><i>DAY 04</i><b>测试迭代</b><s>定一条及格线，测两次，中间只改一个地方。</s></a>
+    <a class="day" href="camp-day.html?d=5"><i>DAY 05</i><b>讲给世界</b><s>把 5 天做成一条成长线，彩排一次，正式讲 3 分钟。</s></a>
+  </div>
+
+  <section class="form-card" id="apply">
+    <h2>预约申请</h2>
+    <p class="lead">填得越具体，我们越能在开营前帮孩子准备好材料。<b style="color:var(--gold)">带 * 为必填</b>。</p>
+    <form id="bookForm" novalidate>
+      <div class="grid">
+        <div class="f">
+          <label>学生姓名 <b>*</b></label>
+          <input id="b-student" maxlength="30" placeholder="例如：李小明" autocomplete="name">
+        </div>
+        <div class="f">
+          <label>联系电话 <b>*</b></label>
+          <input id="b-phone" maxlength="24" inputmode="tel" placeholder="11 位手机号" autocomplete="tel">
+        </div>
+        <div class="f full">
+          <label>地址</label>
+          <input id="b-address" maxlength="120" placeholder="家庭或学校所在城市 / 区，方便我们安排就近场地" autocomplete="street-address">
+        </div>
+        <div class="f full">
+          <label>想学到的内容 <b>*</b></label>
+          <textarea id="b-want" maxlength="600" placeholder="例如：想学会把一个模糊的想法，变成一个能讲清楚、能测试的原型；想让孩子敢开口表达。"></textarea>
+        </div>
+        <div class="f full">
+          <label>已有的创意与成果 <span style="color:var(--faint)">（选填）</span></label>
+          <textarea id="b-works" maxlength="600" placeholder="例如：画过一本连环画、做过一个自动浇花装置、在学校科技节拿过奖；或者只是有一堆「想发明的东西」的清单。"></textarea>
+          <div class="tip">有作品照片或链接，可以开营时带给我们看。</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="b-submit" type="submit">提交预约申请</button>
+        <span class="err" id="b-err"></span>
+      </div>
+    </form>
+    <div class="ok-card" id="b-ok">
+      <b>✓ 预约已提交</b>
+      <div style="font-size:13px;color:var(--dim);margin-top:6px">我们会尽快电话联系你确认。预约编号：</div>
+      <div class="code" id="b-code">—</div>
+    </div>
+  </section>
+
+  <div class="foot">
+    发小明 Genesis 创新学院 · 让每个孩子都拥有创造的能力<br>
+    有问题？回到 <a href="index.html">特训营目录</a> 或 <a href="index.html">学院首页</a>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const form=$('#bookForm'), err=$('#b-err'), btn=$('#b-submit'), ok=$('#b-ok'), code=$('#b-code');
+const val=id=>($(id).value||'').trim();
+
+function setErr(msg){ err.textContent=msg||''; if(msg) err.scrollIntoView({block:'center',behavior:'smooth'}); }
+
+form.addEventListener('submit',async function(e){
+  e.preventDefault();
+  setErr('');
+  const student=val('#b-student'), phone=val('#b-phone').replace(/\D/g,''), want=val('#b-want');
+  if(!student){ setErr('请填写学生姓名'); $('#b-student').focus(); return; }
+  if(!/^1[3-9]\d{9}$/.test(phone)){ setErr('请填写正确的 11 位手机号'); $('#b-phone').focus(); return; }
+  if(!want){ setErr('请简单写一句想学到的内容'); $('#b-want').focus(); return; }
+
+  btn.disabled=true; btn.textContent='提交中…';
+  try{
+    const r=await fetch('../api/camp/book',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        student, phone,
+        address:val('#b-address'),
+        want,
+        works:val('#b-works')
+      })
+    });
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok||!d.ok) throw new Error(d.error||('提交失败（HTTP '+r.status+'）'));
+    form.style.display='none';
+    code.textContent=d.id||'—';
+    ok.style.display='block';
+    ok.scrollIntoView({block:'center',behavior:'smooth'});
+  }catch(ex){
+    setErr(ex.message||'网络异常，请稍后再试');
+    btn.disabled=false; btn.textContent='提交预约申请';
+  }
+});
+})();
+</script>
+</body>
+</html>

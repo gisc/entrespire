@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>真实问题 / 悬赏 · 后台</title>
+<style>
+:root{--bg:#080b14;--card:#101728;--line:rgba(255,255,255,.1);--gold:#f2c14e;--dim:#9aa3bd;--faint:#6e7690;--ok:#39d98a;--bad:#ff6b6b;--blue:#7fb2ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 500px at 15% -10%,rgba(109,141,255,.14),transparent 60%),var(--bg);color:#e9edf6;font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding:24px 16px 60px}
+.wrap{max-width:1100px;margin:0 auto}h1{font-size:24px;margin:0 0 4px;font-family:"Songti SC",serif}.sub{color:var(--dim);font-size:12.5px;margin-bottom:18px}
+.card{background:linear-gradient(180deg,rgba(18,26,44,.96),rgba(10,15,28,.96));border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.login{max-width:380px;margin:8vh auto}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;font-size:11px;color:var(--dim)}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);color:#e9edf6;padding:10px 12px;font-family:inherit;font-size:13px;outline:none}textarea{min-height:90px;resize:vertical;line-height:1.7}input:focus,textarea:focus,select:focus{border-color:rgba(242,193,78,.6)}
+.btn{border:1px solid var(--line);border-radius:8px;padding:9px 14px;background:rgba(255,255,255,.04);color:#e9edf6;font-size:12.5px;cursor:pointer;font-family:inherit}.btn:hover{border-color:rgba(242,193,78,.6)}.btn.pri{background:linear-gradient(120deg,#f2c14e,#ffd97a);border-color:#f2c14e;color:#1a1405;font-weight:800}.btn.ok{border-color:rgba(57,217,138,.5);color:#baf5d8}.btn.bad{border-color:rgba(255,107,107,.5);color:#ffc2c2}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tab{border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-size:12px;color:var(--dim);cursor:pointer}.tab.active{color:#1a1405;background:linear-gradient(120deg,#f2c14e,#ffd97a);border-color:#f2c14e;font-weight:800}
+.item{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;background:rgba(255,255,255,.025)}.item-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.item-h b{font-size:15px}.item p{font-size:12.5px;line-height:1.8;color:#b8c4d8;white-space:pre-wrap;margin:6px 0}.meta{display:flex;gap:10px;flex-wrap:wrap;font-size:10.5px;color:var(--faint);margin-top:6px}.media{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.media img,.media video{width:120px;height:82px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+.status{font-size:10px;border-radius:99px;padding:3px 8px;border:1px solid var(--line)}.status.pending{color:#ffd97a;border-color:rgba(242,193,78,.4)}.status.approved,.status.published{color:#baf5d8;border-color:rgba(57,217,138,.4)}.status.rejected,.status.closed{color:#ffc2c2;border-color:rgba(255,107,107,.4)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.hint{font-size:11px;color:var(--faint);line-height:1.7}.msg{font-size:12px;color:var(--bad);min-height:18px;margin-top:8px}
+.thumb{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:10.5px;margin:3px}.thumb button{border:0;background:transparent;color:var(--bad);cursor:pointer}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}h1{font-size:21px}}
+</style>
+<script src="assets-tc-page.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>真实问题 / 官方悬赏 · 后台</h1>
+  <div class="sub">审核孩子提出的真实问题；发布、编辑、下架官方悬赏。所有操作即时生效。</div>
+  <div class="card login" id="loginBox">
+    <div class="field"><label>管理员昵称</label><input id="lgNick" value="admin" autocomplete="username"></div>
+    <div class="field"><label>密码</label><input id="lgPwd" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn pri" style="width:100%" onclick="doLogin()">登录后台</button>
+    <div class="msg" id="lgMsg"></div>
+    <div class="hint" style="margin-top:12px">用主站管理员账号登录。学员/老师账号无权审核。</div>
+  </div>
+  <div id="dash" style="display:none">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <div class="tabs" style="margin:0">
+        <button class="tab active" data-tab="problems" onclick="switchTab('problems')">真实问题审核</button>
+        <button class="tab" data-tab="bounties" onclick="switchTab('bounties')">官方悬赏</button>
+      </div>
+      <div style="display:flex;gap:8px"><a class="btn" href="bounty-index.html" target="_blank">悬赏前台 ↗</a><a class="btn" href="index.html" target="_blank">打开主站 ↗</a><button class="btn" onclick="logout()">退出</button></div>
+    </div>
+    <div id="msg" class="msg"></div>
+    <div id="view"></div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+let TOKEN=localStorage.getItem('iv3_token')||'';
+let TAB='problems', PROBLEMS=[], BOUNTIES=[], EDIT=null, MEDIA=[];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function headers(){return TOKEN?{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}:{'Content-Type':'application/json'};}
+function toast(m,bad){const el=$('#msg');el.textContent=m;el.style.color=bad?'var(--bad)':'var(--ok)';setTimeout(()=>{if(el.textContent===m)el.textContent='';},4000);}
+async function boot(){
+  if(!TOKEN){$('#loginBox').style.display='block';return;}
+  try{const r=await fetch('/api/me',{headers:headers()});if(!r.ok)throw 0;const u=await r.json();if(!u.admin){$('#lgMsg').textContent='这个账号不是管理员';TOKEN='';return;} $('#loginBox').style.display='none';$('#dash').style.display='block';switchTab(TAB);}catch(e){$('#loginBox').style.display='block';}
+}
+async function doLogin(){
+  const nick=$('#lgNick').value.trim(),pwd=$('#lgPwd').value;
+  $('#lgMsg').textContent='';
+  try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,pwd})});const d=await r.json();if(!r.ok)throw new Error(d.error||'登录失败');if(!d.user||!d.user.admin)throw new Error('这个账号不是管理员');TOKEN=d.token;localStorage.setItem('iv3_token',TOKEN);boot();}catch(e){$('#lgMsg').textContent=e.message;}
+}
+function logout(){TOKEN='';localStorage.removeItem('iv3_token');location.reload();}
+function switchTab(t){TAB=t;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));if(t==='problems')loadProblems();else loadBounties();}
+async function loadProblems(){
+  $('#view').innerHTML='<div class="card">加载中……</div>';
+  try{const r=await fetch('/api/admin/problems',{headers:headers()});const d=await r.json();if(!r.ok)throw new Error(d.error||'加载失败');PROBLEMS=d.problems||[];renderProblems();}catch(e){$('#view').innerHTML='<div class="card" style="color:var(--bad)">'+esc(e.message)+'</div>';}
+}
+function renderProblems(){
+  const rows=PROBLEMS.length?PROBLEMS.map(p=>{
+    const media=(p.media||[]).map(m=>m.kind==='video'?'<video src="'+esc(m.url)+'" controls></video>':'<img src="'+esc(m.url)+'" alt="">').join('');
+    return '<div class="item"><div class="item-h"><b>'+esc(p.title)+'</b><span class="status '+esc(p.status)+'">'+statusName(p.status)+'</span></div><p>'+esc(p.body)+'</p>'+
+      (media?'<div class="media">'+media+'</div>':'')+
+      '<div class="meta"><span>提出人：'+esc(p.userName)+'</span><span>'+new Date(p.createdAt).toLocaleString('zh-CN')+'</span>'+(p.reviewNote?'<span>审核备注：'+esc(p.reviewNote)+'</span>':'')+'</div>'+
+      '<div class="actions">'+(p.status!=='approved'?'<button class="btn ok" onclick="review(\''+p.id+'\',\'approved\')">通过并发布</button>':'')+
+      (p.status!=='rejected'?'<button class="btn bad" onclick="review(\''+p.id+'\',\'rejected\')">拒绝</button>':'')+
+      (p.status==='approved'?'<button class="btn" onclick="review(\''+p.id+'\',\'pending\')">下架</button>':'')+'</div></div>';
+  }).join(''):'<div class="card">还没有问题提交。</div>';
+  $('#view').innerHTML='<div class="card"><div class="hint">待审核 '+PROBLEMS.filter(p=>p.status==='pending').length+' 条 · 已发布 '+PROBLEMS.filter(p=>p.status==='approved').length+' 条</div></div>'+rows;
+}
+function statusName(s){return {pending:'待审核',approved:'已发布',rejected:'已拒绝',published:'已发布',closed:'已下架',draft:'草稿'}[s]||s;}
+async function review(id,status){
+  const note=prompt(status==='approved'?'通过备注（可留空）':status==='rejected'?'拒绝原因（会记录在后台，不公开）':'下架原因（可留空）','');
+  if(note===null)return;
+  try{const r=await fetch('/api/admin/problems/'+encodeURIComponent(id)+'/review',{method:'POST',headers:headers(),body:JSON.stringify({status,note})});const d=await r.json();if(!r.ok)throw new Error(d.error||'操作失败');toast('已更新');loadProblems();}catch(e){toast(e.message,1);}
+}
+async function loadBounties(){
+  $('#view').innerHTML='<div class="card">加载中……</div>';
+  try{const r=await fetch('/api/admin/bounties',{headers:headers()});const d=await r.json();if(!r.ok)throw new Error(d.error||'加载失败');BOUNTIES=d.bounties||[];renderBounties();}catch(e){$('#view').innerHTML='<div class="card" style="color:var(--bad)">'+esc(e.message)+'</div>';}
+}
+function renderBounties(){
+  const rows=BOUNTIES.length?BOUNTIES.map(b=>'<div class="item"><div class="item-h"><b>'+esc(b.title)+'</b><span class="status '+esc(b.status)+'">'+statusName(b.status)+'</span></div><p>'+esc(b.summary||'')+'</p><div class="meta"><span>🎁 '+esc(b.reward||'')+'</span><span>'+esc(b.sponsor||'')+'</span><span>'+(b.deadline||'')+'</span></div><div class="actions"><button class="btn" onclick="editBounty(\''+b.id+'\')">编辑</button><button class="btn '+(b.status==='published'?'bad':'ok')+'" onclick="toggleBounty(\''+b.id+'\')">'+(b.status==='published'?'下架':'发布')+'</button></div></div>').join(''):'<div class="card">还没有悬赏。</div>';
+  $('#view').innerHTML='<div class="card"><div class="actions"><button class="btn pri" onclick="newBounty()">＋ 发布新悬赏</button></div><div class="hint">前台只显示“已发布”的悬赏；草稿/下架不会公开。</div></div>'+rows;
+}
+function newBounty(){EDIT=null;MEDIA=[];renderBountyForm({});}
+function editBounty(id){EDIT=BOUNTIES.find(b=>b.id===id)||null;MEDIA=EDIT?[...(EDIT.images||[]),...(EDIT.attachments||[])]:[];if(EDIT&&EDIT.video)MEDIA.push({kind:'video',url:EDIT.video,name:'已上传视频'});renderBountyForm(EDIT||{});}
+function renderBountyForm(b){
+  const isNew=!b.id;
+  const imgs=(MEDIA||[]).map((m,i)=>'<span class="thumb">'+esc(m.name||m.url)+'<button type="button" onclick="removeMedia('+i+')">×</button></span>').join('');
+  $('#view').innerHTML='<div class="card"><div class="item-h"><b>'+(isNew?'发布新悬赏':'编辑悬赏')+'</b><button class="btn" onclick="loadBounties()">← 返回列表</button></div>'+
+    '<div class="grid2" style="margin-top:12px">'+
+    '<div class="field full"><label>悬赏标题</label><input id="bTitle" value="'+esc(b.title||'')+'"></div>'+
+    '<div class="field"><label>奖励</label><input id="bReward" value="'+esc(b.reward||'')+'" placeholder="10000 创作币 + 作品展示"></div>'+
+    '<div class="field"><label>发布方</label><input id="bSponsor" value="'+esc(b.sponsor||'发小明官方')+'"></div>'+
+    '<div class="field"><label>截止日期</label><input id="bDeadline" value="'+esc(b.deadline||'')+'" placeholder="2026-11-30"></div>'+
+    '<div class="field"><label>状态</label><select id="bStatus"><option value="draft"'+(b.status==='draft'?' selected':'')+'>草稿</option><option value="published"'+(b.status==='published'?' selected':'')+'>已发布</option><option value="closed"'+(b.status==='closed'?' selected':'')+'>已下架</option></select></div>'+
+    '<div class="field full"><label>一句话摘要</label><input id="bSummary" value="'+esc(b.summary||'')+'"></div>'+
+    '<div class="field full"><label>课题说明</label><textarea id="bDesc" style="min-height:150px">'+esc(b.description||'')+'</textarea></div>'+
+    '<div class="field full"><label>图片 / 视频 / 附件（图片可多张；视频1个；附件PDF/Word/ZIP）</label><input id="bFiles" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.zip,.ppt,.pptx,.xls,.xlsx" onchange="pickBountyFiles(this)">'+
+    '<div class="hint" id="bFileHint">上传后自动保存到文件库；视频≤20MB，图片≤5MB。</div><div>'+imgs+'</div></div>'+
+    '</div><div class="actions"><button class="btn pri" onclick="saveBounty()">保存</button><button class="btn" onclick="loadBounties()">取消</button></div><div class="hint" style="margin-top:8px">视频地址会单独保存；附件可多个。</div></div>';
+}
+function pickBountyFiles(input){ keepBountyFields(); uploadFiles(input.files); }
+function currentBountyFields(){return {title:$('#bTitle')?$('#bTitle').value:(EDIT&&EDIT.title)||'',reward:$('#bReward')?$('#bReward').value:(EDIT&&EDIT.reward)||'',sponsor:$('#bSponsor')?$('#bSponsor').value:(EDIT&&EDIT.sponsor)||'',deadline:$('#bDeadline')?$('#bDeadline').value:(EDIT&&EDIT.deadline)||'',status:$('#bStatus')?$('#bStatus').value:(EDIT&&EDIT.status)||'draft',summary:$('#bSummary')?$('#bSummary').value:(EDIT&&EDIT.summary)||'',description:$('#bDesc')?$('#bDesc').value:(EDIT&&EDIT.description)||''};}
+function keepBountyFields(){if(!EDIT)EDIT={};Object.assign(EDIT,currentBountyFields());}
+function removeMedia(i){keepBountyFields();MEDIA.splice(i,1);renderBountyForm(EDIT||{});}
+async function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(new Error('读取失败'));r.readAsDataURL(f);});}
+async function uploadFiles(files){
+  const arr=Array.from(files||[]);
+  for(const f of arr){
+    const isVideo=/^video\//.test(f.type), isImg=/^image\//.test(f.type);
+    if(isVideo&&f.size>20*1024*1024){toast(f.name+' 超过20MB',1);continue;}
+    if(isImg&&f.size>5*1024*1024){toast(f.name+' 超过5MB',1);continue;}
+    try{
+      const dataUrl=await fileData(f);
+      const r=await fetch('/api/upload',{method:'POST',headers:headers(),body:JSON.stringify({dataUrl,name:f.name,mime:f.type})});
+      const d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'上传失败');
+      MEDIA.push({kind:isVideo?'video':isImg?'image':'file',url:d.url,name:f.name,size:f.size});
+      keepBountyFields();
+      toast('已上传：'+f.name);renderBountyForm(EDIT||{});
+    }catch(e){toast(e.message,1);}
+  }
+}
+async function saveBounty(){
+  const b={id:EDIT?EDIT.id:undefined,title:$('#bTitle').value,reward:$('#bReward').value,sponsor:$('#bSponsor').value,deadline:$('#bDeadline').value,status:$('#bStatus').value,summary:$('#bSummary').value,description:$('#bDesc').value,
+    images:MEDIA.filter(m=>m.kind==='image'),video:(MEDIA.find(m=>m.kind==='video')||{}).url||'',attachments:MEDIA.filter(m=>m.kind==='file')};
+  try{const r=await fetch('/api/admin/bounties',{method:'POST',headers:headers(),body:JSON.stringify(b)});const d=await r.json();if(!r.ok)throw new Error(d.error||'保存失败');toast('已保存');EDIT=null;loadBounties();}catch(e){toast(e.message,1);}
+}
+async function toggleBounty(id){const b=BOUNTIES.find(x=>x.id===id);if(!b)return;b.status=b.status==='published'?'closed':'published';try{const r=await fetch('/api/admin/bounties',{method:'POST',headers:headers(),body:JSON.stringify(b)});const d=await r.json();if(!r.ok)throw new Error(d.error||'操作失败');toast('已更新');loadBounties();}catch(e){toast(e.message,1);}}
+boot();
+</script>
+</body>
+</html>

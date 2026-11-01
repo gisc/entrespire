@@ -1,0 +1,45 @@
+/* 第 28 章 · 游戏化学习（专属场景） */
+.c28-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(251,191,36,.22);background:linear-gradient(180deg,#151005,#080602);overflow:hidden}
+.c28-game{position:absolute;left:5%;right:5%;top:16px;bottom:16px;border-radius:12px;border:1px solid rgba(251,191,36,.25);background:linear-gradient(180deg,rgba(251,191,36,.06),rgba(8,6,2,.7));overflow:hidden}
+.c28-top{position:absolute;left:12px;right:12px;top:10px;display:flex;align-items:center;gap:8px;z-index:4}
+.c28-avatar{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FEF3C7,#D97706);display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid #FBBF24}
+.c28-name{font-size:9px;color:#FEF3C7}.c28-lv{font-size:7px;color:var(--faint)}
+.c28-xp{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}.c28-xp i{display:block;height:100%;width:20%;background:linear-gradient(90deg,#FBBF24,#F59E0B);transition:.4s}
+.c28-streak{font-size:10px;color:#FB923C}
+.c28-quest{position:absolute;left:18px;right:120px;top:64px;border-radius:10px;border:1px dashed rgba(251,191,36,.35);background:rgba(251,191,36,.06);padding:10px 12px;z-index:3}
+.c28-quest b{font-size:11px;color:#FEF3C7;display:block}.c28-quest p{font-size:8px;color:#FDE68A;margin:3px 0 8px}
+.c28-answer{display:flex;gap:5px;flex-wrap:wrap}
+.c28-ans{padding:5px 10px;border-radius:6px;border:1px solid rgba(251,191,36,.4);background:rgba(255,255,255,.04);color:#FEF3C7;font-size:9px}
+.c28-ans:hover,.c28-ans.correct{border-color:#4FE0D0;background:rgba(79,224,208,.15);color:#99F6E4}
+.c28-ans.wrong{border-color:#FF7A6B;background:rgba(255,122,107,.12);color:#FFB3A8}
+.c28-badge{position:absolute;right:16px;top:64px;width:86px;text-align:center;z-index:3}
+.c28-badge .medal{width:56px;height:56px;margin:0 auto;border-radius:50%;border:2px solid rgba(251,191,36,.5);display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(251,191,36,.08)}
+.c28-badge span{display:block;font-size:7px;color:var(--faint);margin-top:4px}
+.c28-toast{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);padding:6px 14px;border-radius:8px;background:rgba(79,224,208,.2);border:1px solid #4FE0D0;color:#99F6E4;font-size:11px;opacity:0;transition:.3s;z-index:6}
+.c28-toast.show{opacity:1;transform:translate(-50%,-58%)}
+.c28-footer{position:absolute;left:12px;right:12px;bottom:8px;display:flex;justify-content:space-between;font-size:7px;color:var(--faint);z-index:4}
+.c28-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(251,191,36,.75);z-index:9}
+.c28-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,6,2,.6);z-index:9}
+.c28-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c28-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c28-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c28-context:hover,.c28-context.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08)}
+.c28-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c28-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c28-feat:hover,.c28-feat.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08);color:#FEF3C7}
+.c28-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c28-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c28-act:hover,.c28-act.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08);color:#FEF3C7}
+.c28-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c28-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c28-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c28-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FBBF24,#4FE0D0);transition:.5s}
+.c28-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(251,191,36,.2);background:linear-gradient(180deg,#151005,#080602);overflow:hidden}
+.c28-test .c28-stage{position:absolute;inset:8px;height:auto;border:0}
+.c28-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c28-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c28-fix:hover,.c28-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c28-bp-icon{width:150px;height:100px;margin:0 auto}
+.c28-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c28-stage,.c28-test{height:250px}.c28-context-grid,.c28-feats{grid-template-columns:1fr}.c28-quest{right:100px}}
+@media(max-height:800px){.c28-stage{height:286px}}

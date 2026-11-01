@@ -1,0 +1,95 @@
+/* A20 · 除法：重排后的责任真空 */
+
+/* ---------- 图 ---------- */
+.a20-fig{margin:0;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:#0F151F}
+.a20-fig img{width:100%;display:block;max-height:300px;object-fit:cover}
+.a20-fig.sm img{height:200px}
+.a20-fig figcaption{padding:7px 10px;font-size:10px;line-height:1.65;color:var(--faint)}
+.a20-fig figcaption b{color:var(--dim);font-weight:500}
+
+/* ---------- 概念：四种形态 ---------- */
+.a20-forms{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.a20-form{border:1px solid var(--line2);border-radius:8px;background:#0F151F;padding:9px 10px}
+.a20-form em{display:block;font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--acc);margin-bottom:4px}
+.a20-form b{display:block;font-size:11.5px;color:var(--ink);font-weight:600;margin-bottom:3px}
+.a20-form span{display:block;font-size:10px;line-height:1.7;color:var(--faint)}
+
+/* ---------- 概念：真空三问 ---------- */
+.a20-q3{display:flex;flex-direction:column;gap:9px}
+.a20-q3>div{display:grid;grid-template-columns:20px 1fr;gap:6px 8px;align-items:start}
+.a20-q3 i{grid-row:1 / span 2;width:20px;height:20px;border-radius:50%;border:1px solid rgba(var(--acc-rgb),.4);
+  display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--mono);font-size:9px;color:var(--acc)}
+.a20-q3 b{font-size:11.5px;color:var(--ink);font-weight:600}
+.a20-q3 span{font-size:10px;line-height:1.65;color:var(--faint)}
+
+/* ---------- 雷达 ---------- */
+.a20-radar{display:flex;align-items:center;gap:12px;padding:8px 14px;background:#0C121A;
+  border-bottom:1px solid var(--line)}
+.a20-blips{position:relative;flex:1;display:flex;gap:4px;overflow:hidden;padding:2px;border-radius:5px}
+.a20-blips::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(var(--acc-rgb),.13),transparent);
+  transform:translateX(-100%);animation:a20sweep 6s linear infinite}
+@keyframes a20sweep{to{transform:translateX(100%)}}
+.a20-blip{position:relative;flex:1;height:22px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line2);border-radius:4px;background:#0D131C;
+  font-style:normal;font-family:var(--mono);font-size:9px;color:var(--faint);transition:.2s}
+.a20-blip.done{border-color:rgba(var(--acc-rgb),.6);color:var(--acc2);background:rgba(var(--acc-rgb),.14);
+  box-shadow:0 0 10px rgba(var(--acc-rgb),.14)}
+.a20-bar{width:96px;height:4px;border-radius:99px;background:#243047;overflow:hidden;flex:none}
+.a20-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .25s var(--ease)}
+
+/* ---------- 雷达：案例卡 ---------- */
+.a20-case{border:1px solid var(--line2);border-radius:9px;background:#0F151F;padding:9px 11px;margin-bottom:8px;transition:.18s}
+.a20-case.done{background:#101823;border-color:rgba(var(--acc-rgb),.3)}
+.a20-c-head{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:7px}
+.a20-c-idx{font-family:var(--mono);font-size:9px;color:var(--faint);border:1px solid var(--line2);border-radius:4px;
+  text-align:center;padding:1px 0}
+.a20-case.done .a20-c-idx{color:var(--acc);border-color:rgba(var(--acc-rgb),.4)}
+.a20-c-t{min-width:0}
+.a20-c-t b{font-size:12px;color:var(--ink);font-weight:600;margin-right:8px}
+.a20-c-t span{font-family:var(--mono);font-size:9.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a20-c-done{font-family:var(--mono);font-size:9px;color:var(--faint);white-space:nowrap}
+.a20-case.done .a20-c-done{color:var(--ok)}
+.a20-c-row{display:flex;align-items:center;gap:6px;margin-top:5px}
+.a20-c-lab{flex:none;width:44px;font-family:var(--mono);font-size:9px;letter-spacing:.02em;color:var(--faint)}
+.a20-fbs,.a20-wbs{display:flex;gap:4px;flex-wrap:wrap;min-width:0}
+.a20-fb,.a20-wb{padding:3px 7px;border-radius:5px;border:1px solid var(--line2);background:none;
+  font-size:10px;line-height:1.4;color:var(--dim);transition:.15s}
+.a20-fb:hover,.a20-wb:hover{border-color:#3A475E;color:var(--ink)}
+.a20-fb.on,.a20-wb.on{border-color:var(--acc);color:var(--acc2);background:rgba(var(--acc-rgb),.12)}
+.a20-sent{flex:1;min-width:120px;background:#0D131C;border:1px solid var(--line2);border-radius:5px;
+  padding:5px 8px;font-size:10.5px;line-height:1.5;color:var(--ink)}
+.a20-sent:focus{outline:none;border-color:var(--acc);background:#0F1621}
+.a20-sent::placeholder{color:#4A5466}
+.a20-len{flex:none;width:36px;text-align:right;font-family:var(--mono);font-size:8.5px;color:var(--faint)}
+.a20-len.ok{color:var(--ok)}
+.a20-fbk:empty{display:none}
+.a20-fl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;margin-top:6px;padding-top:5px;
+  border-top:1px dashed var(--line);font-size:9.5px;line-height:1.65}
+.a20-fl b{font-family:var(--mono);font-size:8.5px;font-weight:500;letter-spacing:.02em;color:var(--faint)}
+.a20-fl span{color:var(--faint)}
+.a20-fl.good b{color:var(--ok)}
+.a20-fl.good span{color:#9ED3B4}
+.a20-fl.diff b{color:var(--warn)}
+.a20-fl.diff span{color:#D9C68C}
+.a20-fl.note b{color:var(--acc2)}
+
+/* ---------- 过滤与提交 ---------- */
+.a20-qopts{display:flex;flex-direction:column;gap:6px}
+.a20-qo{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border:1px solid var(--line2);
+  border-radius:7px;background:none;font-size:11px;line-height:1.55;color:var(--dim);text-align:left;transition:.15s}
+.a20-qo:hover{border-color:#3A475E;color:var(--ink)}
+.a20-qo.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.09);color:var(--ink)}
+.a20-qo i{font-style:normal;font-family:var(--mono);font-size:9px;color:var(--faint);flex:none;padding-top:1px}
+.a20-qo.on i{color:var(--acc)}
+.a20-verdict{border-left:2px solid var(--acc);background:rgba(var(--acc-rgb),.06);border-radius:0 7px 7px 0;
+  padding:9px 11px;font-size:11px;line-height:1.8;color:var(--dim)}
+.a20-verdict b{color:var(--acc2);font-weight:600}
+
+/* ---------- 窄屏 ---------- */
+@media(max-width:900px){
+  .a20-forms{grid-template-columns:1fr}
+  .a20-fl{grid-template-columns:1fr;gap:2px}
+  .a20-c-head{grid-template-columns:22px minmax(0,1fr)}
+  .a20-c-done{display:none}
+}

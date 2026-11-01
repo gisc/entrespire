@@ -1,0 +1,49 @@
+/* 第 21 章 · 无障碍设计师（专属场景） */
+.c21-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(34,211,238,.2);background:linear-gradient(180deg,#071822,#060F16);overflow:hidden}
+.c21-building{position:absolute;left:6%;right:6%;bottom:44px;height:180px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,rgba(34,211,238,.08),rgba(34,211,238,.03));border:1px solid rgba(34,211,238,.25)}
+.c21-door{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);width:86px;height:112px;border-radius:6px 6px 0 0;background:rgba(8,20,30,.85);border:2px solid #22D3EE;z-index:4}
+.c21-door:before{content:"";position:absolute;right:10px;top:54%;width:5px;height:5px;border-radius:50%;background:#67E8F9}
+.c21-step{position:absolute;left:50%;bottom:32px;transform:translateX(-50%);width:190px;height:12px;background:#155E75;border:1px solid #22D3EE;z-index:3}
+.c21-step:before{content:"";position:absolute;left:13%;right:13%;bottom:-12px;height:12px;background:#0E4A5C;border:1px solid rgba(34,211,238,.6)}
+.c21-ramp{position:absolute;left:24%;bottom:34px;width:180px;height:14px;background:linear-gradient(180deg,#22D3EE,#0E7490);transform:skewY(-11deg);transform-origin:left bottom;z-index:3;opacity:0;transition:.3s}
+.c21-ramp.on{opacity:1}
+.c21-rail{position:absolute;left:25%;bottom:74px;width:176px;height:3px;background:#67E8F9;transform:rotate(-11deg);transform-origin:left bottom;opacity:0;transition:.3s;z-index:4}
+.c21-rail.on{opacity:1}
+.c21-sign{position:absolute;right:12%;bottom:130px;width:74px;height:42px;border-radius:5px;background:rgba(34,211,238,.15);border:2px solid #22D3EE;color:#CFFAFE;font-size:8px;display:flex;align-items:center;justify-content:center;opacity:0;transition:.3s;z-index:5}
+.c21-sign.on{opacity:1}
+.c21-button{position:absolute;right:30%;bottom:90px;width:26px;height:34px;border-radius:6px;background:#164E63;border:2px solid #22D3EE;opacity:0;transition:.3s;z-index:5}
+.c21-button.on{opacity:1}
+.c21-button:before{content:"●";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:10px;color:#67E8F9}
+.c21-voice{position:absolute;right:18%;bottom:180px;font-size:18px;opacity:0;transition:.3s;z-index:5}
+.c21-voice.on{opacity:1;animation:c21pulse 1.4s ease-in-out infinite}
+.c21-wheel{position:absolute;left:24%;bottom:46px;font-size:28px;z-index:7;transition:.5s;filter:drop-shadow(0 6px 8px rgba(0,0,0,.4))}
+.c21-wheel.move{animation:c21move 2.4s ease-in-out forwards}
+.c21-wheel.ramp{animation:c21ramp 2.4s ease-in-out forwards}
+.c21-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(34,211,238,.75);z-index:8}
+.c21-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(4,14,20,.6);z-index:8}
+.c21-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c21-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c21-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c21-context:hover,.c21-context.on{border-color:rgba(34,211,238,.55);background:rgba(34,211,238,.09)}
+.c21-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c21-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c21-feat:hover,.c21-feat.on{border-color:rgba(34,211,238,.55);background:rgba(34,211,238,.09);color:#A5F3FC}
+.c21-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c21-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c21-act:hover,.c21-act.on{border-color:rgba(34,211,238,.55);background:rgba(34,211,238,.09);color:#A5F3FC}
+.c21-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c21-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c21-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c21-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22D3EE,#4FE0D0);transition:.5s}
+.c21-test{position:relative;height:290px;border-radius:15px;border:1px solid rgba(34,211,238,.18);background:linear-gradient(180deg,#071822,#060F16);overflow:hidden}
+.c21-test .c21-stage{position:absolute;inset:10px;height:auto;border:0}
+.c21-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c21-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c21-fix:hover,.c21-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c21-bp-icon{width:150px;height:110px;margin:0 auto}
+.c21-bp-icon svg{width:100%;height:100%}
+@keyframes c21move{0%{left:24%;bottom:46px}100%{left:50%;bottom:46px}}
+@keyframes c21ramp{0%{left:24%;bottom:46px}100%{left:53%;bottom:122px}}
+@keyframes c21pulse{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.1)}}
+@media(max-width:900px){.c21-stage,.c21-test{height:250px}.c21-context-grid{grid-template-columns:1fr}.c21-feats{grid-template-columns:1fr}}
+@media(max-height:800px){.c21-stage{height:286px}}

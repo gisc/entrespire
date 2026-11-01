@@ -1,0 +1,38 @@
+/* 第 37 章 · 项目简报（专属场景） */
+.c37-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(250,204,21,.22);background:linear-gradient(180deg,#141003,#080602);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c37-sheet{position:relative;width:76%;max-width:560px;height:244px;background:#F5F0E6;border-radius:6px;box-shadow:0 18px 34px rgba(0,0,0,.5);color:#1C1917;padding:14px 18px;display:flex;flex-direction:column;gap:5px;z-index:4;overflow:hidden}
+.c37-sheet h4{font-size:15px;margin:0;color:#1C1917;line-height:1.2;letter-spacing:.02em}
+.c37-sheet .sub{font-size:8px;color:#57534E;margin:0}
+.c37-row{display:flex;gap:6px;flex:1;min-height:0}
+.c37-col{flex:1;border:1px solid #D6D3D1;border-radius:4px;padding:5px 6px;background:rgba(255,255,255,.5);min-height:0}
+.c37-col b{display:block;font-size:7px;letter-spacing:.08em;color:#A16207;text-transform:uppercase;margin-bottom:2px}
+.c37-col p{font-size:8px;line-height:1.45;color:#292524;margin:0}
+.c37-col.empty{border-style:dashed;background:rgba(255,255,255,.25)}
+.c37-col.empty p{color:#A8A29E;font-style:italic}
+.c37-stamp{position:absolute;right:16px;bottom:12px;font-size:9px;color:#B45309;border:1px solid #B45309;border-radius:3px;padding:3px 7px;transform:rotate(-4deg);opacity:.7}
+.c37-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(250,204,21,.75);z-index:9}
+.c37-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,6,2,.6);z-index:9}
+.c37-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c37-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c37-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c37-context:hover,.c37-context.on{border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.08)}
+.c37-sections{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c37-sec{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c37-sec:hover,.c37-sec.on{border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.08);color:#FDE68A}
+.c37-sec.used{opacity:.4}
+.c37-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c37-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c37-act:hover,.c37-act.on{border-color:rgba(250,204,21,.55);background:rgba(250,204,21,.08);color:#FDE68A}
+.c37-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c37-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c37-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c37-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FACC15,#4FE0D0);transition:.5s}
+.c37-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(250,204,21,.2);background:linear-gradient(180deg,#141003,#080602);overflow:hidden}
+.c37-test .c37-stage{position:absolute;inset:8px;height:auto;border:0}
+.c37-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c37-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c37-fix:hover,.c37-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c37-bp-icon{width:150px;height:100px;margin:0 auto}
+.c37-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c37-stage,.c37-test{height:250px}.c37-context-grid,.c37-sections{grid-template-columns:1fr}.c37-sheet{width:90%;height:210px;padding:10px 12px}.c37-col p{font-size:7px}}
+@media(max-height:800px){.c37-stage{height:286px}}

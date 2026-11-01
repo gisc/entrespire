@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>直播中控台 · SIT 创新专业大师版</title>
+<link rel="stylesheet" href="adult-ops.css">
+</head>
+<body>
+<div class="top">
+  <div class="brand"><b>SIT 中控台</b><span>LIVE CONSOLE</span></div>
+  <div class="grow"></div>
+  <span class="who" id="who"></span>
+  <a class="btn sm" href="adult-index.html">课程地图</a>
+  <a class="btn sm" href="adult-admin.html">管理后台</a>
+  <button class="btn sm" id="logout">退出</button>
+</div>
+
+<div class="wrap">
+  <div id="loginBox" style="display:none">
+    <h1 class="h1">讲师登录</h1>
+    <p class="sub">用员工口令进入。学员请从课程地图用邀请码登录。</p>
+    <div class="panel" style="max-width:420px">
+      <div class="field"><label>员工口令</label><input id="pwd" type="password" placeholder="ADULT_STAFF_PASSWORD"></div>
+      <button class="btn primary" id="doLogin">进入</button>
+    </div>
+  </div>
+
+  <div id="app" style="display:none">
+    <h1 class="h1">直播中控台</h1>
+    <p class="sub">看进度、看全班作品、挑三张点评、发通知。每 15 秒自动刷新。</p>
+
+    <div class="grid g4" style="margin-bottom:14px">
+      <div class="stat"><b id="sSubmitted">0</b><span>本节已提交</span></div>
+      <div class="stat"><b id="sTotal">0</b><span>班级学员</span></div>
+      <div class="stat"><b id="sRate">0%</b><span>完成率</span></div>
+      <div class="stat"><b id="sPicked">0</b><span>已挑点评卡</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>班级与课节</h3><span id="refreshAt"></span></div>
+      <div class="grid g3">
+        <div class="field"><label>班级</label><select id="cohort"></select></div>
+        <div class="field"><label>课节</label><select id="lesson"></select></div>
+        <div class="field"><label>操作</label>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="refresh">刷新</button>
+            <a class="btn" id="csv" href="#" target="_blank">导出 CSV</a>
+          </div></div>
+      </div>
+      <div class="bar"><i id="rateBar" style="width:0%"></i></div>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+      <div class="panel">
+        <div class="panel-h"><h3>学员作品</h3><span id="cardCount">0 张</span></div>
+        <div id="cards" class="grid" style="grid-template-columns:1fr 1fr"></div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="panel-h"><h3>现场点评（挑三张）</h3><span id="pickHint">0 / 3</span></div>
+          <div id="picked" class="grid" style="gap:8px"></div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn sm" id="clearPicks">清空</button>
+            <button class="btn sm" data-k="good">做得好</button>
+            <button class="btn sm" data-k="bad">差一点</button>
+            <button class="btn sm" data-k="surprise">有惊喜</button>
+            <button class="btn sm" id="pushBtn">推送最后一张</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-h"><h3>答案分布</h3><span>按出现次数</span></div>
+          <div id="dist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="align-items:start;margin-top:14px">
+      <div class="panel">
+        <div class="panel-h"><h3>发通知（图文）</h3><span id="composerTo">全班</span></div>
+        <div class="grid g2">
+          <div class="field"><label>发给</label><select id="target"></select></div>
+          <div class="field"><label>标题（可空）</label><input id="nTitle" maxlength="60" placeholder="今晚 8 点直播"></div>
+        </div>
+        <div class="field"><label>正文</label><textarea id="nBody" rows="3" maxlength="1200" placeholder="带上你 A37 的组件清单，我们挑三个现场拆。"></textarea></div>
+        <div class="field"><label>图片（最多 2 张，自动压缩）</label><input id="nFiles" type="file" accept="image/*" multiple></div>
+        <div id="preview" style="display:flex;gap:8px;margin-bottom:10px"></div>
+        <button class="btn primary" id="sendNotice">发送</button>
+        <span class="tag" id="sendState" style="margin-left:8px"></span>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h3>已发通知</h3><span id="sentHint">最近 50 条</span></div>
+        <div id="sent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box" style="width:min(720px,94vw);max-height:88vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3 id="mTitle" style="margin:0">学员作品</h3>
+      <button class="btn sm" id="mClose">关闭</button>
+    </div>
+    <div id="mBody"></div>
+    <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">
+      <div class="field"><label>讲师留言（会随动作一起发给学员）</label>
+        <textarea id="mNote" rows="2" maxlength="300" placeholder="例如：第一栏太笼统，写清「哪个组件」再来一次"></textarea></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="actReturn">退回重做</button>
+        <button class="btn" id="actPraise">表扬并通知</button>
+        <button class="btn primary" id="actPush">推送给全班</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+const API=(location.protocol==='file:')?'http://127.0.0.1:8898/api/adult':'/api/adult';
+const TKEY='fxm_staff_token';
+let TOKEN=localStorage.getItem(TKEY)||'';
+let cohortId=null,lessonId='A01',timer=null,picked=[],picks={},lessons=[],students=[],current=null,imgs=[];
+
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),1900);}
+async function call(path,opt){
+  opt=opt||{};
+  const res=await fetch(API+path,{method:opt.method||'GET',headers:Object.assign({'Content-Type':'application/json'},TOKEN?{Authorization:'Bearer '+TOKEN}:{}),body:opt.body?JSON.stringify(opt.body):undefined});
+  const data=await res.json().catch(()=>({}));
+  if(res.status===401){localStorage.removeItem(TKEY);TOKEN='';showLogin();throw new Error(data.detail||'请先登录');}
+  if(!res.ok)throw new Error(data.detail||('请求失败 '+res.status));
+  return data;
+}
+function showLogin(){$('#loginBox').style.display='';$('#app').style.display='none';}
+
+async function afterLogin(){
+  $('#loginBox').style.display='none';$('#app').style.display='';
+  lessons=await call('/lessons');
+  const ov=await call('adult-admin-index.htmloverview');
+  cohortId=ov.cohorts[0]?ov.cohorts[0].id:null;
+  $('#cohort').innerHTML=ov.cohorts.map(c=>`<option value="${c.id}">${esc(c.name)}（${c.students} 人）</option>`).join('')||'<option value="">（没有班级）</option>';
+  $('#lesson').innerHTML=lessons.map(l=>`<option value="${l.id}">${l.id} · ${esc(l.title)}</option>`).join('');
+  lessonId=(lessons[0]&&lessons[0].id)||'A01';
+  $('#lesson').value=lessonId;
+  $('#csv').href=API+'adult-admin-index.htmlexport.csv?cohort_id='+cohortId;
+  load();loadSent();
+  if(timer)clearInterval(timer);
+  timer=setInterval(load,15000);
+}
+
+async function load(){
+  if(!cohortId)return;
+  try{
+    const q=`?cohort_id=${cohortId}&lesson=${encodeURIComponent(lessonId)}`;
+    const d=await call('teacher-index.htmllive'+q);
+    const v=await call('teacher-index.htmllesson-view'+q);
+    students=v.students;
+    $('#sSubmitted').textContent=d.submitted;
+    $('#sTotal').textContent=d.total;
+    const rate=d.total?Math.round(d.submitted/d.total*100):0;
+    $('#sRate').textContent=rate+'%';
+    $('#rateBar').style.width=rate+'%';
+    $('#refreshAt').textContent='更新于 '+new Date().toLocaleTimeString('zh-CN',{hour12:false});
+    $('#cardCount').textContent=students.filter(s=>s.submitted).length+' 份已提交';
+    $('#cards').innerHTML=students.length?students.map(cardHtml).join(''):'<div class="empty">这个班还没有学员</div>';
+    bindCards();renderPicked();renderDist(d.distribution);
+    const keep=$('#target').value;
+    $('#target').innerHTML='<option value="">全班</option>'+students.filter(s=>s.submitted).map(s=>`<option value="${s.user_id}">${esc(s.name)}</option>`).join('');
+    if(keep)$('#target').value=keep;
+  }catch(e){toast(e.message);}
+}
+function cardHtml(s){
+  const rows=(s.card&&s.card.rows||[]).slice(0,4);
+  const p=picks[s.user_id];
+  return `<div class="card ${p?'sel':''} ${s.submitted?'':'dim'}" data-uid="${s.user_id}">
+    <h4>${esc(s.name)} ${s.submitted?'<span class="tag ok">已交</span>':'<span class="tag">未交</span>'} ${p?'<span class="tag warn">'+labelOf(p)+'</span>':''}</h4>
+    <div class="kv">${rows.length?rows.map(r=>'<div><b>'+esc(r[0])+'</b>'+esc(r[1])+'</div>').join(''):'<span style="opacity:.6">（暂无内容）</span>'}</div>
+    <div style="margin-top:7px;display:flex;gap:6px">
+      <button class="btn sm" data-pick="${s.user_id}" ${s.submitted?'':'disabled'}>${p?'取消':(s.submitted?'挑':'未交')}</button>
+      <button class="btn sm" data-open="${s.user_id}" ${s.submitted?'':'disabled'}>详情</button>
+    </div>
+  </div>`;
+}
+function labelOf(k){return {good:'做得好',bad:'差一点',surprise:'有惊喜'}[k]||k;}
+function bindCards(){
+  document.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{
+    const uid=+b.dataset.pick;
+    if(picks[uid]){delete picks[uid];picked=picked.filter(x=>x!==uid);}
+    else{if(picked.length>=3){toast('最多挑 3 张');return;}picked.push(uid);picks[uid]='good';}
+    load();
+  });
+  document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openStudent(+b.dataset.open));
+}
+function renderPicked(){
+  const byId={};students.forEach(s=>byId[s.user_id]=s);
+  $('#picked').innerHTML=picked.length?picked.map(uid=>{
+    const s=byId[uid]||{name:'?'};
+    return `<div class="card sel"><h4>${esc(s.name)} <span class="tag warn">${labelOf(picks[uid])}</span></h4>
+      <div class="kv">${(s.card&&s.card.rows||[]).slice(0,3).map(r=>'<div><b>'+esc(r[0])+'</b>'+esc(r[1])+'</div>').join('')||'（无卡）'}</div></div>`;
+  }).join(''):'<div class="empty">点左边任意一张的「挑」，最多 3 张。</div>';
+  $('#pickHint').textContent=picked.length+' / 3';
+  $('#sPicked').textContent=picked.length;
+}
+const LABEL={topic:'题目',obj:'对象',comp:'组件',plan:'方案',memo:'记住一句',s1:'谁痛',s2:'改了什么',s3:'为什么成立',s4:'下一步',
+  hook:'先猜',c2:'概念判断',weak:'弱连接',main:'主推',why:'为什么',prove:'30 天证明',last:'带走一句',cost:'代价',risk:'风险',
+  pair:'双任务',sense:'怎么测',react:'怎么变',user:'谁需要',rule:'依存规则',inner:'内部属性',outer:'外部变量',action:'用户动作',
+  proc:'流程',edge:'改的连接',bottleneck:'瓶颈移向',load:'工作量',vac:'责任真空',min:'最小改动',who:'谁先用',keep:'只留一个'};
+function renderDist(dist){
+  if(!dist||!dist.length){$('#dist').innerHTML='<div class="empty">还没有可统计的答案</div>';return;}
+  $('#dist').innerHTML=dist.map(d=>{
+    const max=Math.max.apply(null,d.items.map(i=>i.count).concat([1]));
+    return `<div style="margin-bottom:12px"><div style="font-size:10.5px;color:var(--faint);margin-bottom:5px">${esc(LABEL[d.key]||d.key)}<span style="font-family:var(--mono);opacity:.45;margin-left:6px">${esc(d.key)}</span></div>`+
+      d.items.map(i=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <span style="flex:1;font-size:11.5px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(i.value)}</span>
+        <span style="width:30px;text-align:right;font-size:10.5px;color:var(--faint);font-family:var(--mono)">${i.count}</span>
+        <span style="width:80px"><span class="bar" style="margin:0"><i style="width:${Math.round(i.count/max*100)}%"></i></span></span>
+      </div>`).join('')+'</div>';
+  }).join('');
+}
+
+function openStudent(uid){
+  current=students.find(s=>s.user_id===uid);
+  if(!current)return;
+  $('#mTitle').textContent=current.name+' · '+lessonId;
+  const rows=(current.card&&current.card.rows)||[];
+  const answers=current.answers||{};
+  const skip=new Set(['hook','c2']);
+  $('#mBody').innerHTML=`
+    <div style="font-size:11px;color:var(--faint);margin-bottom:8px">提交于 ${esc((current.updated_at||'').replace('T',' ').slice(0,16)||'—')}</div>
+    ${rows.length?`<table style="margin-bottom:12px"><tbody>
+      ${rows.map(r=>`<tr><td style="width:120px;color:var(--faint)">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}
+    </tbody></table>`:''}
+    <div style="font-size:11px;color:var(--faint);margin-bottom:6px">全部答案</div>
+    <table><tbody>${Object.keys(answers).filter(k=>!skip.has(k)).map(k=>{
+      const v=answers[k];
+      const text=typeof v==='string'?v:(Array.isArray(v)?v.join('、'):(v&&typeof v==='object'?JSON.stringify(v):String(v)));
+      return `<tr><td style="width:120px;color:var(--faint);font-family:var(--mono);font-size:10.5px">${esc(k)}</td><td style="font-size:12px">${esc(String(text).slice(0,400))}</td></tr>`;
+    }).join('')||'<tr><td colspan="2" style="color:var(--faint)">没有可展示的答案</td></tr>'}</tbody></table>`;
+  $('#mNote').value='';
+  $('#modal').classList.add('on');
+}
+$('#mClose').onclick=()=>$('#modal').classList.remove('on');
+$('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('on');};
+
+async function act(path,extra){
+  if(!current){toast('先打开一份作品');return;}
+  try{
+    await call(path,{method:'POST',body:Object.assign({user_id:current.user_id,lesson_id:lessonId,note:$('#mNote').value},extra||{})});
+    toast('已发送');
+    $('#modal').classList.remove('on');
+    load();loadSent();
+  }catch(e){toast(e.message);}
+}
+$('#actReturn').onclick=()=>act('teacher-index.htmlreturn');
+$('#actPraise').onclick=()=>act('teacher-index.htmlpraise');
+$('#actPush').onclick=()=>act('teacher-index.htmlpush',{cohort_id:cohortId});
+
+$('#nFiles').onchange=async()=>{
+  imgs=[];
+  const files=[...$('#nFiles').files].slice(0,2);
+  for(const f of files)imgs.push(await compress(f));
+  $('#preview').innerHTML=imgs.map(src=>`<img src="${src}" style="height:64px;border-radius:6px;border:1px solid var(--line2)">`).join('');
+};
+function compress(file){
+  return new Promise(res=>{
+    const img=new Image();const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const max=1000;let w=img.width,h=img.height;
+      if(w>max){h=Math.round(h*max/w);w=max;}
+      const c=document.createElement('canvas');c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg',0.72));
+    };
+    img.src=url;
+  });
+}
+$('#sendNotice').onclick=async()=>{
+  const title=$('#nTitle').value.trim(),body=$('#nBody').value.trim();
+  if(!title&&!body&&!imgs.length){toast('至少写一句话或放一张图');return;}
+  try{
+    $('#sendState').textContent='发送中…';
+    await call('/notices',{method:'POST',body:{cohort_id:cohortId,user_id:$('#target').value?+$('#target').value:null,title,body,images:imgs}});
+    toast('已发送');
+    $('#nTitle').value='';$('#nBody').value='';$('#nFiles').value='';imgs=[];$('#preview').innerHTML='';$('#sendState').textContent='';
+    loadSent();
+  }catch(e){$('#sendState').textContent='';toast(e.message);}
+};
+$('#target').onchange=()=>{
+  const v=$('#target').value;const s=students.find(x=>x.user_id===+v);
+  $('#composerTo').textContent=v?('发给 '+s.name):'全班';
+};
+async function loadSent(){
+  if(!cohortId)return;
+  try{
+    const d=await call(`/notices/sent?cohort_id=${cohortId}`);
+    $('#sent').innerHTML=d.notices.length?d.notices.map(n=>`<div class="card" style="margin-bottom:6px">
+      <h4 style="font-size:12px">${esc(n.title||'（无标题）')} <span class="tag">${esc(n.target)}</span></h4>
+      <div class="kv">${esc(n.body).slice(0,80)}</div>
+      <div class="kv" style="opacity:.6">${esc((n.created_at||'').replace('T',' ').slice(0,16))} · 已读 ${n.reads}</div>
+    </div>`).join(''):'<div class="empty">还没发过通知</div>';
+  }catch(e){}
+}
+
+$('#doLogin').onclick=async()=>{
+  try{
+    const r=await call('adult-auth-index.htmlstaff',{method:'POST',body:{password:$('#pwd').value}});
+    TOKEN=r.token;localStorage.setItem(TKEY,TOKEN);
+    $('#who').textContent=r.user.name+' · '+r.user.role;
+    afterLogin();
+  }catch(e){toast(e.message);}
+};
+$('#pwd').addEventListener('keydown',e=>{if(e.key==='Enter')$('#doLogin').click();});
+$('#logout').onclick=()=>{localStorage.removeItem(TKEY);TOKEN='';showLogin();};
+$('#refresh').onclick=()=>{load();loadSent();};
+$('#cohort').onchange=()=>{cohortId=+$('#cohort').value;$('#csv').href=API+'adult-admin-index.htmlexport.csv?cohort_id='+cohortId;load();loadSent();};
+$('#lesson').onchange=()=>{lessonId=$('#lesson').value;load();};
+$('#clearPicks').onclick=()=>{picked=[];picks={};load();};
+document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{
+  if(!picked.length){toast('先挑一张卡');return;}
+  picks[picked[picked.length-1]]=b.dataset.k;load();toast('已标为「'+labelOf(b.dataset.k)+'」');
+});
+$('#pushBtn').onclick=()=>{
+  if(!picked.length){toast('先挑一张卡');return;}
+  openStudent(picked[picked.length-1]);
+};
+if(TOKEN){afterLogin().catch(()=>showLogin());}else{showLogin();}
+})();
+</script>
+</body>
+</html>
+

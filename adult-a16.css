@@ -1,0 +1,81 @@
+/* A16 · 乘法：什么时候变成为难用户 */
+/* ---------- 1 先猜：图 + 选项 ---------- */
+.a16-fig img{height:262px;object-fit:cover}
+.a16-fig figcaption b{font-size:11.5px}
+.a16-fig figcaption span{font-size:10px}
+
+/* ---------- 2 概念：选配 / 标配对照条 ---------- */
+.a16-strip{display:grid;grid-template-columns:158px minmax(0,1fr);gap:14px;align-items:center;
+  border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:10px 14px 10px 10px}
+.a16-strip>img{width:100%;height:104px;object-fit:cover;border-radius:7px;border:1px solid var(--line2);display:block}
+.a16-strip-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
+.a16-strip-h b{font-size:12px;color:var(--ink);font-weight:600}
+.a16-strip-h span{font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.04em}
+.a16-strip p{font-size:11px;line-height:1.72;color:var(--faint)}
+.a16-strip p b{color:var(--dim);font-weight:600}
+
+/* ---------- 3 负担判断台 ---------- */
+.a16-bbench{padding:11px 12px;overflow:auto}
+.a16-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
+.a16-card{border:1px solid var(--line2);border-radius:8px;background:#0F151F;padding:6px 8px 7px;transition:.16s;min-width:0}
+.a16-card.done{background:#101823;border-color:rgba(var(--acc-rgb),.26)}
+.a16-top{display:grid;grid-template-columns:18px minmax(0,1fr) 12px;gap:5px;align-items:start;margin-bottom:5px}
+.a16-no{font-family:var(--mono);font-size:9px;color:var(--faint);padding-top:3px}
+.a16-card.done .a16-no{color:var(--acc)}
+.a16-p{font-size:10.8px;line-height:1.42;color:var(--ink)}
+.a16-badge{font-size:9.5px;line-height:1.6;text-align:right}
+.a16-badge.ok{color:var(--ok)}
+.a16-badge.diff{color:#D9B36A}
+.a16-r{display:flex;gap:5px}
+.a16-rb{flex:1;padding:3px 0;border-radius:5px;border:1px solid var(--line2);font-size:10px;color:var(--faint);transition:.15s;white-space:nowrap}
+.a16-rb:hover{border-color:#3A475E;color:var(--ink)}
+.a16-rb.on{font-weight:600}
+.a16-rb.on.ok{background:#4E9F6E;border-color:#4E9F6E;color:#08120C}
+.a16-rb.on.burden{background:#C75660;border-color:#C75660;color:#fff}
+.a16-rb.on.cond{background:#C9A227;border-color:#C9A227;color:#0A0D12}
+.a16-b{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:4px;padding-top:4px;border-top:1px dashed rgba(42,53,71,.8)}
+.a16-bl{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--faint);margin-right:1px}
+.a16-bc{padding:1px 7px;border-radius:4px;border:1px solid var(--line2);background:#0C121A;font-size:9.5px;color:var(--faint);transition:.14s;line-height:1.5}
+.a16-bc:hover{border-color:#3A475E;color:var(--ink)}
+.a16-bc.on{border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.14);color:var(--acc2)}
+
+/* 解析区：固定在判断台底部，不随网格滚动 */
+.a16-read{flex:none;border-top:1px solid var(--line);background:#0C121A;padding:7px 14px 8px;min-height:72px}
+.a16-read-h{display:flex;align-items:center;gap:8px;font-size:9.5px;color:var(--faint);margin-bottom:3px}
+.a16-read-h b{font-family:var(--mono);color:var(--acc);font-weight:500;letter-spacing:.06em}
+.a16-read-h i{font-style:normal;font-size:9.5px}
+.a16-ok{color:var(--ok)}
+.a16-diff{color:#D9B36A}
+.a16-read p{font-size:10.5px;line-height:1.62;color:var(--dim)}
+.a16-read p.a16-adv{margin-top:3px;color:#D9C68C}
+.a16-read p.a16-adv b{color:var(--acc2);font-weight:600}
+.a16-read p.a16-wait{color:var(--faint)}
+.a16-empty{font-size:10.5px;line-height:1.7;color:var(--faint);padding:4px 0}
+
+/* ---------- 4 负担体检 ---------- */
+.a16-chips .chip{font-size:11px}
+
+/* ---------- 5 两问 ---------- */
+.a16-qbox .opt{padding:7px 10px}
+.a16-qbox .opt span{font-size:11px}
+.a16-qbox .opt b{font-size:12px}
+.a16-altbox input{font-size:12px}
+
+@media(max-width:900px){
+  .a16-grid{grid-template-columns:1fr}
+  .a16-strip{grid-template-columns:1fr}
+  .a16-strip>img{height:150px}
+  .a16-fig img{height:200px}
+}
+
+/* 4 负担体检：实时体检单 */
+.a16-sum{margin-top:10px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(165deg,#121925,#0D131C);padding:11px 14px 12px}
+.a16-sum-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.a16-sum-h b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--acc);font-weight:500}
+.a16-sum-h span{font-family:var(--mono);font-size:9px;color:var(--faint)}
+.a16-sum-g{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:10px}
+.a16-sum-g>div{min-width:0}
+.a16-sum-g b{display:block;font-family:var(--mono);font-size:9px;color:var(--faint);margin-bottom:2px;font-weight:400}
+.a16-sum-g span{display:block;font-size:11.5px;line-height:1.55;color:var(--ink);word-break:break-word}
+.a16-sum-v{margin-top:9px;padding-top:8px;border-top:1px dashed rgba(42,53,71,.8);font-size:11px;line-height:1.6;color:var(--faint)}
+.a16-sum-v.on{color:#D9C68C}

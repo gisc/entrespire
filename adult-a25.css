@@ -1,0 +1,20 @@
+/* A25 · 专属样式（.a25- 前缀），待开发 */
+/* A25 · 属性关联矩阵 */
+.a25-mx{display:grid;grid-template-columns:86px repeat(5,1fr);gap:4px;margin-bottom:12px}
+.a25-corner{}
+.a25-hx{font-size:9.5px;color:var(--faint);text-align:center;padding:4px 2px;line-height:1.35;min-height:34px;display:flex;align-items:center;justify-content:center}
+.a25-hy{font-size:10px;color:var(--dim);display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.a25-cell{height:34px;border:1px solid var(--line2);border-radius:5px;background:#0D131C;color:var(--acc);
+  font-size:11px;transition:.15s;display:flex;align-items:center;justify-content:center}
+.a25-cell:hover{border-color:#3A475E;background:#121A25}
+.a25-cell.has{border-color:rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.1)}
+.a25-cell.sel{border-color:var(--acc);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.4) inset}
+.a25-deps{display:flex;flex-direction:column;gap:5px}
+.a25-edit{display:flex;gap:6px;align-items:center;border:1px dashed rgba(var(--acc-rgb),.4);border-radius:7px;padding:7px 9px;margin-bottom:4px}
+.a25-eh{font-size:10px;color:var(--acc2);font-family:var(--mono);white-space:nowrap}
+.a25-edit input{flex:1;background:#0B1018;border:1px solid var(--line2);border-radius:5px;padding:6px 8px;font-size:11px;color:var(--ink)}
+.a25-dep{display:grid;grid-template-columns:120px 1fr 18px;gap:8px;align-items:center;border:1px solid var(--line2);border-radius:6px;background:#0F151F;padding:6px 9px}
+.a25-dep b{font-size:10px;color:var(--acc2);font-family:var(--mono)}
+.a25-dep span{font-size:11px;color:var(--ink)}
+.a25-dep button{color:var(--faint);font-size:11px}
+.a25-dep button:hover{color:#C75660}

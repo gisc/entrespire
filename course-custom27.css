@@ -1,0 +1,53 @@
+/* 第 27 章 · 界面会说话（专属场景） */
+.c27-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(168,85,247,.22);background:linear-gradient(180deg,#120A1C,#08050E);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c27-browser{width:78%;max-width:560px;height:236px;border-radius:10px;border:1px solid rgba(168,85,247,.35);background:#0E0A14;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:3}
+.c27-bar{height:22px;background:#1B1226;border-bottom:1px solid rgba(168,85,247,.2);display:flex;align-items:center;gap:4px;padding:0 8px}
+.c27-bar i{width:6px;height:6px;border-radius:50%;background:#A855F7;opacity:.6}
+.c27-bar span{margin-left:8px;font-size:7px;color:var(--faint)}
+.c27-page{position:relative;padding:14px 18px;font-size:10px;line-height:1.5;color:#E9D5FF;transition:.3s}
+.c27-page h4{font-size:17px;color:#F5D0FE;margin:0 0 4px;line-height:1.3}
+.c27-page p{margin:0 0 8px;color:#C4B5FD;font-size:9px}
+.c27-form{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.c27-form label{font-size:8px;color:#A78BFA}
+.c27-input{height:18px;border-radius:4px;border:1px solid rgba(168,85,247,.35);background:rgba(255,255,255,.04);font-size:8px;color:#E9D5FF;padding:0 6px;display:flex;align-items:center}
+.c27-btn{display:inline-block;padding:6px 14px;border-radius:6px;background:#7C3AED;color:#fff;font-size:9px;border:0;cursor:pointer;transition:.2s}
+.c27-btn:hover{background:#A855F7}
+.c27-steps{display:flex;gap:4px;margin-top:8px}
+.c27-steps i{width:18px;height:4px;border-radius:99px;background:rgba(168,85,247,.25)}
+.c27-steps i.on{background:#A855F7}
+.c27-hot{position:absolute;width:26px;height:26px;border-radius:50%;border:2px solid #F472B6;background:rgba(244,114,182,.18);display:flex;align-items:center;justify-content:center;font-size:11px;z-index:6;cursor:pointer;animation:c27pulse 1.8s ease-in-out infinite}
+.c27-hot.on{background:rgba(79,224,208,.2);border-color:#4FE0D0;animation:none}
+.c27-hot:after{content:attr(data-label);position:absolute;left:50%;top:29px;transform:translateX(-50%);font-size:7px;color:var(--faint);white-space:nowrap;background:rgba(6,4,10,.7);padding:2px 5px;border-radius:4px}
+.c27-page.big{font-size:13px}.c27-page.big h4{font-size:22px}.c27-page.big p{font-size:11px}.c27-page.big .c27-btn{font-size:12px;padding:9px 20px}
+.c27-page.contrast{background:#F8FAFC;color:#111827}.c27-page.contrast h4{color:#111827}.c27-page.contrast p{color:#374151}.c27-page.contrast .c27-form label{color:#374151}.c27-page.contrast .c27-input{background:#fff;border-color:#9CA3AF;color:#111827}.c27-page.contrast .c27-btn{background:#6D28D9}
+.c27-page.clear .c27-btn{background:#16A34A}.c27-page.clear .c27-btn:after{content:" · 报名"}
+.c27-page.steps .c27-steps{display:flex}.c27-page.help .c27-help{display:block}
+.c27-help{display:none;margin-top:6px;font-size:8px;color:#A78BFA;border:1px dashed rgba(168,85,247,.4);border-radius:4px;padding:4px 6px}
+.c27-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(216,180,254,.75);z-index:9}
+.c27-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,5,12,.6);z-index:9}
+.c27-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c27-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c27-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c27-context:hover,.c27-context.on{border-color:rgba(168,85,247,.55);background:rgba(168,85,247,.09)}
+.c27-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c27-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c27-feat:hover,.c27-feat.on{border-color:rgba(168,85,247,.55);background:rgba(168,85,247,.08);color:#E9D5FF}
+.c27-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c27-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c27-act:hover,.c27-act.on{border-color:rgba(168,85,247,.55);background:rgba(168,85,247,.08);color:#E9D5FF}
+.c27-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c27-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c27-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c27-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#A855F7,#4FE0D0);transition:.5s}
+.c27-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(168,85,247,.2);background:linear-gradient(180deg,#120A1C,#08050E);overflow:hidden}
+.c27-test .c27-stage{position:absolute;inset:8px;height:auto;border:0}
+.c27-test.fail .c27-browser{animation:c27shake .4s ease 3}
+.c27-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c27-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c27-fix:hover,.c27-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c27-bp-icon{width:150px;height:100px;margin:0 auto}
+.c27-bp-icon svg{width:100%;height:100%}
+@keyframes c27pulse{0%,100%{transform:scale(.9);opacity:.6}50%{transform:scale(1.1);opacity:1}}
+@keyframes c27shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media(max-width:900px){.c27-stage,.c27-test{height:250px}.c27-context-grid,.c27-feats{grid-template-columns:1fr}.c27-browser{width:90%;height:210px}}
+@media(max-height:800px){.c27-stage{height:286px}}

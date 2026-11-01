@@ -1,0 +1,38 @@
+/* 第 33 章 · 原型快做（专属场景） */
+.c33-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(251,146,60,.22);background:linear-gradient(180deg,#160F06,#080502);overflow:hidden}
+.c33-bench{position:absolute;left:6%;right:6%;bottom:24px;height:150px;border-radius:10px;background:repeating-linear-gradient(90deg,rgba(120,80,40,.18) 0 38px,rgba(120,80,40,.1) 38px 40px);border:1px solid rgba(251,146,60,.25)}
+.c33-build{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);width:200px;height:140px;z-index:4;transition:.3s}
+.c33-base{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:140px;height:16px;border-radius:5px;background:#92400E;border:1px solid #FDBA74}
+.c33-slot{position:absolute;width:54px;height:54px;border-radius:10px;border:2px dashed rgba(253,186,116,.45);display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(251,146,60,.06);z-index:5;transition:.2s}
+.c33-slot.filled{border-style:solid;border-color:#FDBA74;background:rgba(251,146,60,.16);box-shadow:0 0 18px rgba(251,146,60,.22)}
+.c33-slot:after{content:attr(data-label);position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);font-size:7px;color:var(--faint);white-space:nowrap}
+.c33-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(253,186,116,.75);z-index:9}
+.c33-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,5,2,.6);z-index:9}
+.c33-shelf{position:absolute;left:6%;right:6%;bottom:2px;height:16px;background:rgba(146,64,14,.4);border-radius:0 0 6px 6px}
+.c33-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c33-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c33-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c33-context:hover,.c33-context.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.08)}
+.c33-mats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c33-mat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c33-mat:hover,.c33-mat.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09);color:#FED7AA}
+.c33-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c33-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c33-act:hover,.c33-act.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09);color:#FED7AA}
+.c33-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c33-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c33-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c33-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FB923C,#4FE0D0);transition:.5s}
+.c33-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(251,146,60,.2);background:linear-gradient(180deg,#160F06,#080502);overflow:hidden}
+.c33-test .c33-stage{position:absolute;inset:8px;height:auto;border:0}
+.c33-test.fail .c33-build{animation:c33wobble .4s ease 4}
+.c33-test.pass .c33-build{animation:c33pop .6s ease}
+.c33-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c33-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c33-fix:hover,.c33-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c33-bp-icon{width:150px;height:100px;margin:0 auto}
+.c33-bp-icon svg{width:100%;height:100%}
+@keyframes c33wobble{0%,100%{transform:translateX(-50%) rotate(0)}25%{transform:translateX(-50%) rotate(-4deg)}75%{transform:translateX(-50%) rotate(4deg)}}
+@keyframes c33pop{0%{transform:translateX(-50%) scale(.9)}60%{transform:translateX(-50%) scale(1.05)}100%{transform:translateX(-50%) scale(1)}}
+@media(max-width:900px){.c33-stage,.c33-test{height:250px}.c33-context-grid,.c33-mats{grid-template-columns:1fr}.c33-build{width:160px}}
+@media(max-height:800px){.c33-stage{height:286px}}

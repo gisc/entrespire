@@ -1,0 +1,39 @@
+/* 第 14 章 · 光的路线（专属场景） */
+.c14-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(251,191,36,.2);background:radial-gradient(ellipse at 50% 55%,rgba(251,191,36,.1),transparent 62%),linear-gradient(180deg,#0B1424,#070C16);overflow:hidden}
+.c14-stage svg{width:100%;height:100%;display:block}
+.c14-beam{filter:drop-shadow(0 0 8px rgba(251,191,36,.65));transition:.25s}
+.c14-mirror{transition:.25s;transform-origin:center}
+.c14-target{transition:.3s}
+.c14-stage.dark .c14-target{opacity:.35;filter:grayscale(1)}
+.c14-stage.lit .c14-target{opacity:1}
+.c14-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(251,191,36,.7)}
+.c14-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(4,10,20,.55)}
+.c14-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c14-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c14-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c14-context:hover,.c14-context.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08)}
+.c14-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:7px}
+.c14-slider{flex:1;min-width:120px;font-size:8.5px;color:var(--faint)}
+.c14-slider input{width:100%;accent-color:#FBBF24;margin-top:3px}
+.c14-parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c14-part{padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:9px;text-align:left}
+.c14-part b{display:block;color:var(--ink);font-size:10px}.c14-part span{display:block;color:var(--faint);font-size:8px;margin-top:2px}
+.c14-part:hover,.c14-part.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.09)}
+.c14-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c14-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c14-act:hover,.c14-act.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.09);color:#FDE68A}
+.c14-test-scene{position:relative;height:280px;border-radius:15px;border:1px solid rgba(251,191,36,.18);background:radial-gradient(ellipse at 50% 55%,rgba(251,191,36,.08),transparent 62%),#070D18;overflow:hidden}
+.c14-test-scene svg{width:100%;height:100%}
+.c14-test-scene.fail{background:radial-gradient(ellipse at 50% 55%,rgba(255,122,107,.12),transparent 62%),#070D18}
+.c14-test-scene.pass{background:radial-gradient(ellipse at 50% 55%,rgba(79,224,208,.12),transparent 62%),#070D18}
+.c14-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c14-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c14-meter .bar{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c14-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FBBF24,#4FE0D0);transition:.6s}
+.c14-fix-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c14-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c14-fix:hover,.c14-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+@media(max-width:900px){.c14-stage,.c14-test-scene{height:250px}.c14-context-grid{grid-template-columns:1fr}.c14-parts{grid-template-columns:1fr}}
+.c14-bp-icon{width:150px;height:90px;margin:0 auto;filter:drop-shadow(0 12px 20px rgba(0,0,0,.4))}
+.c14-bp-icon svg{width:100%;height:100%}
+@media(max-height:800px){.c14-stage{height:286px}}

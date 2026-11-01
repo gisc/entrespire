@@ -1,0 +1,158 @@
+/* =========================================================
+   A05 · 组织的猴子实验
+   仅本节使用，类名统一 .a05- 前缀
+   ========================================================= */
+
+/* ---------- 1 先猜：示意图 ---------- */
+.a05-hook{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:14px;align-items:start}
+.a05-fig{position:relative;margin:0;border:1px solid var(--line2);border-radius:10px;overflow:hidden;
+  background:linear-gradient(180deg,#0F151F,#0A0F17)}
+.a05-fig svg.a05-scene{display:block;width:100%;height:auto;color:#8D97AA}
+.a05-figcap{padding:8px 11px 9px;border-top:1px solid var(--line);background:#0C121A}
+.a05-figcap b{display:block;font-size:11.5px;color:var(--ink);font-weight:600}
+.a05-figcap span{display:block;font-size:10.5px;line-height:1.55;color:var(--faint);margin-top:2px}
+.a05-figcap em{display:block;font-style:normal;font-family:var(--mono);font-size:8.5px;color:#4A5466;margin-top:5px;letter-spacing:.02em}
+.a05-scene text{stroke:none}
+.a05-lb{fill:#5A6679;font-family:var(--mono);font-size:9px;letter-spacing:.04em}
+.a05-lb.acc{fill:#C9A227}
+.a05-qm{fill:#C9A227;font-family:var(--serif);font-size:19px;text-anchor:middle}
+
+.a05-hook-r{min-width:0;display:flex;flex-direction:column}
+.a05-ask{border-left:2px solid rgba(var(--acc-rgb),.45);padding:1px 0 1px 10px;margin-bottom:10px}
+.a05-ask-k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;color:var(--acc);text-transform:uppercase;margin-bottom:4px}
+.a05-ask p{font-size:12px;line-height:1.75;color:var(--dim)}
+.a05-ask p b{color:var(--ink);font-weight:600}
+
+.a05-reveal{border:1px solid var(--line2);border-radius:9px;padding:11px 13px}
+.a05-reveal.ok{border-color:rgba(78,159,110,.45);background:rgba(78,159,110,.06)}
+.a05-reveal.warn{border-color:rgba(216,154,60,.42);background:rgba(216,154,60,.055)}
+.a05-reveal-h{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.1em;color:var(--dim);margin-bottom:7px;text-transform:uppercase}
+.a05-reveal p{font-size:12px;line-height:1.8;color:var(--dim);margin-bottom:6px}
+.a05-reveal p:last-child{margin-bottom:0}
+.a05-reveal p.small{font-size:11px;line-height:1.7}
+.a05-reveal b{color:var(--ink);font-weight:600}
+.a05-reveal .a05-note{font-size:10.5px;color:var(--faint);border-left:2px solid rgba(var(--acc-rgb),.4);padding-left:8px}
+
+/* ---------- 2 概念 ---------- */
+.a05-concepts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.a05-def{display:flex;flex-direction:column;border-color:rgba(var(--acc-rgb),.28);
+  background:linear-gradient(160deg,rgba(var(--acc-rgb),.07),transparent 62%),var(--panel)}
+.a05-def-p{font-size:13px;line-height:1.75;color:var(--ink)}
+.a05-term{padding:10px 12px}
+.a05-silent{margin-top:auto;padding-top:8px;border-top:1px solid var(--line);font-size:10.5px;line-height:1.65;color:var(--faint)}
+.a05-silent b{display:block;color:var(--dim);font-weight:600;margin-bottom:2px}
+.a05-qlist{display:flex;flex-direction:column;gap:4px}
+.a05-qlist div{display:grid;grid-template-columns:15px minmax(0,1fr);gap:6px;padding:5px 8px;
+  border:1px solid var(--line);border-radius:6px;background:#0D131C}
+.a05-qlist span{font-family:var(--mono);font-size:8.5px;color:var(--acc);padding-top:2px;letter-spacing:.04em}
+.a05-qlist p{font-size:11px;line-height:1.55;color:var(--dim)}
+.a05-qcap{margin-top:8px;font-size:10.5px;line-height:1.6;color:var(--faint)}
+.a05-qcap b{color:var(--dim)}
+.a05-three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.a05-three-i{border:1px solid var(--line);border-radius:8px;background:#0D131C;padding:8px 10px}
+.a05-n{width:18px;height:18px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;
+  justify-content:center;font-family:var(--mono);font-size:9px;color:var(--acc);flex:none;margin-bottom:6px}
+.a05-three-i b{display:block;font-size:11.5px;color:var(--ink);font-weight:600;line-height:1.45;margin-bottom:3px}
+.a05-three-i p{font-size:10.5px;line-height:1.65;color:var(--faint)}
+.a05-boundary{margin-top:10px;padding:8px 10px;border-left:2px solid rgba(216,154,60,.5);
+  background:rgba(216,154,60,.05);font-size:10.5px;line-height:1.7;color:var(--dim)}
+.a05-boundary b{color:#EFCB94}
+.a05-choice{margin-top:12px}
+.a05-opts2{grid-template-columns:1fr 1fr}
+
+/* ---------- 3 考古台 ---------- */
+.a05-bench{flex:1 1 auto;min-height:0}
+.a05-bench .bench-f{padding:8px 12px;flex:none}
+.a05-bench-h{margin-bottom:12px}
+.a05-bench .bench-b{padding:9px 10px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.a05-bench .bench-b::-webkit-scrollbar{width:6px}
+.a05-bench .bench-b::-webkit-scrollbar-thumb{background:#2A3547;border-radius:6px}
+.a05-bench .bench-b::-webkit-scrollbar-track{background:transparent}
+.a05-rules{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.a05-rule{position:relative;border:1px solid var(--line2);border-radius:9px;background:#0F151F;
+  padding:6px 9px 5px 10px;transition:border-color .2s,background .2s}
+.a05-rule::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:2px;border-radius:2px;background:transparent;transition:.2s}
+.a05-rule-h{display:grid;grid-template-columns:13px minmax(0,1fr) auto auto 18px;gap:6px;align-items:center;margin-bottom:4px}
+.a05-rule-h .n{font-family:var(--mono);font-size:9px;color:#3F4A5C}
+.a05-rule-h b{font-size:11.5px;color:var(--ink);font-weight:600;line-height:1.4}
+.a05-tag{font-family:var(--mono);font-size:8px;color:var(--faint);border:1px solid var(--line2);border-radius:3px;
+  padding:0 3px;line-height:1.5;white-space:nowrap}
+.a05-vd{font-family:var(--mono);font-size:8.5px;color:var(--faint);border:1px solid var(--line2);border-radius:4px;
+  padding:1px 4px;white-space:nowrap;line-height:1.4}
+.a05-undo{width:18px;height:18px;border-radius:4px;border:1px solid transparent;color:#3F4A5C;font-size:11px;line-height:1}
+.a05-undo:hover{border-color:var(--line2);color:var(--dim);background:#131A25}
+
+.a05-q{display:grid;grid-template-columns:57px minmax(0,1fr);gap:5px;align-items:center;margin-top:2px}
+.a05-q .lbl{font-family:var(--mono);font-size:8.5px;color:#5A6679;white-space:nowrap}
+.a05-seg{display:flex;gap:3px;min-width:0}
+.a05-seg button{flex:1 1 0;min-width:0;padding:2px 1px;border:1px solid var(--line2);border-radius:5px;
+  background:#0B1018;font-size:10px;color:var(--dim);line-height:1.4;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:.14s var(--ease)}
+.a05-seg button:hover{border-color:#3A475E;color:var(--ink);background:#121A25}
+.a05-seg button.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.13);color:var(--acc2);font-weight:600}
+.a05-why{margin:4px 0 0;padding-top:4px;border-top:1px dashed var(--line);font-size:10px;
+  line-height:1.55;color:var(--faint);min-height:26px}
+.a05-why b{margin-right:4px;color:var(--dim);font-weight:600}
+.a05-why.done{color:var(--dim)}
+
+.a05-rule.v-retire{border-color:rgba(78,159,110,.45);background:rgba(78,159,110,.05)}
+.a05-rule.v-retire::before{background:var(--ok)}
+.a05-rule.v-retire .a05-seg button.on{border-color:rgba(78,159,110,.6);background:rgba(78,159,110,.14);color:#BFE3CC}
+.a05-rule.v-retire .a05-vd.retire,.a05-vd.retire{color:#BFE3CC;border-color:rgba(78,159,110,.5);background:rgba(78,159,110,.14)}
+.a05-rule.v-retire .a05-why b{color:#9ED3B4}
+.a05-rule.v-reform{border-color:rgba(216,154,60,.45);background:rgba(216,154,60,.05)}
+.a05-rule.v-reform::before{background:var(--warn)}
+.a05-rule.v-reform .a05-seg button.on{border-color:rgba(216,154,60,.6);background:rgba(216,154,60,.14);color:#EFCB94}
+.a05-rule.v-reform .a05-vd.reform,.a05-vd.reform{color:#EFCB94;border-color:rgba(216,154,60,.5);background:rgba(216,154,60,.14)}
+.a05-rule.v-reform .a05-why b{color:#EFCB94}
+.a05-rule.v-keep{border-color:rgba(91,141,239,.45);background:rgba(91,141,239,.05)}
+.a05-rule.v-keep::before{background:#5B8DEF}
+.a05-rule.v-keep .a05-seg button.on{border-color:rgba(91,141,239,.6);background:rgba(91,141,239,.14);color:#A9C4FA}
+.a05-rule.v-keep .a05-vd.keep,.a05-vd.keep{color:#A9C4FA;border-color:rgba(91,141,239,.5);background:rgba(91,141,239,.14)}
+.a05-rule.v-keep .a05-why b{color:#A9C4FA}
+
+/* ---------- 4 在你的事上 ---------- */
+.a05-mq{display:grid;grid-template-columns:120px minmax(0,1fr);gap:9px;align-items:center;margin-top:8px}
+.a05-mq:first-of-type{margin-top:0}
+.a05-mq-l{font-size:11px;color:var(--dim);line-height:1.45}
+.a05-seg.big button{padding:5px 4px;font-size:11.5px}
+.a05-mine-out{margin-top:10px;padding:8px 10px;border:1px dashed var(--line2);border-radius:7px;
+  font-size:10.5px;color:var(--faint);line-height:1.65}
+.a05-mine-out b{display:inline-block;margin-right:6px;font-family:var(--mono);font-size:9.5px;
+  padding:1px 6px;border-radius:4px;vertical-align:1px}
+.a05-mine-out span{display:block;margin-top:4px;color:var(--dim)}
+.a05-mine-out.on{border-style:solid}
+.a05-mine-out.retire{border-color:rgba(78,159,110,.45);background:rgba(78,159,110,.06);color:#BFE3CC}
+.a05-mine-out.retire b{background:#4E9F6E;color:#08110C}
+.a05-mine-out.reform{border-color:rgba(216,154,60,.45);background:rgba(216,154,60,.06);color:#EFCB94}
+.a05-mine-out.reform b{background:#D89A3C;color:#100C05}
+.a05-mine-out.keep{border-color:rgba(91,141,239,.45);background:rgba(91,141,239,.06);color:#A9C4FA}
+.a05-mine-out.keep b{background:#5B8DEF;color:#070C16}
+
+/* ---------- 5 提交 ---------- */
+.a05-mini{padding:9px 12px}
+.a05-mini .panel-h{margin-bottom:8px}
+.a05-mini .opt{padding:6px 9px}
+.a05-note-in{margin-top:7px;font-size:10.5px;line-height:1.65;color:var(--dim);
+  border-left:2px solid rgba(var(--acc-rgb),.45);padding-left:8px}
+.a05-card .kv b{width:52px}
+.a05-sub{padding:9px 12px}
+.a05-opts4{grid-template-columns:1fr 1fr;gap:6px}
+.a05-opts4 .opt{padding:6px 9px}
+.a05-opts4 .opt b{font-size:12px}
+.a05-opts4 .opt .k{width:18px;height:18px;font-size:9px}
+.a05-opts4 .opt .k+span>span{font-size:10.5px}
+
+/* ---------- 窄屏 ---------- */
+@media(max-width:1260px){
+  .a05-hook{grid-template-columns:1fr}
+  .a05-fig{max-width:560px}
+}
+@media(max-width:960px){
+  .a05-concepts{grid-template-columns:1fr}
+  .a05-three{grid-template-columns:1fr}
+  .a05-rules{grid-template-columns:1fr}
+  .a05-opts2,.a05-opts4{grid-template-columns:1fr}
+  .a05-mq{grid-template-columns:1fr;gap:4px}
+}

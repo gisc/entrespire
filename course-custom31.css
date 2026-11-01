@@ -1,0 +1,41 @@
+/* 第 31 章 · 预算大师（专属场景） */
+.c31-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(132,204,22,.22);background:linear-gradient(180deg,#0C1204,#060802);overflow:hidden}
+.c31-top{position:absolute;left:16px;right:16px;top:14px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.c31-budget{font-size:9px;color:var(--faint)}.c31-budget b{font-size:20px;color:#BEF264;letter-spacing:-.02em}
+.c31-left{font-size:9px;color:var(--faint)}.c31-left b{font-size:13px;color:#FDE68A}
+.c31-coins{position:absolute;right:18px;top:46px;display:flex;flex-direction:column-reverse;gap:3px;z-index:6}
+.c31-coins i{width:54px;height:9px;border-radius:99px;background:linear-gradient(90deg,#A3E635,#4D7C0F);border:1px solid #BEF264;opacity:.9}
+.c31-coins i.over{background:linear-gradient(90deg,#FF7A6B,#7F1D1D);border-color:#FF7A6B}
+.c31-bars{position:absolute;left:18px;right:90px;top:62px;bottom:18px;display:flex;flex-direction:column;justify-content:space-around;z-index:4}
+.c31-row{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c31-row b{width:52px;color:#D9F99D;font-size:9px;flex:none}
+.c31-track{flex:1;height:9px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;position:relative}
+.c31-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#84CC16,#BEF264);transition:.35s}
+.c31-row.over .c31-track i{background:linear-gradient(90deg,#F97316,#FF7A6B)}
+.c31-amt{width:38px;text-align:right;color:#ECFCCB;flex:none}
+.c31-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(163,230,53,.75);z-index:9}
+.c31-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(5,8,2,.6);z-index:9}
+.c31-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c31-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c31-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c31-context:hover,.c31-context.on{border-color:rgba(132,204,22,.55);background:rgba(132,204,22,.08)}
+.c31-cats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c31-cat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c31-cat b{display:block;color:var(--ink);font-size:9px}.c31-cat span{color:var(--faint);font-size:8px}
+.c31-cat:hover,.c31-cat.on{border-color:rgba(132,204,22,.55);background:rgba(132,204,22,.08)}
+.c31-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c31-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c31-act:hover,.c31-act.on{border-color:rgba(132,204,22,.55);background:rgba(132,204,22,.08);color:#D9F99D}
+.c31-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c31-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c31-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c31-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#84CC16,#4FE0D0);transition:.5s}
+.c31-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(132,204,22,.2);background:linear-gradient(180deg,#0C1204,#060802);overflow:hidden}
+.c31-test .c31-stage{position:absolute;inset:8px;height:auto;border:0}
+.c31-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c31-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c31-fix:hover,.c31-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c31-bp-icon{width:150px;height:100px;margin:0 auto}
+.c31-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c31-stage,.c31-test{height:250px}.c31-context-grid,.c31-cats{grid-template-columns:1fr}.c31-coins{display:none}}
+@media(max-height:800px){.c31-stage{height:286px}}

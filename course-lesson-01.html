@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>第01章 · 世界为什么不能换一种方式？| 发小明 · 世界创新港</title>
+<meta name="theme-color" content="#050914">
+<meta name="description" content="发小明创新教育第一季度第1章互动课件：从一支铅笔开始，发现生活可以换一种方式。">
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="course-lesson.css?v=12">
+<script src="assets-tc-page.js" defer></script>
+</head>
+<body class="ch-0">
+<canvas id="sky"></canvas>
+<div class="aura"></div>
+<div class="grain"></div>
+<div class="progress-top"><i id="progressBar"></i></div>
+
+<header class="topbar">
+  <a class="tb-brand" href="course-index.html" title="返回世界创新港">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M16 2l2.9 8.6L28 13l-7.1 5.3L23 27l-7-4.8L9 27l2.1-8.7L4 13l9.1-2.4L16 2z" stroke="#F5C451" stroke-width="1.3" fill="rgba(245,196,81,.08)"/>
+      <circle cx="16" cy="15" r="2.2" fill="#F5C451"/>
+    </svg>
+    <span>世界创新港<small>CHAPTER 01</small></span>
+  </a>
+  <div class="tb-sep"></div>
+  <div class="tb-chapter"><span id="tbAct">序</span><b id="tbTitle">序章</b></div>
+  <div class="tb-spacer"></div>
+  <div class="tb-tools">
+    <button class="tb-btn" id="btnNotes" title="教师指引 (T)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg><span>教师指引</span>
+    </button>
+    <button class="tb-btn on" id="btnSound" title="声音开关 (M)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15 9a4 4 0 010 6M18 6a8 8 0 010 12"/></svg><span>声音</span>
+    </button>
+    <button class="tb-btn" id="btnFull" title="全屏 (F)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>全屏</span>
+    </button>
+    <a class="tb-btn" href="course-index.html" title="退出课堂">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4h6v16h-6M10 8l-4 4 4 4M6 12h9"/></svg><span>退出</span>
+    </a>
+  </div>
+</header>
+
+<main id="deck">
+
+<!-- ============ 00 封面 ============ -->
+<section class="ch cover" data-ch="0" data-title="序章" data-act="序" data-time="">
+  <div class="cover-stars" id="coverStars"></div>
+  <div class="cover-grid">
+    <div class="cover-copy">
+      <div class="kicker">GENESIS · 世界创新港 · 第一季</div>
+      <h1>世界为什么<br><span class="line2">不能换一种方式<span class="q">？</span></span></h1>
+      <p class="cover-lead">今天，我们不急着寻找正确答案。<br>我们要寻找的是：<b style="color:var(--gold2);font-weight:600">有没有更好的答案？</b></p>
+      <div class="cover-meta">
+        <span class="gold">第 01 章</span><span>创新启蒙</span><span>8 幕互动</span><span>7–13 岁</span><span>发现力 · 想象力 · 表达力</span>
+      </div>
+      <div class="cover-actions">
+        <button class="btn primary" data-go="1">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          开始上课
+        </button>
+        <button class="btn ghost" id="coverNotes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>
+          教师指引
+        </button>
+      </div>
+    </div>
+    <div class="portal" aria-hidden="true">
+      <svg class="rings" viewBox="0 0 520 520" fill="none">
+        <circle cx="260" cy="260" r="250" stroke="rgba(245,196,81,.12)" stroke-dasharray="2 9"/>
+        <g class="ring-a">
+          <circle cx="260" cy="260" r="210" stroke="rgba(245,196,81,.28)" stroke-dasharray="1 11"/>
+          <circle cx="260" cy="260" r="210" stroke="rgba(79,224,208,.24)" stroke-dasharray="90 1200"/>
+        </g>
+        <g class="ring-b">
+          <circle cx="260" cy="260" r="164" stroke="rgba(245,196,81,.2)" stroke-dasharray="1 13"/>
+          <circle cx="260" cy="260" r="164" stroke="rgba(167,139,250,.24)" stroke-dasharray="52 980"/>
+        </g>
+        <g class="ring-c">
+          <circle cx="260" cy="260" r="118" stroke="rgba(245,196,81,.32)" stroke-dasharray="1 8"/>
+        </g>
+        <g stroke="rgba(245,196,81,.35)" stroke-width="1">
+          <path d="M260 4v12M260 504v12M4 260h12M504 260h12"/>
+          <path d="M78 78l8 8M434 434l8 8M442 78l-8 8M86 434l-8 8"/>
+        </g>
+      </svg>
+      <div class="pencil-orbit">
+        <svg viewBox="0 0 120 40" fill="none">
+          <rect x="14" y="12" width="76" height="16" rx="3" fill="#F5C451"/>
+          <path d="M90 12l16 8-16 8z" fill="#E8C08A"/><path d="M99 16l7 4-7 4z" fill="#2A2A2E"/>
+          <rect x="4" y="12" width="12" height="16" rx="3" fill="#D96A52"/>
+          <rect x="14" y="12" width="76" height="5" fill="#FFE3A6" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="portal-core"><span>?</span></div>
+      <div class="portal-word pw1">观察</div>
+      <div class="portal-word pw2">提问</div>
+      <div class="portal-word pw3">想象</div>
+      <div class="portal-word pw4">表达</div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span>发小明 Genesis 创新学院 · 让每个孩子都拥有创造的能力</span>
+    <span class="kbd"><span><kbd>→</kbd>前进</span><span><kbd>T</kbd>教师指引</span><span><kbd>F</kbd>全屏</span></span>
+  </div>
+</section>
+
+<!-- ============ 01 铅笔 ============ -->
+<section class="ch" data-ch="1" data-title="这支铅笔，只能写字吗？" data-act="01" data-time="10 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>01</b><span>开场挑战</span></div>
+      <h2>这支铅笔，<em>只能写字吗？</em></h2>
+      <p>我们每天都在使用它，所以很容易以为它本来就应该这样。现在，请点一点铅笔周围的光点，看看熟悉的物品还能变成什么。</p>
+    </div>
+    <div class="pencil-layout">
+      <div class="pencil-stage" id="pencilStage">
+        <div class="stage-halo"></div>
+        <svg class="pencil-svg" id="pencilSvg" viewBox="0 0 780 520" onclick="window.L1&&L1.spinPencil()" role="img" aria-label="一支铅笔">
+          <defs>
+            <linearGradient id="pBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDD86"/><stop offset=".42" stop-color="#F5C451"/><stop offset="1" stop-color="#B87A18"/></linearGradient>
+            <linearGradient id="pWood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E8C08A"/><stop offset="1" stop-color="#C99A5E"/></linearGradient>
+            <linearGradient id="pMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9AA3B8"/><stop offset=".5" stop-color="#E8EDF5"/><stop offset="1" stop-color="#7C869E"/></linearGradient>
+            <linearGradient id="pEraser" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9A86"/><stop offset="1" stop-color="#C4553F"/></linearGradient>
+            <filter id="pShadow"><feGaussianBlur stdDeviation="10"/></filter>
+          </defs>
+          <ellipse cx="390" cy="330" rx="250" ry="34" fill="rgba(0,0,0,.45)" filter="url(#pShadow)"/>
+          <g transform="translate(390 260) rotate(-26) translate(-300 -42)">
+            <rect x="-26" y="0" width="22" height="84" rx="9" fill="url(#pEraser)"/>
+            <rect x="-8" y="0" width="34" height="84" rx="5" fill="url(#pMetal)"/>
+            <rect x="-2" y="6" width="5" height="72" fill="#F4F7FC" opacity=".55"/>
+            <rect x="-6" y="8" width="4" height="68" fill="#5B6378" opacity=".5"/>
+            <rect x="20" y="0" width="470" height="84" rx="5" fill="url(#pBody)"/>
+            <path d="M20 9h470v17H20z" fill="#FFE9B0" opacity=".55"/>
+            <path d="M20 60h470v16H20z" fill="#7A4A06" opacity=".22"/>
+            <path d="M20 26h470" stroke="#FFF2C9" stroke-width="1" opacity=".35"/>
+            <g opacity=".7">
+              <text x="86" y="53" font-family="Noto Sans SC,sans-serif" font-size="24" letter-spacing="7" fill="#7A4A06">创 造 者</text>
+              <text x="330" y="53" font-family="Noto Sans SC,sans-serif" font-size="18" letter-spacing="4" fill="#7A4A06">No.01</text>
+            </g>
+            <path d="M490 0l74 42-74 42z" fill="url(#pWood)"/>
+            <path d="M534 24l30 18-30 18z" fill="#2A2A2E"/>
+            <path d="M490 0l17 10-17 32z" fill="#F4D8A8" opacity=".6"/>
+            <path d="M20 0v84" stroke="#8A5A0E" stroke-width="2" opacity=".4"/>
+          </g>
+          <g fill="#F5C451" opacity=".4">
+            <circle cx="120" cy="110" r="2"/><circle cx="660" cy="120" r="1.6"/><circle cx="690" cy="390" r="2"/><circle cx="100" cy="400" r="1.5"/>
+          </g>
+        </svg>
+        <button class="hotspot" data-use="draw" style="left:80%;top:27%" aria-label="发现用途"><span>1</span></button>
+        <button class="hotspot" data-use="measure" style="left:65%;top:22%" aria-label="发现用途"><span>2</span></button>
+        <button class="hotspot" data-use="roll" style="left:45%;top:35%" aria-label="发现用途"><span>3</span></button>
+        <button class="hotspot" data-use="spin" style="left:27%;top:50%" aria-label="发现用途"><span>4</span></button>
+        <button class="hotspot" data-use="stand" style="left:18%;top:70%" aria-label="发现用途"><span>5</span></button>
+        <button class="hotspot" data-use="drum" style="left:69%;top:73%" aria-label="发现用途"><span>6</span></button>
+        <div class="stage-tip">点亮点 · 也可以直接点铅笔，让它转一圈</div>
+      </div>
+      <aside class="discover-panel">
+        <div class="dp-head"><span>已经发现的可能</span><b><em id="useCount">0</em> / 6</b></div>
+        <div class="dp-bar"><i id="useBar"></i></div>
+        <ul class="use-list" id="useList"><li class="use-empty">还没有发现。随便点一个光点开始吧——<br>答案没有标准，越不一样越好。</li></ul>
+        <div class="custom-use" id="customUseBox">
+          <label>第 7 种可能 · 写下来</label>
+          <div class="row"><input id="customUseInput" maxlength="18" placeholder="比如：当书签、做风筝的轴…"><button id="addUse" aria-label="加入想法">+</button></div>
+        </div>
+      </aside>
+    </div>
+    <div class="ch-foot-note">先不判断“有没有用”。发明家做的第一件事，是把“只能这样”改成“还能怎样”。</div>
+  </div>
+</section>
+
+<!-- ============ 02 四件物品 ============ -->
+<section class="ch" data-ch="2" data-title="如果，换一种方式呢？" data-act="02" data-time="10 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>02</b><span>换一种方式</span></div>
+      <h2>如果，<em>换一种方式呢？</em></h2>
+      <p>水杯、书包、椅子、雨伞——它们一定要长成现在这样吗？点开每一张卡片，替它们换一种“活法”。</p>
+    </div>
+    <div class="obj-grid" id="objGrid">
+      <!-- 水杯 -->
+      <div class="obj-card" data-obj="cup" data-alt="0" style="--ac:rgba(79,224,208,.18)">
+        <div class="flip-inner">
+          <div class="face front">
+            <span class="obj-badge">日常物品 · 01</span>
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none">
+                <ellipse cx="108" cy="148" rx="58" ry="9" fill="rgba(0,0,0,.28)"/>
+                <path d="M62 58h88l-9 76a14 14 0 01-14 12H85a14 14 0 01-14-12z" fill="#E8F2FF" fill-opacity=".92"/>
+                <path d="M62 58h88l-3 24H65z" fill="#F7FBFF" fill-opacity=".8"/>
+                <path d="M150 70h9a21 21 0 010 42h-13" stroke="#E8F2FF" stroke-width="9" stroke-linecap="round"/>
+                <ellipse cx="106" cy="58" rx="44" ry="8" fill="#F7FBFF"/>
+                <path d="M92 44q5-12 0-22M110 44q5-12 0-22" stroke="#AFC3E0" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>
+                <path d="M79 94h54" stroke="#AFC3E0" stroke-width="2" opacity=".6"/>
+              </svg>
+            </div>
+            <div class="obj-name">一只普通水杯</div>
+            <div class="obj-q">水杯只能长成现在这样吗？<br><span style="color:var(--faint)">点一下，替它换一种活法。</span></div>
+            <button class="obj-btn">换一种活法 →</button>
+          </div>
+          <div class="face back">
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none" class="alt-svg">
+                <ellipse cx="108" cy="148" rx="58" ry="9" fill="rgba(0,0,0,.28)"/>
+                <path d="M62 58h88l-9 76a14 14 0 01-14 12H85a14 14 0 01-14-12z" fill="#E8F2FF" fill-opacity=".92"/>
+                <path d="M150 70h9a21 21 0 010 42h-13" stroke="#E8F2FF" stroke-width="9" stroke-linecap="round"/>
+                <ellipse cx="106" cy="58" rx="44" ry="8" fill="#F7FBFF"/>
+                <g class="altgrp" data-a="0">
+                  <circle cx="168" cy="46" r="19" fill="#0C1A33" stroke="#4FE0D0" stroke-width="2"/>
+                  <path d="M168 35v12l7 5" stroke="#4FE0D0" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M80 98h50" stroke="#4FE0D0" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+                  <circle cx="80" cy="98" r="3" fill="#4FE0D0"/>
+                </g>
+                <g class="altgrp" data-a="1" style="display:none">
+                  <ellipse cx="106" cy="148" rx="52" ry="10" fill="#4FE0D0" opacity=".28"/>
+                  <path d="M66 138q40 16 80 0" stroke="#4FE0D0" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M66 138v8q40 18 80 0v-8" fill="#4FE0D0" opacity=".18"/>
+                </g>
+                <g class="altgrp" data-a="2" style="display:none">
+                  <path d="M62 70H49a20 20 0 000 40h16" stroke="#E8F2FF" stroke-width="9" stroke-linecap="round"/>
+                  <path d="M78 96h54M78 108h54" stroke="#AFC3E0" stroke-width="2" opacity=".6"/>
+                </g>
+              </svg>
+            </div>
+            <div class="alt-label">如果 · <span class="alt-no">另 1 种</span></div>
+            <div class="alt-title">会提醒的杯子</div>
+            <div class="alt-desc">杯壁上的小灯按时间亮起：该喝水了。</div>
+            <div class="alt-btns"><button class="back-btn">翻回去</button><button class="next nextAlt">再换一种 ↻</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- 书包 -->
+      <div class="obj-card" data-obj="bag" data-alt="0" style="--ac:rgba(245,196,81,.18)">
+        <div class="flip-inner">
+          <div class="face front">
+            <span class="obj-badge">日常物品 · 02</span>
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none">
+                <ellipse cx="108" cy="152" rx="54" ry="8" fill="rgba(0,0,0,.28)"/>
+                <rect x="62" y="48" width="92" height="102" rx="20" fill="#D96A52"/>
+                <rect x="70" y="62" width="76" height="50" rx="12" fill="#EE8368"/>
+                <rect x="84" y="120" width="48" height="30" rx="8" fill="#B34A38"/>
+                <path d="M72 52q-11 30 0 58M144 52q11 30 0 58" stroke="#8C3528" stroke-width="6" stroke-linecap="round"/>
+                <rect x="96" y="42" width="24" height="9" rx="4" fill="#8C3528"/>
+                <circle cx="108" cy="91" r="3.4" fill="#F5C451"/>
+              </svg>
+            </div>
+            <div class="obj-name">一只书包</div>
+            <div class="obj-q">书包一定要背在背上吗？<br><span style="color:var(--faint)">点一下，替它换一种活法。</span></div>
+            <button class="obj-btn">换一种活法 →</button>
+          </div>
+          <div class="face back">
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none" class="alt-svg">
+                <ellipse cx="108" cy="152" rx="54" ry="8" fill="rgba(0,0,0,.28)"/>
+                <rect x="62" y="48" width="92" height="102" rx="20" fill="#D96A52"/>
+                <rect x="70" y="62" width="76" height="50" rx="12" fill="#EE8368"/>
+                <g class="altgrp" data-a="0">
+                  <path d="M100 48V26h16M108 26h28" stroke="#F5C451" stroke-width="3.4" stroke-linecap="round"/>
+                  <circle cx="80" cy="148" r="9" fill="#0C1A33" stroke="#F5C451" stroke-width="3"/>
+                  <circle cx="136" cy="148" r="9" fill="#0C1A33" stroke="#F5C451" stroke-width="3"/>
+                  <rect x="74" y="30" width="12" height="5" rx="2" fill="#F5C451"/>
+                </g>
+                <g class="altgrp" data-a="1" style="display:none">
+                  <path d="M75 68h66M75 88h66M75 108h66M108 62v52" stroke="#F5C451" stroke-width="2" opacity=".85"/>
+                  <rect x="80" y="72" width="22" height="12" rx="2" fill="#F5C451" opacity=".35"/>
+                  <rect x="114" y="92" width="22" height="12" rx="2" fill="#4FE0D0" opacity=".35"/>
+                </g>
+                <g class="altgrp" data-a="2" style="display:none">
+                  <path d="M68 112h80v18H68z" fill="#F5C451" opacity=".8"/>
+                  <path d="M74 130v22M142 130v22M74 140h68" stroke="#F5C451" stroke-width="3" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </div>
+            <div class="alt-label">如果 · <span class="alt-no">另 1 种</span></div>
+            <div class="alt-title">拉着走的书包</div>
+            <div class="alt-desc">装上轮子和拉杆，重的时候不用一直背着。</div>
+            <div class="alt-btns"><button class="back-btn">翻回去</button><button class="next nextAlt">再换一种 ↻</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- 椅子 -->
+      <div class="obj-card" data-obj="chair" data-alt="0" style="--ac:rgba(167,139,250,.18)">
+        <div class="flip-inner">
+          <div class="face front">
+            <span class="obj-badge">日常物品 · 03</span>
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none">
+                <ellipse cx="108" cy="154" rx="56" ry="8" fill="rgba(0,0,0,.28)"/>
+                <rect x="74" y="34" width="68" height="58" rx="12" fill="#A78BFA" fill-opacity=".85"/>
+                <rect x="62" y="92" width="92" height="14" rx="6" fill="#C4B1FF"/>
+                <path d="M70 106l-6 44M146 106l6 44M88 106l-2 44M128 106l2 44" stroke="#6E5AAE" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="obj-name">一把椅子</div>
+            <div class="obj-q">椅子一定要有四条腿吗？<br><span style="color:var(--faint)">点一下，替它换一种活法。</span></div>
+            <button class="obj-btn">换一种活法 →</button>
+          </div>
+          <div class="face back">
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none" class="alt-svg">
+                <ellipse cx="108" cy="154" rx="56" ry="8" fill="rgba(0,0,0,.28)"/>
+                <rect x="74" y="34" width="68" height="58" rx="12" fill="#A78BFA" fill-opacity=".85"/>
+                <rect x="62" y="92" width="92" height="14" rx="6" fill="#C4B1FF"/>
+                <g class="altgrp" data-a="0">
+                  <path d="M78 106l-10 46M138 106l10 46M108 106v46" stroke="#6E5AAE" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M68 152h80" stroke="#A78BFA" stroke-width="2" opacity=".5"/>
+                </g>
+                <g class="altgrp" data-a="1" style="display:none">
+                  <path d="M70 106l-6 46M146 106l6 46" stroke="#6E5AAE" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M74 122h68M74 138h68" stroke="#C4B1FF" stroke-width="5" stroke-linecap="round"/>
+                </g>
+                <g class="altgrp" data-a="2" style="display:none">
+                  <path d="M70 106l-6 30q24 18 44 0t44 0l-6-30" stroke="#6E5AAE" stroke-width="8" stroke-linecap="round" fill="none"/>
+                  <path d="M60 142q48 14 96 0" stroke="#A78BFA" stroke-width="2" opacity=".5"/>
+                </g>
+              </svg>
+            </div>
+            <div class="alt-label">如果 · <span class="alt-no">另 1 种</span></div>
+            <div class="alt-title">三条腿的椅子</div>
+            <div class="alt-desc">少一条腿，反而更稳？把三条腿摆成三角形试试。</div>
+            <div class="alt-btns"><button class="back-btn">翻回去</button><button class="next nextAlt">再换一种 ↻</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- 雨伞 -->
+      <div class="obj-card" data-obj="umbrella" data-alt="0" style="--ac:rgba(255,122,107,.18)">
+        <div class="flip-inner">
+          <div class="face front">
+            <span class="obj-badge">日常物品 · 04</span>
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none">
+                <path d="M38 92q70-78 144 0-26-10-48 0-24-10-48 0-24-10-48 0z" fill="#FF8A7A"/>
+                <path d="M110 30v94q0 16 16 16t16-14" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/>
+                <path d="M38 92q70 10 144 0" stroke="#D8614F" stroke-width="2"/>
+                <path d="M86 82q24-42 48 0M62 88q18-38 34-46M158 88q-18-38-34-46" stroke="#FFD0C8" stroke-width="2" opacity=".6"/>
+                <path d="M110 30q-8-8 0-14" stroke="#E8EDF5" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="obj-name">一把雨伞</div>
+            <div class="obj-q">雨伞一定要靠人拿着吗？<br><span style="color:var(--faint)">点一下，替它换一种活法。</span></div>
+            <button class="obj-btn">换一种活法 →</button>
+          </div>
+          <div class="face back">
+            <div class="obj-art">
+              <svg viewBox="0 0 220 170" fill="none" class="alt-svg">
+                <path d="M38 92q70-78 144 0-26-10-48 0-24-10-48 0-24-10-48 0z" fill="#FF8A7A"/>
+                <path d="M110 30v94q0 16 16 16t16-14" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/>
+                <g class="altgrp" data-a="0">
+                  <rect x="28" y="74" width="42" height="68" rx="12" fill="#D96A52" opacity=".9"/>
+                  <path d="M40 78q-6 22 0 44M58 78q6 22 0 44" stroke="#8C3528" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M70 96h22" stroke="#F5C451" stroke-width="4" stroke-linecap="round"/>
+                </g>
+                <g class="altgrp" data-a="1" style="display:none">
+                  <path d="M110 68v58q0 12 12 12" stroke="#4FE0D0" stroke-width="3" fill="none"/>
+                  <rect x="118" y="128" width="26" height="30" rx="6" fill="#4FE0D0" opacity=".25" stroke="#4FE0D0" stroke-width="2"/>
+                  <path d="M120 142h22" stroke="#4FE0D0" stroke-width="2"/>
+                </g>
+                <g class="altgrp" data-a="2" style="display:none">
+                  <path d="M38 92q70-78 144 0" stroke="#F5C451" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+                  <path d="M110 14v-6M74 40l-5-5M146 40l5-5M30 76h-7M190 76h7" stroke="#F5C451" stroke-width="2.4" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </div>
+            <div class="alt-label">如果 · <span class="alt-no">另 1 种</span></div>
+            <div class="alt-title">背在背上的伞</div>
+            <div class="alt-desc">固定在书包上，双手就自由了。</div>
+            <div class="alt-btns"><button class="back-btn">翻回去</button><button class="next nextAlt">再换一种 ↻</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vote-panel" id="votePanel">
+      <div class="vp-head"><h4>如果只能改造一件，你最想改哪个？</h4><span>点一次 = 一票 · 让全班一起选</span></div>
+      <div class="vote-rows" id="voteRows">
+        <div class="vote-item" data-vote="cup"><div class="vi-top"><span>水杯</span><b>0</b></div><div class="vi-bar"><i></i></div></div>
+        <div class="vote-item" data-vote="bag"><div class="vi-top"><span>书包</span><b>0</b></div><div class="vi-bar"><i></i></div></div>
+        <div class="vote-item" data-vote="chair"><div class="vi-top"><span>椅子</span><b>0</b></div><div class="vi-bar"><i></i></div></div>
+        <div class="vote-item" data-vote="umbrella"><div class="vi-top"><span>雨伞</span><b>0</b></div><div class="vi-bar"><i></i></div></div>
+      </div>
+    </div>
+    <div class="ch-foot-note">不是它们不能变，是我们太久没有问一句“如果”。找到一种新的解决办法，也是一种创造。</div>
+  </div>
+</section>
+
+<!-- ============ 03 问题侦探 ============ -->
+<section class="ch" data-ch="3" data-title="问题侦探：教室里的小麻烦" data-act="03" data-time="20 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>03</b><span>问题侦探</span></div>
+      <h2>先别急着解决，<em>先看见问题</em></h2>
+      <p>这间教室里藏着 6 个“不方便”。点一点发光的圆点，把它们收进问题采集袋。找到至少 3 个，再选一个你最想研究的。</p>
+    </div>
+    <div class="detective-layout">
+      <div class="room-panel" id="roomPanel">
+        <div class="room-tip"><i></i>点击发光的位置 · 找到 6 个不方便</div>
+        <svg class="room-svg" viewBox="0 0 1000 620" role="img" aria-label="一间有六个不方便之处的教室">
+          <defs>
+            <linearGradient id="rWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16223F"/><stop offset="1" stop-color="#0B1226"/></linearGradient>
+            <linearGradient id="rFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2437"/><stop offset="1" stop-color="#090D18"/></linearGradient>
+            <linearGradient id="rSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B1B3D"/><stop offset="1" stop-color="#1D3C66"/></linearGradient>
+            <linearGradient id="rDesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A4C72"/><stop offset="1" stop-color="#263755"/></linearGradient>
+            <linearGradient id="rWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33456B"/><stop offset="1" stop-color="#22314F"/></linearGradient>
+            <radialGradient id="rGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F5C451" stop-opacity=".22"/><stop offset="1" stop-color="#F5C451" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="1000" height="430" fill="url(#rWall)"/>
+          <rect y="430" width="1000" height="190" fill="url(#rFloor)"/>
+          <rect y="420" width="1000" height="12" fill="#2B3752"/>
+          <path d="M0 110h1000M0 230h1000M0 340h1000" stroke="rgba(255,255,255,.028)" stroke-width="1"/>
+          <ellipse cx="480" cy="520" rx="380" ry="82" fill="#1A2338" opacity=".72"/>
+
+          <!-- window -->
+          <g>
+            <rect x="52" y="66" width="276" height="204" rx="5" fill="#0A1735" stroke="#3A4C72" stroke-width="7"/>
+            <rect x="64" y="78" width="252" height="180" fill="url(#rSky)"/>
+            <circle cx="112" cy="122" r="17" fill="#FFE3A6" opacity=".82"/>
+            <circle cx="106" cy="116" r="17" fill="#1D3C66" opacity=".9"/>
+            <g fill="#F5C451" opacity=".62">
+              <circle cx="160" cy="105" r="1.5"/><circle cx="205" cy="132" r="1.2"/><circle cx="246" cy="100" r="1.4"/><circle cx="282" cy="150" r="1.2"/><circle cx="138" cy="165" r="1.1"/>
+            </g>
+            <path d="M64 220q45-38 92-8t72-12 52 8v50H64z" fill="#122A4A" opacity=".9"/>
+            <path d="M190 78v180M64 168h252" stroke="#3A4C72" stroke-width="6"/>
+            <rect x="42" y="264" width="296" height="11" rx="3" fill="#3A4C72"/>
+            <path d="M52 66q-18 104 0 204" stroke="#5A2A34" stroke-width="15" fill="none" opacity=".65"/>
+            <path d="M328 66q18 104 0 204" stroke="#5A2A34" stroke-width="15" fill="none" opacity=".65"/>
+          </g>
+
+          <!-- poster -->
+          <g transform="translate(398 96)">
+            <rect width="146" height="104" rx="7" fill="#152140" stroke="#3A4C72" stroke-width="2"/>
+            <text x="73" y="58" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="42" fill="#F5C451" opacity=".5">?</text>
+            <text x="73" y="84" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="9.5" fill="#8A93A6" letter-spacing="2">今天，换个问法</text>
+          </g>
+
+          <!-- shelf -->
+          <g>
+            <rect x="745" y="92" width="196" height="258" rx="5" fill="#1B2744" stroke="#3A4C72" stroke-width="3"/>
+            <rect x="754" y="184" width="178" height="7" fill="#3A4C72"/>
+            <rect x="754" y="266" width="178" height="7" fill="#3A4C72"/>
+            <rect x="754" y="342" width="178" height="7" fill="#3A4C72"/>
+            <g opacity=".95">
+              <rect x="766" y="112" width="13" height="70" fill="#D96A52"/><rect x="782" y="122" width="10" height="60" fill="#F5C451"/>
+              <rect x="796" y="106" width="15" height="76" fill="#4FE0D0"/><rect x="815" y="126" width="9" height="56" fill="#A78BFA"/>
+              <rect x="828" y="116" width="13" height="66" fill="#6D8DFF"/><rect x="845" y="108" width="11" height="74" fill="#FF8A7A"/>
+              <rect x="860" y="130" width="14" height="52" fill="#F5C451"/><rect x="878" y="118" width="10" height="64" fill="#8BD17C"/>
+            </g>
+            <g opacity=".9">
+              <rect x="768" y="198" width="16" height="62" fill="#A78BFA"/><rect x="788" y="210" width="11" height="50" fill="#F5C451"/>
+              <rect x="803" y="194" width="14" height="66" fill="#4FE0D0"/><rect x="821" y="212" width="10" height="48" fill="#FF8A7A"/>
+              <rect x="836" y="202" width="15" height="58" fill="#6D8DFF"/><rect x="855" y="216" width="9" height="44" fill="#F5C451"/>
+            </g>
+            <g opacity=".85">
+              <rect x="766" y="284" width="18" height="54" fill="#D96A52"/><rect x="788" y="292" width="12" height="46" fill="#4FE0D0"/>
+              <rect x="804" y="278" width="15" height="60" fill="#F5C451"/><rect x="823" y="296" width="10" height="42" fill="#A78BFA"/>
+              <rect x="838" y="286" width="14" height="52" fill="#8BD17C"/>
+            </g>
+          </g>
+
+          <!-- desk -->
+          <g>
+            <ellipse cx="510" cy="445" rx="278" ry="20" fill="rgba(0,0,0,.35)"/>
+            <rect x="272" y="328" width="466" height="25" rx="5" fill="url(#rDesk)"/>
+            <rect x="282" y="353" width="446" height="76" rx="3" fill="#1A2744"/>
+            <rect x="294" y="428" width="16" height="86" rx="3" fill="#22345A"/>
+            <rect x="700" y="428" width="16" height="86" rx="3" fill="#22345A"/>
+            <path d="M282 353h446" stroke="#4A5D84" stroke-width="2"/>
+            <rect x="492" y="372" width="92" height="6" rx="3" fill="#2E4268"/>
+            <rect x="382" y="374" width="14" height="8" rx="2" fill="#4A5D84"/><rect x="606" y="374" width="14" height="8" rx="2" fill="#4A5D84"/>
+            <!-- notebook -->
+            <g transform="rotate(-6 405 322)">
+              <rect x="348" y="316" width="112" height="17" rx="2" fill="#E8D9B8"/>
+              <rect x="348" y="316" width="112" height="5" fill="#F5EAD0"/>
+              <path d="M360 321h88" stroke="#B9A57C" stroke-width="1.4"/>
+            </g>
+            <!-- pencils -->
+            <path d="M494 327l72-7" stroke="#F5C451" stroke-width="5" stroke-linecap="round"/>
+            <path d="M518 335l56 4" stroke="#FF7A6B" stroke-width="5" stroke-linecap="round"/>
+            <path d="M560 322l42-11" stroke="#4FE0D0" stroke-width="4" stroke-linecap="round"/>
+            <!-- cup near edge -->
+            <g>
+              <path d="M642 286h44l-5 39a10 10 0 01-10 9h-14a10 10 0 01-10-9z" fill="#DCE6F5" fill-opacity=".9"/>
+              <path d="M685 294h7a12 12 0 010 23h-9" stroke="#DCE6F5" stroke-width="4" fill="none"/>
+              <ellipse cx="664" cy="286" rx="22" ry="5" fill="#F4F8FF"/>
+              <path d="M654 278q4-10 0-18M669 278q4-10 0-18" stroke="#AFC3E0" stroke-width="2" fill="none" opacity=".45"/>
+            </g>
+          </g>
+
+          <!-- chair -->
+          <g>
+            <ellipse cx="507" cy="552" rx="82" ry="14" fill="rgba(0,0,0,.36)"/>
+            <rect x="450" y="356" width="112" height="74" rx="12" fill="#2B3A5E" stroke="#4A5D84" stroke-width="2"/>
+            <rect x="438" y="428" width="136" height="16" rx="6" fill="#3A4C72"/>
+            <path d="M450 444l-7 96M560 444l5 74M468 444l1 96M544 444l-1 88" stroke="#22345A" stroke-width="9" stroke-linecap="round"/>
+            <path d="M559 516l16 10" stroke="#FF7A6B" stroke-width="2" opacity=".65"/>
+          </g>
+
+          <!-- backpack -->
+          <g>
+            <ellipse cx="754" cy="587" rx="62" ry="10" fill="rgba(0,0,0,.32)"/>
+            <rect x="700" y="454" width="106" height="128" rx="22" fill="#C4553F"/>
+            <rect x="711" y="470" width="84" height="54" rx="12" fill="#E0705A"/>
+            <rect x="726" y="536" width="54" height="34" rx="8" fill="#A84232"/>
+            <path d="M712 458q-12 30 0 60M794 458q12 30 0 60" stroke="#8C3528" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <rect x="736" y="446" width="34" height="10" rx="4" fill="#8C3528"/>
+            <circle cx="753" cy="505" r="3.4" fill="#F5C451"/>
+          </g>
+
+          <!-- umbrella stand -->
+          <g>
+            <ellipse cx="918" cy="590" rx="64" ry="9" fill="rgba(79,163,217,.22)"/>
+            <path d="M884 442h68l-9 132h-50z" fill="#243B63" stroke="#3A5580" stroke-width="2"/>
+            <path d="M890 474h56M892 506h52" stroke="#3A5580" stroke-width="2"/>
+            <path d="M910 442l-13-98" stroke="#8A93A6" stroke-width="4"/>
+            <path d="M897 344q-30 18-2 37 26 16 44-8" fill="#3E6FA8" stroke="#5A8FC8" stroke-width="2"/>
+            <path d="M918 442v-92" stroke="#8A93A6" stroke-width="3"/>
+            <path d="M852 586q40-12 80 0t60-6" stroke="#4FA3D9" stroke-width="3" fill="none" opacity=".6"/>
+          </g>
+
+          <!-- power strip & cables -->
+          <g>
+            <rect x="520" y="540" width="172" height="32" rx="6" fill="#2B3A5E" stroke="#4A5D84" stroke-width="2"/>
+            <circle cx="546" cy="556" r="4" fill="#0C1A33" stroke="#4A5D84"/><circle cx="576" cy="556" r="4" fill="#0C1A33" stroke="#4A5D84"/><circle cx="606" cy="556" r="4" fill="#0C1A33" stroke="#4A5D84"/>
+            <path d="M540 540q-18-28 6-50t44 10 50-16 42 26" stroke="#F5C451" stroke-width="2.2" fill="none" opacity=".72"/>
+            <path d="M614 540q30-22 22-52t38-28" stroke="#4FE0D0" stroke-width="2.2" fill="none" opacity=".5"/>
+          </g>
+
+          <rect width="1000" height="620" fill="url(#rGlow)" opacity=".35"/>
+        </svg>
+        <button class="room-hotspot" data-prob="cup" style="left:66.4%;top:46.9%" aria-label="桌角的杯子"><span>1</span></button>
+        <button class="room-hotspot" data-prob="bag" style="left:75.4%;top:80.5%" aria-label="书包"><span>2</span></button>
+        <button class="room-hotspot" data-prob="chair" style="left:50.7%;top:75.8%" aria-label="椅子"><span>3</span></button>
+        <button class="room-hotspot" data-prob="umbrella" style="left:91.8%;top:77.8%" aria-label="雨伞"><span>4</span></button>
+        <button class="room-hotspot" data-prob="cable" style="left:61%;top:88.5%" aria-label="插线板"><span>5</span></button>
+        <button class="room-hotspot" data-prob="shelf" style="left:84%;top:20.5%" aria-label="书架"><span>6</span></button>
+        <div class="prob-detail" id="probDetail">
+          <div class="pd-ic" id="pdIc">🔍</div>
+          <div class="pd-body"><h4 id="pdTitle">发现问题</h4><p id="pdObs"></p><p class="why" id="pdWhy"></p></div>
+          <button class="pd-btn" id="pdSelect">就研究这个</button>
+        </div>
+      </div>
+
+      <aside class="detective-panel">
+        <div class="dp2-top"><span>问题采集袋</span><b><em id="probCount">0</em> / 6</b></div>
+        <div class="pk-lite" id="pkLite"><span>小组 PK</span><div class="pkl-team" data-team="A"><b>A队</b><em data-score>0</em><button data-add>+10</button></div><div class="pkl-team" data-team="B"><b>B队</b><em data-score>0</em><button data-add>+10</button></div></div>
+        <div class="obs-row"><button id="obsStart">开始观察 5:00</button><span id="obsTime">05:00</span></div>
+        <div class="prob-list" id="probList"><div class="prob-empty">还没有采集到问题。<br>点一点左边的发光圆点，把“哪里不方便”找出来。</div></div>
+        <div class="custom-prob"><input id="customProbInput" maxlength="22" placeholder="我自己的问题…"><button id="addProb" aria-label="加入问题">+</button></div>
+        <div class="select-hint" id="selectHint">找到 <b>3 个</b>问题后，选一个最想研究的。</div>
+      </aside>
+    </div>
+    <div class="ch-foot-note">问题找得越准确，后面的办法就越有可能有效。</div>
+  </div>
+</section>
+
+<!-- ============ 04 创意爆发 ============ -->
+<section class="ch" data-ch="4" data-title="一个问题，三个答案" data-act="04" data-time="20 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>04</b><span>创意爆发</span></div>
+      <h2>先让想法长出来，<em>再挑选</em></h2>
+      <p>现在先不要急着判断“能不能做”。摇一个灵感角度，围绕同一个问题，至少想出 3 个不一样的解决办法。<b>记住口诀：先多想，再选择；先尝试，再改进。</b></p>
+    </div>
+    <div class="problem-banner"><span>我们要解决的问题</span><b id="ideaProblem">还没有选择问题</b><button data-go="3">重新挑一个</button></div>
+    <div class="idea-layout">
+      <aside class="angle-panel">
+        <div class="ap-title"><span>摇一个灵感角度</span><span style="color:var(--acc)">6 个</span></div>
+        <button class="dice" id="diceBtn">🎲 随便给我一个角度</button>
+        <div class="angle-grid" id="angleGrid"></div>
+      </aside>
+      <div class="idea-main">
+        <div class="energy"><span>创意能量</span><div class="ebar"><i id="ideaEnergy"></i></div><b id="energyNum">0%</b></div>
+        <div class="slots" id="ideaSlots"></div>
+        <div class="pick-zone" id="pickZone"><span>🎯 把最想试的想法拖到这里</span><em>也可以点卡片上的“选它”</em></div>
+        <div class="composer">
+          <div class="prompt" id="anglePrompt">先选一个角度，或者直接写下你的想法。三个想法不用都“靠谱”，但要不一样。</div>
+          <div class="composer-row"><input id="ideaInput" maxlength="64" placeholder="写下或说出一个解决办法…"><button id="addIdea">放进想法槽</button></div>
+        </div>
+        <div class="ai-row"><button class="btn sm" id="aiAsk" type="button">🤖 AI 追问我</button><div class="ai-out" id="aiOut"></div></div>
+      </div>
+    </div>
+    <div class="ch-foot-note" id="ideaFoot">第一个想到的办法，不一定是最好的办法。先多想，再选择。</div>
+  </div>
+</section>
+
+<!-- ============ 05 四镜头升级 ============ -->
+<section class="ch" data-ch="5" data-title="四个镜头，把想法升级" data-act="05" data-time="10 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>05</b><span>创意升级</span></div>
+      <h2>用四个镜头，<em>把想法升级</em></h2>
+      <p>选一个最想试的想法，然后用四个镜头看它：更方便、更有趣、更省钱、更安全。至少升级两个角度。</p>
+    </div>
+    <div class="lens-layout">
+      <div class="lens-main">
+        <div class="idea-focus"><p id="lensIdea">还没有选择想法</p></div>
+        <div class="lens-row" id="lensRow"></div>
+        <div class="lens-panel" id="lensPanel">
+          <div class="lp-q" id="lensQ">先点一个镜头，看看它会问你什么。</div>
+          <div class="lp-tips" id="lensTips"></div>
+          <textarea id="lensInput" maxlength="90" placeholder="写下你的升级办法…"></textarea>
+          <div class="lp-actions"><span class="progress" id="lensProgress">已升级 <b>0</b> / 4 个角度</span><button id="addUpgrade">记下这个升级</button></div>
+        </div>
+      </div>
+      <aside class="upgrade-side">
+        <div class="us-head"><span>升级记录</span><b id="upCount">0 / 4</b></div>
+        <div class="upgrade-list" id="upgradeList"><div class="prob-empty" style="font-size:10px">还没有升级。选一个镜头，写下你的改进。</div></div>
+        <div class="ba"><span>升级前</span><p id="beforeText">—</p><span>升级后</span><p class="after" id="afterText">—</p></div>
+        <button class="to-proposal" id="toProposal" data-go="6">把它写进我的提案 →</button>
+      </aside>
+    </div>
+    <div class="ch-foot-note">功能越多，不一定越好。好的升级，是让原来的问题被解决得更彻底。</div>
+  </div>
+</section>
+
+<!-- ============ 06 提案 ============ -->
+<section class="ch" data-ch="6" data-title="我的第一个创新提案" data-act="06" data-time="25 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>06</b><span>我的提案</span></div>
+      <h2>把它写下来，<em>它就不再只是一个想法</em></h2>
+      <p>不用写得很长。把问题、办法和设计图画清楚，这就是你的第一张创新提案。</p>
+    </div>
+    <div class="proposal-layout">
+      <form class="prop-form" id="propForm" autocomplete="off" onsubmit="return false">
+        <div class="field"><label>01 我的名字 <b>NAME</b></label><input id="fName" maxlength="12" placeholder="写下你的名字或昵称"></div>
+        <div class="field"><label>02 我发现的问题 <b>PROBLEM</b></label><textarea id="fProblem" maxlength="90" placeholder="哪里不方便？谁遇到了这个问题？"></textarea><div class="fh">越具体越好：不是“书包很乱”，而是“找橡皮要翻半天”。</div></div>
+        <div class="field"><label>03 谁会遇到这个问题 <b>USER</b></label><div class="who-chips" id="whoChips"><button type="button" data-who="我自己">我自己</button><button type="button" data-who="同学">同学</button><button type="button" data-who="家人">家人</button><button type="button" data-who="其他人">其他人</button></div></div>
+        <div class="field-row">
+          <div class="field"><label>04 我的办法叫什么 <b>NAME IT</b></label><input id="fSolution" maxlength="16" placeholder="给它起一个名字"></div>
+          <div class="field"><label>05 它怎样解决问题 <b>HOW</b></label><textarea id="fHow" maxlength="90" placeholder="它靠什么起作用？"></textarea></div>
+        </div>
+        <div class="field"><label>06 我还想改进什么 <b>NEXT</b></label><textarea id="fImprove" maxlength="90" placeholder="如果继续研究，下一步想改哪里？"></textarea></div>
+      </form>
+      <div class="draw-panel">
+        <div class="draw-head">
+          <span>画出你的设计 · DRAW</span>
+          <div class="draw-tools">
+            <div class="colors" id="colors">
+              <button type="button" class="color on" data-color="#F5C451" style="background:#F5C451" aria-label="金色"></button>
+              <button type="button" class="color" data-color="#FFFFFF" style="background:#FFFFFF" aria-label="白色"></button>
+              <button type="button" class="color" data-color="#4FE0D0" style="background:#4FE0D0" aria-label="青色"></button>
+              <button type="button" class="color" data-color="#FF7A6B" style="background:#FF7A6B" aria-label="珊瑚红"></button>
+              <button type="button" class="color" data-color="#A78BFA" style="background:#A78BFA" aria-label="紫色"></button>
+            </div>
+            <button type="button" class="tool" data-size="3" title="细笔">·</button>
+            <button type="button" class="tool on" data-size="7" title="中笔">●</button>
+            <button type="button" class="tool" data-size="15" title="粗笔">⬤</button>
+            <button type="button" class="tool" id="eraser" title="橡皮">◻</button>
+            <button type="button" class="tool" id="undo" title="撤销">↺</button>
+            <button type="button" class="tool" id="clearDraw" title="清空">✕</button>
+          </div>
+        </div>
+        <div class="canvas-wrap"><canvas id="drawCanvas" width="1000" height="620"></canvas><div class="canvas-hint" id="canvasHint">在这里画出你的设计<br>可以只画关键结构，不用画得漂亮</div></div>
+        <div class="draw-foot"><span>支持鼠标 / 手指 / 触控笔</span><span id="drawState">未开始</span></div>
+      </div>
+    </div>
+    <div class="proposal-cta">
+      <div class="prop-progress"><div class="pt"><span>提案完成度</span><b id="propPct">0%</b></div><div class="pbar"><i id="propBar"></i></div></div>
+      <button class="btn primary" id="genProposal">生成我的创新提案 →</button>
+    </div>
+    <div class="ch-foot-note">最后一步不是“做得漂亮”，而是“讲得清楚”：我发现了什么，我打算怎么解决。</div>
+  </div>
+</section>
+
+<!-- ============ 07 发布会 ============ -->
+<section class="ch" data-ch="7" data-title="创意发布会：60 秒讲清楚" data-act="07" data-time="15 MIN">
+  <div class="ch-body">
+    <div class="ch-head">
+      <div class="act"><b>07</b><span>创意发布会</span></div>
+      <h2>站上台，<em>用 60 秒讲清楚</em></h2>
+      <p>不用背稿。看着屏幕上的句子，把“我发现的问题、我的办法、我还想改进什么”讲给大家听。</p>
+    </div>
+    <div class="stage-wrap">
+      <div class="curtain l"></div><div class="curtain r"></div><div class="spot"></div><div class="stage-floor"></div>
+      <div class="stage-content">
+        <div class="stage-top"><span>创意发布会 · 第 <b id="speakerNo">1</b> 位</span><span class="who" id="speakerName">小小发明家</span></div>
+        <div class="speech" id="speechText">
+          <p class="lead">大家好，我是 <b>小小发明家</b>。</p>
+          <p>我发现了一个问题：<b>……</b></p>
+          <p>这个问题会让 <b>……</b> 感到不方便。</p>
+          <p>所以，我想设计一个 <b>……</b>。</p>
+          <p>它通过 <b>……</b> 来解决问题。</p>
+          <p>如果继续研究，我还想 <b>……</b>。</p>
+        </div>
+        <div class="stage-controls">
+          <div class="timer">
+            <div class="timer-ring">
+              <svg viewBox="0 0 74 74"><circle class="tr-bg" cx="37" cy="37" r="32"/><circle class="tr-fg" id="timerArc" cx="37" cy="37" r="32"/></svg>
+              <div class="timer-num" id="timerNum">60</div>
+            </div>
+            <div class="timer-btns"><button class="main" id="timerStart">开始 60 秒</button><button id="timerReset">重置</button></div>
+          </div>
+          <div class="applause">
+            <button class="applause-btn" id="applauseBtn" aria-label="鼓掌">👏</button>
+            <div class="applause-meter">
+              <div class="am-top"><span>掌声能量</span><b><span id="applauseCount">0</span></b></div>
+              <div class="ambar"><i id="applauseBar"></i></div>
+            </div>
+          </div>
+          <button class="btn ghost sm" id="nextSpeaker">下一位同学 →</button>
+        </div>
+      </div>
+      <div class="applause-particles" id="applauseParticles"></div>
+    </div>
+    <div class="stage-rules">
+      <div class="rule"><span class="ri">👂</span><div><b>先理解，再建议</b><p>先说你听懂了他的意思，再提出你的建议。不要一上来就说“这个不行”。</p></div></div>
+      <div class="rule"><span class="ri">🤝</span><div><b>可以讨论方案，不能嘲笑人</b><p>可以问“它真的能解决问题吗？”，但不能说“你这个太傻了”。</p></div></div>
+    </div>
+    <div class="ch-foot-note">讲清楚，比讲得漂亮更重要。让别人理解你的创造，也是创造的一部分。</div>
+  </div>
+</section>
+
+<!-- ============ 08 徽章 ============ -->
+<section class="ch" data-ch="8" data-title="问题发现者 · 结课" data-act="08" data-time="10 MIN">
+  <div class="ch-body">
+    <div class="finale">
+      <div class="badge-stage">
+        <div class="badge-rays"></div>
+        <div class="badge"><div class="badge-inner">
+          <span class="b-kicker">FXM · GENESIS</span>
+          <div class="b-star">★</div>
+          <b>问题发现者</b>
+          <span class="bn" id="badgeName">小小发明家</span>
+          <span class="b-date" id="badgeDate">2026 · 第 01 章</span>
+        </div></div>
+      </div>
+      <h2>今天，你已经是<em>发明家</em>了</h2>
+      <p class="sub">你完成了一次真正的创造：发现一个问题，想出三个办法，选一个最想试的，再把它讲给别人听。这四步，就是发明家每天在做的事。</p>
+      <div class="journey">
+        <div class="jstep"><span class="ji">🔍</span><b>发现</b><span>看见生活里的不方便</span></div>
+        <div class="jstep"><span class="ji">💡</span><b>想象</b><span>想出不止一个办法</span></div>
+        <div class="jstep"><span class="ji">🛠️</span><b>设计</b><span>画出自己的解决方案</span></div>
+        <div class="jstep"><span class="ji">🎤</span><b>表达</b><span>让别人听懂你的想法</span></div>
+      </div>
+      <div class="reflect">
+        <div><b>想一想 01</b><p>今天，你发现了什么以前没有认真注意到的问题？</p></div>
+        <div><b>想一想 02</b><p>你提出的哪一个办法，最想继续做下去？为什么？</p></div>
+        <div><b>想一想 03</b><p>如果下次再做一次，你想改进哪里？</p></div>
+      </div>
+      <div class="homework"><span class="hi">🏠</span><div><b>本周家庭任务 · 一周三个问题</b><p>和家人一起找一件“不太好用”的物品：记下它哪里不方便，问问至少一位家人的意见，再想一个改进办法。下节课，带着你的发现回来。</p></div></div>
+      <div class="final-actions">
+        <button class="btn primary" id="dlBadge">下载我的徽章</button>
+        <a class="btn" href="course-index.html">回到世界创新港</a>
+        <button class="btn ghost" id="restartBtn">再上一次</button>
+      </div>
+      <div class="final-quote">“发明家并不是一开始就知道答案的人。发明家是那些愿意<em>多看一眼、多问一句、多试一次</em>的人。”<br>从今天开始，你不只是物品的使用者，也是生活的观察者和未来的创造者。</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bottombar">
+  <button class="bb-round" id="btnPrev" aria-label="上一幕"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div class="dots" id="dots"></div>
+  <button class="bb-next" id="btnNext"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:1px"><span>下一幕</span><b id="nextLabel">开始上课</b></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</nav>
+
+<aside class="notes" id="notes">
+  <div class="notes-head"><div><b>教师指引</b><span>TEACHER'S GUIDE · 第 01 章</span></div><button class="notes-close" id="closeNotes" aria-label="关闭">×</button></div>
+  <div class="notes-body"><div class="note-sched" id="noteSched"></div><div id="noteBody"></div></div>
+  <div class="notes-foot"><span><kbd>T</kbd>关闭 · <kbd>→</kbd>下一幕</span><span>建议全屏上课</span></div>
+</aside>
+
+<div class="curtain-trans" id="curtainTrans"><span id="curtainNo">ACT 01</span><b id="curtainTitle">开场挑战</b></div>
+<div class="toast" id="toast"><i>✓</i><span id="toastText"></span></div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<canvas id="fx"></canvas>
+
+<script>
+window.FXM_GATE={
+  chapter:'01',
+  free:true,
+  title:'世界为什么不能换一种方式？',
+  passwordHash:'4c07af38239404e231a1083d3b9fd020bec5d6f5e462302b7fc6a7460e134afd',
+  passwordHashes:[
+    '4c07af38239404e231a1083d3b9fd020bec5d6f5e462302b7fc6a7460e134afd',
+    '0c693905cfbbe4ff77e0d7470c4e18d9cf32a25c7b0dff14558854988835e2fb'
+  ],
+  openAt:'2026-01-01T00:00:00+08:00',
+  closeAt:'2027-12-31T23:59:59+08:00',
+  leaseHours:4,
+  hint:'🙆🏻‍♀️'
+};
+</script>
+<script src="course-gate.js?v=9"></script>
+<script src="course-lesson.js?v=9"></script>
+<script src="course-class-sync.js?v=2"></script>
+  <script src="course-finish45.js?v=3"></script>
+</body>
+</html>

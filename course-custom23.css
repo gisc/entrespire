@@ -1,0 +1,42 @@
+/* 第 23 章 · 垃圾的新工作（专属场景） */
+.c23-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(132,204,22,.22);background:linear-gradient(180deg,#0C1406,#060A04);overflow:hidden}
+.c23-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(163,230,53,.75);z-index:9}
+.c23-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(5,9,3,.6);z-index:9}
+.c23-bins{position:absolute;left:6%;right:6%;bottom:26px;display:flex;justify-content:space-between;z-index:3}
+.c23-bin{position:relative;width:31%;height:120px;border-radius:8px 8px 12px 12px;border:2px solid rgba(163,230,53,.4);background:rgba(163,230,53,.05);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:8px;transition:.2s}
+.c23-bin b{font-size:10px;color:#D9F99D}.c23-bin span{font-size:8px;color:var(--faint);margin-top:2px}
+.c23-bin:before{content:"";position:absolute;left:8%;right:8%;top:-8px;height:8px;border-radius:4px;background:rgba(163,230,53,.4)}
+.c23-bin.paper{border-color:rgba(96,165,250,.55)}.c23-bin.paper b{color:#BFDBFE}
+.c23-bin.plastic{border-color:rgba(251,191,36,.55)}.c23-bin.plastic b{color:#FDE68A}
+.c23-bin.compost{border-color:rgba(132,204,22,.6)}.c23-bin.compost b{color:#D9F99D}
+.c23-bin.over{box-shadow:0 0 0 3px rgba(163,230,53,.25),0 0 24px rgba(163,230,53,.2);transform:translateY(-3px)}
+.c23-item{position:absolute;width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;z-index:6;cursor:grab;transition:.15s;touch-action:none}
+.c23-item:after{content:attr(data-name);position:absolute;left:50%;top:46px;transform:translateX(-50%);font-size:7px;color:var(--faint);white-space:nowrap;background:rgba(5,9,3,.7);padding:2px 5px;border-radius:4px}
+.c23-item:hover{transform:scale(1.06);border-color:#A3E635}
+.c23-item.picked{box-shadow:0 0 0 3px rgba(163,230,53,.35);border-color:#A3E635}
+.c23-item.done{opacity:0;pointer-events:none;transform:scale(.6)}
+.c23-item.wrong{animation:c23shake .35s ease 2}
+.c23-score{position:absolute;left:14px;bottom:12px;font-size:9px;color:var(--faint);z-index:9}
+.c23-score b{color:#A3E635;font-size:14px}
+.c23-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c23-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c23-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c23-context:hover,.c23-context.on{border-color:rgba(132,204,22,.55);background:rgba(132,204,22,.08)}
+.c23-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c23-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c23-feat:hover,.c23-feat.on{border-color:rgba(132,204,22,.55);background:rgba(132,204,22,.08);color:#D9F99D}
+.c23-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c23-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c23-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c23-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#84CC16,#4FE0D0);transition:.5s}
+.c23-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(132,204,22,.2);background:linear-gradient(180deg,#0C1406,#060A04);overflow:hidden}
+.c23-test .c23-stage{position:absolute;inset:8px;height:auto;border:0}
+.c23-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c23-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c23-fix:hover,.c23-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c23-bp-icon{width:150px;height:100px;margin:0 auto}
+.c23-bp-icon svg{width:100%;height:100%}
+@keyframes c23shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media(max-width:900px){.c23-stage,.c23-test{height:250px}.c23-context-grid,.c23-feats{grid-template-columns:1fr}.c23-bin{height:100px}}
+@media(max-height:800px){.c23-stage{height:286px}}
+.c23-item:after{top:-14px}

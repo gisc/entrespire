@@ -1,0 +1,40 @@
+/* 第 15 章 · 水的旅程（专属场景） */
+.c15-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(56,189,248,.2);background:radial-gradient(ellipse at 50% 60%,rgba(56,189,248,.1),transparent 62%),linear-gradient(180deg,#081426,#060B14);overflow:hidden}
+.c15-stage svg{width:100%;height:100%;display:block}
+.c15-rain i{position:absolute;top:-12px;width:2px;height:14px;border-radius:2px;background:linear-gradient(180deg,rgba(125,211,252,0),#7DD3FC);animation:c15rain 1.1s linear infinite;opacity:.6}
+.c15-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(125,211,252,.7)}
+.c15-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(4,10,20,.55)}
+.c15-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c15-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c15-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c15-context:hover,.c15-context.on{border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.09)}
+.c15-filter{position:relative;width:150px;height:190px;margin:0 auto;border:2px solid rgba(125,211,252,.4);border-top:0;border-radius:4px 4px 14px 14px;background:rgba(8,20,38,.55);overflow:hidden}
+.c15-filter:before{content:"";position:absolute;left:8%;right:8%;top:0;height:8px;border-radius:99px;background:rgba(125,211,252,.35)}
+.c15-layer{position:absolute;left:7%;right:7%;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#08202a;font-weight:600;transition:.3s}
+.c15-layer.cloth{background:#93C5FD}.c15-layer.sand{background:#FCD34D}.c15-layer.char{background:#64748B;color:#E2E8F0}
+.c15-drop{position:absolute;left:50%;top:-8px;width:7px;height:10px;border-radius:50%;background:#7DD3FC;animation:c15drop 1.6s ease-in infinite;z-index:4}
+.c15-clear{position:absolute;right:14px;bottom:14px;left:14px;display:flex;align-items:center;gap:6px;font-size:8px;color:var(--faint);background:rgba(4,10,20,.7);border:1px solid var(--line);border-radius:7px;padding:5px 8px}
+.c15-clear .bar{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.c15-clear .bar i{display:block;height:100%;width:20%;background:linear-gradient(90deg,#92400E,#4FE0D0);transition:.5s}
+.c15-mats{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c15-mat{padding:5px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c15-mat:hover,.c15-mat.on{border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.1);color:#7DD3FC}
+.c15-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(56,189,248,.18);background:radial-gradient(ellipse at 50% 60%,rgba(56,189,248,.1),transparent 62%),#070D18;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c15-test .c15-filter{height:200px}
+.c15-test.fail{border-color:rgba(255,122,107,.45)}
+.c15-test.pass{border-color:rgba(79,224,208,.5)}
+.c15-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c15-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c15-meter .bar{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c15-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#38BDF8,#4FE0D0);transition:.6s}
+.c15-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c15-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c15-fix:hover,.c15-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c15-bp-icon{width:140px;height:100px;margin:0 auto}
+.c15-bp-icon svg{width:100%;height:100%}
+@keyframes c15rain{0%{transform:translateY(-20px);opacity:0}20%{opacity:.7}100%{transform:translateY(300px);opacity:0}}
+@keyframes c15drop{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(170px);opacity:0}}
+@media(max-width:900px){.c15-stage,.c15-test{height:250px}.c15-context-grid{grid-template-columns:1fr}}
+@media(max-height:800px){.c15-stage{height:286px}}
+.c15-in,.c15-out{position:absolute;font-size:8.5px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:3px 7px;background:rgba(4,10,20,.55);z-index:5}
+.c15-in{right:14px;top:52px}.c15-out{left:14px;bottom:54px}

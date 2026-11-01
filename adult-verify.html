@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>证书验真 · SIT 创新专业大师版</title>
+<link rel="stylesheet" href="adult-ops.css">
+</head>
+<body>
+<div class="top">
+  <div class="brand"><b>证书验真</b><span>VERIFY</span></div>
+  <div class="grow"></div>
+  <a class="btn sm" href="adult-index.html">课程地图</a>
+</div>
+<div class="wrap" style="max-width:720px">
+  <h1 class="h1">证书验真</h1>
+  <p class="sub">输入证书编号，或直接打开带 <code>?code=</code> 的链接。</p>
+
+  <div class="panel">
+    <div class="field"><label>证书编号</label><input id="code" placeholder="SIT-XXXXXXXX"></div>
+    <button class="btn primary" id="check">查询</button>
+  </div>
+
+  <div id="out"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+const API=(location.protocol==='file:')?'http://127.0.0.1:8898/api/adult':'/api/adult';
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),1800);}
+async function check(code){
+  if(!code){toast('请输入编号');return;}
+  try{
+    const res=await fetch(API+'adult-cert.htmlverify/'+encodeURIComponent(code));
+    const d=await res.json();
+    if(!res.ok)throw new Error(d.detail||'证书不存在');
+    const date=new Date(d.issued_at).toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});
+    $('#out').innerHTML=`<div class="panel" style="border-color:rgba(78,159,110,.45);background:rgba(78,159,110,.06)">
+      <div class="panel-h"><h3>验证通过</h3><span class="tag ok">有效</span></div>
+      <div style="font-size:13px;line-height:2.1;color:var(--ink)">
+        <div><b>姓名</b>　${esc(d.name)}</div>
+        <div><b>课程</b>　${esc(d.course)}</div>
+        <div><b>班级</b>　${esc(d.cohort)}</div>
+        <div><b>编号</b>　<span class="mono">${esc(d.code)}</span></div>
+        <div><b>发证</b>　${date}</div>
+      </div></div>`;
+  }catch(e){
+    $('#out').innerHTML=`<div class="panel" style="border-color:rgba(199,86,96,.45);background:rgba(199,86,96,.06)">
+      <div class="panel-h"><h3>未通过</h3><span class="tag bad">无效</span></div>
+      <p style="font-size:12.5px;color:var(--dim);margin:0">${esc(e.message)}。请核对编号，或联系发证方。</p></div>`;
+  }
+}
+$('#check').onclick=()=>check($('#code').value.trim());
+$('#code').addEventListener('keydown',e=>{if(e.key==='Enter')$('#check').click();});
+const q=new URLSearchParams(location.search).get('code');
+if(q){$('#code').value=q;check(q);}
+})();
+</script>
+</body>
+</html>

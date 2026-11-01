@@ -1,0 +1,38 @@
+/* 第 18 章 · 衣服的新工作（专属场景） */
+.c18-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(244,114,182,.2);background:radial-gradient(ellipse at 50% 58%,rgba(244,114,182,.1),transparent 62%),linear-gradient(180deg,#170A14,#0A0610);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c18-jacket{position:relative;width:210px;height:230px;z-index:3;transition:.3s}
+.c18-jacket svg{width:100%;height:100%;filter:drop-shadow(0 16px 24px rgba(0,0,0,.4))}
+.c18-rain{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.c18-rain i{position:absolute;top:-16px;width:2px;height:14px;background:linear-gradient(180deg,rgba(125,211,252,0),#7DD3FC);animation:c18rain 1s linear infinite;opacity:.45}
+.c18-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(244,114,182,.75)}
+.c18-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(10,5,10,.6)}
+.c18-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c18-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c18-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c18-context:hover,.c18-context.on{border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.09)}
+.c18-parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c18-part{padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:9px;text-align:left}
+.c18-part b{display:block;color:var(--ink);font-size:10px}.c18-part span{display:block;color:var(--faint);font-size:8px;margin-top:2px}
+.c18-part:hover,.c18-part.on{border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.09)}
+.c18-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c18-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c18-act:hover,.c18-act.on{border-color:rgba(244,114,182,.55);background:rgba(244,114,182,.09);color:#FBCFE8}
+.c18-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c18-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c18-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c18-meter .bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#F472B6,#4FE0D0);transition:.5s}
+.c18-test{position:relative;height:290px;border-radius:15px;border:1px solid rgba(244,114,182,.18);background:linear-gradient(180deg,#170A14,#0A0610);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c18-test.run .c18-jacket{animation:c18run .7s ease 3}
+.c18-test.fail .c18-jacket{animation:c18fail 1.1s ease forwards}
+.c18-test.pass .c18-jacket{animation:c18pass .8s ease}
+.c18-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c18-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c18-fix:hover,.c18-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c18-bp-icon{width:140px;height:150px;margin:0 auto}
+.c18-bp-icon svg{width:100%;height:100%}
+@keyframes c18rain{0%{transform:translateY(-20px);opacity:0}20%{opacity:.5}100%{transform:translateY(300px);opacity:0}}
+@keyframes c18run{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(6px) rotate(2deg)}}
+@keyframes c18fail{0%{transform:rotate(0)}100%{transform:rotate(-16deg) translateY(12px);opacity:.7}}
+@keyframes c18pass{0%{transform:rotate(-12deg)}100%{transform:rotate(0)}}
+@media(max-width:900px){.c18-stage,.c18-test{height:250px}.c18-context-grid,.c18-parts{grid-template-columns:1fr}.c18-jacket{width:170px;height:190px}}
+@media(max-height:800px){.c18-stage{height:286px}}

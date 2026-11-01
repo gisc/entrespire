@@ -1,0 +1,48 @@
+/* 第 16 章 · 空气的力量（专属场景） */
+.c16-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(94,234,212,.2);background:linear-gradient(180deg,#071826,#061019 60%,#0B1A20);overflow:hidden}
+.c16-fan{position:absolute;left:22px;top:50%;transform:translateY(-50%);width:86px;height:86px;border-radius:50%;border:3px solid rgba(94,234,212,.55);background:radial-gradient(circle,rgba(94,234,212,.18),rgba(6,16,25,.8));z-index:3}
+.c16-fan:before{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#5EEAD4}
+.c16-fan i{position:absolute;left:50%;top:50%;width:32px;height:7px;border-radius:99px;background:linear-gradient(90deg,#5EEAD4,#0EA5A0);transform-origin:0 50%;animation:c16fan 1.1s linear infinite}
+.c16-fan i:nth-child(2){transform:rotate(120deg);animation-delay:-.36s}.c16-fan i:nth-child(3){transform:rotate(240deg);animation-delay:-.72s}
+.c16-wind{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.c16-wind i{position:absolute;left:96px;height:2px;border-radius:99px;background:linear-gradient(90deg,rgba(94,234,212,0),rgba(94,234,212,.6));animation:c16wind 2.1s linear infinite;opacity:.5}
+.c16-wing{position:absolute;left:52%;top:45%;width:150px;height:44px;transform-origin:50% 50%;transition:.3s;z-index:4}
+.c16-wing svg{width:100%;height:100%;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.c16-wing:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:#FDE68A;border:2px solid #F59E0B}
+.c16-lift{position:absolute;left:50%;top:26%;height:48px;width:2px;background:linear-gradient(180deg,#4FE0D0,rgba(79,224,208,0));z-index:3;transition:.3s}
+.c16-lift:before{content:"升力";position:absolute;left:5px;top:-4px;font-size:8px;color:#4FE0D0;white-space:nowrap}
+.c16-drag{position:absolute;left:54%;top:47%;width:64px;height:2px;background:linear-gradient(90deg,#FB7185,rgba(251,113,133,0));z-index:3;transition:.3s}
+.c16-drag:before{content:"阻力";position:absolute;left:6px;top:-11px;font-size:8px;color:#FB7185}
+.c16-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(94,234,212,.7)}
+.c16-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(4,10,20,.55)}
+.c16-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c16-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c16-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c16-context:hover,.c16-context.on{border-color:rgba(94,234,212,.55);background:rgba(94,234,212,.09)}
+.c16-sliders{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.c16-slider{flex:1;min-width:110px;font-size:8.5px;color:var(--faint)}
+.c16-slider input{width:100%;accent-color:#5EEAD4;margin-top:3px}
+.c16-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c16-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c16-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c16-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5EEAD4,#FBBF24);transition:.5s}
+.c16-parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c16-part{padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:9px;text-align:left}
+.c16-part b{display:block;color:var(--ink);font-size:10px}.c16-part span{display:block;color:var(--faint);font-size:8px;margin-top:2px}
+.c16-part:hover,.c16-part.on{border-color:rgba(94,234,212,.55);background:rgba(94,234,212,.09)}
+.c16-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c16-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c16-act:hover,.c16-act.on{border-color:rgba(94,234,212,.55);background:rgba(94,234,212,.09);color:#5EEAD4}
+.c16-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(94,234,212,.18);background:linear-gradient(180deg,#071826,#061019);overflow:hidden}
+.c16-test.fail{background:linear-gradient(180deg,#1A0E14,#061019)}
+.c16-test.pass{background:linear-gradient(180deg,#071C20,#061019)}
+.c16-test .c16-wing{left:55%;top:42%}
+.c16-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c16-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c16-fix:hover,.c16-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c16-bp-icon{width:150px;height:100px;margin:0 auto}
+.c16-bp-icon svg{width:100%;height:100%}
+@keyframes c16fan{to{transform:rotate(360deg)}}
+@keyframes c16wind{0%{transform:translateX(-40px);opacity:0}20%{opacity:.6}100%{transform:translateX(520px);opacity:0}}
+@media(max-width:900px){.c16-stage,.c16-test{height:250px}.c16-context-grid{grid-template-columns:1fr}.c16-parts{grid-template-columns:1fr}}
+@media(max-height:800px){.c16-stage{height:286px}}

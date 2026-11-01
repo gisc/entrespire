@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教师工作台 · 发小明创新学院</title>
+<style>
+:root{--bg:#070b14;--card:#101728;--line:rgba(255,255,255,.1);--gold:#f2c14e;--dim:#9aa3bd;--faint:#6e7690;--ok:#39d98a;--bad:#ff6b6b;--blue:#7fb2ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 560px at 12% -10%,rgba(109,141,255,.15),transparent 60%),var(--bg);color:#e9edf6;font:24px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding:22px 16px 60px}
+.wrap{max-width:1180px;margin:0 auto}h1{font-family:"Songti SC",serif;font-size:44px;line-height:1.25;margin:0 0 6px}.sub{font-size:22px;color:var(--dim);margin-bottom:20px}
+.card{background:linear-gradient(180deg,rgba(18,26,44,.96),rgba(10,15,28,.96));border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}
+.login{max-width:620px;margin:7vh auto}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px;font-size:17px;color:var(--dim)}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.04);color:#e9edf6;padding:12px 14px;font-family:inherit;font-size:22px;outline:none}textarea{min-height:90px;resize:vertical;line-height:1.7}input:focus,textarea:focus,select:focus{border-color:rgba(242,193,78,.6)}
+.btn{border:1px solid var(--line);border-radius:9px;padding:12px 20px;background:rgba(255,255,255,.04);color:#e9edf6;font-size:21px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:7px}.btn:hover{border-color:rgba(242,193,78,.6);color:#fff}.btn.pri{background:linear-gradient(120deg,#f2c14e,#ffd97a);border-color:#f2c14e;color:#1a1405;font-weight:800}.btn.blue{background:linear-gradient(120deg,#5a8fe8,#7fb2ff);border-color:#7fb2ff;color:#081426;font-weight:800}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 20px}.tab{border:1px solid var(--line);border-radius:99px;padding:11px 22px;font-size:21px;color:var(--dim);cursor:pointer}.tab.active{color:#1a1405;background:linear-gradient(120deg,#f2c14e,#ffd97a);border-color:#f2c14e;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.full{grid-column:1/-1}
+.hint{font-size:20px;color:var(--faint);line-height:1.9}.kicker{font-size:16px;letter-spacing:.26em;color:var(--gold)}.title{font-family:"Songti SC",serif;font-size:42px;font-weight:900;margin:6px 0 8px}
+.phase{font-size:19px;color:var(--gold);letter-spacing:.16em}.clock{font-family:"Songti SC",serif;font-size:clamp(86px,12vw,150px);font-weight:900;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums;margin:10px 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:rgba(255,255,255,.025)}.stat b{display:block;font-size:44px;color:var(--gold);font-family:"Songti SC",serif}.stat span{font-size:16px;color:var(--faint)}
+.student{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:10px;background:rgba(255,255,255,.025)}.student-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.student-h b{font-size:26px}.student-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--faint);margin-top:7px}
+.project{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:19px;color:var(--dim)}.project b{color:#f7e7c6}
+.list{margin:10px 0 0 22px;padding:0;font-size:22px;line-height:2.1;color:#c3ccdc}.list li{margin-bottom:6px}
+.msg{font-size:19px;color:var(--bad);min-height:20px;margin-top:9px}
+.prep{border:1px solid rgba(242,193,78,.28);border-radius:12px;padding:16px;background:rgba(242,193,78,.035)}
+.prep h3{font-family:"Songti SC",serif;font-size:34px;margin:18px 0 8px}.prep p,.prep li{font-size:22px;line-height:2.1;color:#c3ccdc}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}.clock{font-size:72px}}
+.teacher-exit{position:fixed;top:14px;right:16px;z-index:9999;width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:rgba(5,9,18,.9);color:#fff;font-size:23px;line-height:1;cursor:pointer;backdrop-filter:blur(8px)}
+.teacher-exit:hover{border-color:var(--gold);color:#ffe3a6}
+@media print{.teacher-exit{display:none!important}
+
+  body{background:#fff!important;color:#111;padding:0}
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{position:absolute;left:0;top:0;width:100%;background:#fff;padding:0}
+  #printArea .prep{border:0;background:#fff;color:#111}
+  #printArea .prep h2,#printArea .prep h3{color:#111}
+  #printArea .prep p,#printArea .prep li{color:#222}
+  #printArea .kicker{color:#8a5a12}
+}
+.academy{border-color:rgba(242,193,78,.38);background:linear-gradient(120deg,rgba(242,193,78,.10),rgba(16,23,40,.96));}
+.academy .kicker{margin-bottom:6px}
+.academy-title{font-family:"Songti SC",serif;font-size:36px;font-weight:900;line-height:1.25;margin:4px 0 8px}
+.academy-sub{font-size:20px;line-height:1.8;color:#c3ccdc;margin:0 0 14px;max-width:900px}
+.academy .actions{margin-top:4px}
+.academy-hint{font-size:16px;color:var(--faint);align-self:center;margin-left:4px}
+</style>
+<script src="assets-tc-page.js" defer></script>
+</head>
+<body>
+<button class="teacher-exit" type="button" onclick="location.href='course-index.html'" title="退出教师工作台，回课程目录" aria-label="退出教师工作台">✕</button>
+<div class="wrap">
+  <h1>教师工作台</h1>
+  <div class="sub">备课 · 45 分钟课堂 · 学生证据 · 家长摘要。一个老师，也能把创新课上稳。</div>
+  <div class="card login" id="loginBox">
+    <div class="kicker">TEACHER CONSOLE</div>
+    <div class="field"><label>教师昵称</label><input id="lgNick" autocomplete="username"></div>
+    <div class="field"><label>密码</label><input id="lgPwd" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn pri" style="width:100%" onclick="doLogin()">进入工作台</button>
+    <div class="msg" id="lgMsg"></div>
+    <div class="hint" style="margin-top:12px">用主站教师账号登录。没有班级？请联系机构管理员绑定教师码。</div><div class="hint" style="margin-top:10px">第一次来？<a href="teacher-training-index.html" target="_blank" style="color:var(--gold);text-decoration:underline">先看教师特训营 →</a></div>
+  </div>
+  <div id="dash" style="display:none">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      <div><span class="kicker">TEACHER CONSOLE</span><div style="font-size:13px;color:var(--dim);margin-top:3px">老师：<b style="color:var(--gold)" id="who">—</b> · <span id="classInfo">—</span></div></div>
+      <div class="actions" style="margin:0"><a class="btn pri" href="teacher-training-index.html" target="_blank" title="教师创新力特训营">✦ 特训营</a><a class="btn" id="adminSettings" style="display:none" href="course-admin.html" target="_blank">班级与教师设置 ↗</a><a class="btn" href="index.html" target="_blank">主站 ↗</a><button class="btn" onclick="logout()">退出</button></div>
+    </div>
+    <div class="tabs"><button class="tab active" data-tab="prep" onclick="switchTab('prep')">备课</button><button class="tab" data-tab="class" onclick="switchTab('class')">课堂 45 分钟</button><button class="tab" data-tab="evidence" onclick="switchTab('evidence')">学生证据</button></div>
+    <div id="view"></div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+let TOKEN=localStorage.getItem('iv3_token')||'', ME=null, CLASSES=[], CLASS=null, CHAPTERS=[], TAB='prep', PHASE=0, LEFT=1200, TIMER=null, RUNNING=false, PREP_CH='', CLASS_CH='', IS_ADMIN=false;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function headers(){return TOKEN?{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}:{'Content-Type':'application/json'};}
+function toast(m,bad){$('#lgMsg')&&($('#lgMsg').textContent=m);if(!$('#lgMsg'))alert(m);}
+function adminSetupHtml(){
+  return '<div class="card"><div class="kicker">ADMIN SETUP · 教师工作台设置</div><div class="title">先把班级和老师接进来</div>'+
+    '<p class="hint">教师工作台不是教师登录页。管理员账号会自动进入“全部班级”视图；如果还没有班级，请先到课程机构后台创建班级、发教师码，并绑定老师。</p>'+
+    '<div class="actions"><a class="btn pri" href="course-admin.html" target="_blank">打开班级与教师设置 ↗</a>'+
+    '<a class="btn" href="ops-index.html" target="_blank">学校运营台 ↗</a>'+
+    '<a class="btn" href="admin-problems.html" target="_blank">真实问题 / 悬赏后台 ↗</a>'+
+    '<a class="btn" href="index.html" target="_blank">回主站 ↗</a></div>'+
+    '<div class="hint" style="margin-top:16px">完成后刷新本页，就能看到全部班级的备课、课堂计时、学生证据和家长摘要。</div></div>';
+}
+async function boot(){
+  if(!TOKEN){$('#loginBox').style.display='block';return;}
+  try{
+    const r=await fetch('/api/me',{headers:headers()}); if(!r.ok) throw new Error('未登录');
+    ME=await r.json(); IS_ADMIN=!!ME.admin;
+    if(!(ME.teacherOf&&ME.teacherOf.length) && !IS_ADMIN) throw new Error('这个账号还没有绑定班级');
+    const cr=await fetch('/api/teacher/overview',{headers:headers()}); const cd=await cr.json();
+    if(!cr.ok) throw new Error(cd.error||'加载班级失败');
+    CLASSES=cd.classes||[];
+    const ar=await fetch('/api/access/config'); const ad=await ar.json();
+    CHAPTERS=(ad&&ad.chapters)||[];
+    $('#loginBox').style.display='none'; $('#dash').style.display='block';
+    $('#who').textContent=ME.nick+(IS_ADMIN?' · 管理员':'');
+    const ab=$('#adminSettings'); if(ab) ab.style.display=IS_ADMIN?'inline-flex':'none';
+    if(!CLASSES.length){
+      if(IS_ADMIN){
+        $('#classInfo').textContent='管理员视图 · 还没有班级';
+        $('#view').innerHTML=adminSetupHtml();
+        return;
+      }
+      throw new Error('这个账号绑定的班级不存在或已失效');
+    }
+    CLASS=CLASSES[0];
+    $('#classInfo').textContent=IS_ADMIN?('管理员视图 · '+CLASSES.length+' 个班级'):CLASSES.map(c=>className(c)).join(' / ');
+    switchTab(TAB);
+  }catch(e){ $('#loginBox').style.display='block'; $('#lgMsg').textContent=e.message; if(!TOKEN)return; }
+}
+async function doLogin(){
+  const nick=$('#lgNick').value.trim(),pwd=$('#lgPwd').value; $('#lgMsg').textContent='';
+  try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,pwd})});const d=await r.json();if(!r.ok)throw new Error(d.error||'登录失败');TOKEN=d.token;localStorage.setItem('iv3_token',TOKEN);boot();}catch(e){$('#lgMsg').textContent=e.message;}
+}
+function logout(){TOKEN='';localStorage.removeItem('iv3_token');location.reload();}
+function switchTab(t){TAB=t;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));render();}
+function className(c){ return c && c.schoolName ? (c.name+' · '+c.schoolName) : (c&&c.name||''); }
+function chapterOptions(sel){return CHAPTERS.map(c=>'<option value="'+esc(c.no)+'"'+(String(c.no)===String(sel)?' selected':'')+'>第 '+esc(c.no)+' 章 · '+esc(c.title)+'</option>').join('');}
+function render(){
+  if(!CLASS)return;
+  if(TAB==='prep')renderPrep();
+  else if(TAB==='class')renderClass();
+  else renderEvidence();
+}
+function selectedChapter(){const no=(TAB==='class'?(CLASS_CH||PREP_CH):(PREP_CH||CLASS_CH))||((CHAPTERS[0]&&CHAPTERS[0].no)||'01');return CHAPTERS.find(c=>String(c.no)===String(no))||{no:no,title:'第 '+no+' 章'};}
+function academyHtml(){
+  return '<div class="card academy"><div class="kicker">TEACHER ACADEMY · 2 天 1 夜</div>'+
+    '<div class="academy-title">先点亮自己，再点亮学生</div>'+
+    '<p class="academy-sub">10 个航段 · 40 课地图 · 课堂互动 · 可下载图表。第一次来，建议从“点亮”开始；带班前，可以跳到“看港”查课卡。</p>'+
+    '<div class="actions"><a class="btn pri" href="teacher-training-index.html" target="_blank">打开特训课件 ↗</a>'+
+    '<a class="btn" href="teacher-training-index.htmlpdf/40课地图.pdf" target="_blank">下载 40 课地图</a>'+
+    '<a class="btn" href="teacher-training-index.htmlpdf/课堂提问卡.pdf" target="_blank">下载提问卡</a>'+
+    '<span class="academy-hint">可复习 · 可投影 · 可打印</span></div></div>';
+}
+function renderPrep(){
+  if(!PREP_CH) PREP_CH=selectedChapter().no;
+  const c=selectedChapter();
+  const title=c.title||'创新课';
+  $('#view').innerHTML=academyHtml()+'<div class="card"><div class="grid2"><div class="field full"><label>选择本章</label><select id="prepChapter" onchange="PREP_CH=this.value;renderPrep()">'+chapterOptions(PREP_CH)+'</select></div>'+
+    '<div class="field"><label>班级</label><select id="prepClass" onchange="pickClass(this.value)">'+CLASSES.map((x,i)=>'<option value="'+i+'"'+(x.id===CLASS.id?' selected':'')+'>'+esc(className(x))+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label>本课结构</label><div class="hint" style="padding-top:8px">20 分钟原课件 + 10 分钟人脑静思 + 15 分钟人机共创</div></div></div>'+
+    '<div class="actions"><button class="btn pri" onclick="printPrep()">打印 / 存为 PDF</button><button class="btn" onclick="switchTab(\'class\')">进入课堂计时</button></div></div>'+
+    '<div id="printArea">'+prepHtml(c)+'</div>';
+}
+function prepHtml(c){
+  const t=c.title||'本章';
+  return '<div class="prep"><div class="kicker">LESSON PLAN · 第 '+esc(c.no)+' 章</div><h2 class="title">'+esc(t)+'</h2>'+
+    '<p class="hint">班级：'+esc(CLASS.name)+' · 45 分钟 · 大屏 + 任务单 + 草稿纸</p>'+
+    '<h3>① 0–20 分钟 · 原课件</h3><ul class="list">'+
+      '<li>用课程页打开第 '+esc(c.no)+' 章，按原课件节奏走。</li>'+
+      '<li>目标：学生能说清“本章要解决什么问题”，并举一个自己生活里的例子。</li>'+
+      '<li>目标：学生能用一个本章工具，做出一个可解释的方案。</li>'+
+      '<li>目标：学生能留下一个证据或一次失败记录。</li></ul>'+
+    '<h3>② 20–30 分钟 · 人脑静思（不碰 AI）</h3><ul class="list">'+
+      '<li>停下电脑，发草稿纸与笔。屏幕只留 10 分钟倒计时。</li>'+
+      '<li>纸上写三件事：谁最受这个问题折磨？我最硬的证据是什么？如果只改一个地方，我改哪里？</li>'+
+      '<li>老师只巡场，不提示答案，不替学生写。</li></ul>'+
+    '<h3>③ 30–45 分钟 · 人机共创</h3><ul class="list">'+
+      '<li>把纸上的一个点带回灵感大厅或我的实验室，只完成本周微挑战。</li>'+
+      '<li>产出：一张证据卡 / 一次迭代 / 一句用户原话，不追求完整发明。</li>'+
+      '<li>下课前 3 分钟：学生用一句话说“我今天改了什么”。</li></ul>'+
+    '<h3>关键提问</h3><ul class="list">'+
+      '<li>“哪一天、谁、你亲眼看见了什么？”</li><li>“现在的人是怎么凑合的？”</li><li>“你的证据是什么？没有证据也没关系，先记下来。”</li>'+
+      '<li>“如果只能改一个地方，你改哪里？”</li><li>“这次失败留下了什么？”</li></ul>'+
+    '<h3>常见误区</h3><ul class="list"><li>把“大家”当用户，没有具体的人。</li><li>把“想法”当证据，没有测试或记录。</li><li>AI 代做，孩子说不清自己的方案。</li><li>只做一次就说“完美”，没有迭代。</li></ul>'+
+    '<h3>给家长的 3 分钟摘要</h3><p>今天孩子完成了《'+esc(t)+'》。回家只问三个问题：你今天发现了谁的一个麻烦？你拿什么证明？如果重来一次，你先改哪里？请不要替孩子操作，也不要评价“对不对”，听他说完。</p>'+
+    '<p class="hint">材料：课程页、任务单、草稿纸、笔、计时器。离线也能上：用任务单 + 纸笔完成 20/10/15。</p></div>';
+}
+function pickClass(id){CLASS=CLASSES[+id]||CLASS;render();}
+function printPrep(){window.print();}
+function renderClass(){
+  if(!CLASS_CH) CLASS_CH=PREP_CH||selectedChapter().no;
+  const c=selectedChapter();
+  const students=(CLASS.students||[]).map(s=>s.nick);
+  $('#view').innerHTML='<div class="card"><div class="kicker">45-MIN CLASS · 课堂</div><div class="grid2">'+
+    '<div class="field"><label>班级</label><select onchange="pickClass(this.value)">'+CLASSES.map((x,i)=>'<option value="'+i+'"'+(x.id===CLASS.id?' selected':'')+'>'+esc(className(x))+'</option>').join('')+'</select></div>'+
+    '<div class="field"><label>本章</label><select id="classChapter" onchange="CLASS_CH=this.value;renderClass()">'+chapterOptions(CLASS_CH)+'</select></div></div>'+
+    '<div style="text-align:center;margin:18px 0"><div class="phase" id="phaseName">原课件 · 20 分钟</div><div class="clock" id="clock">20:00</div>'+
+    '<div class="hint" id="phaseHint">按原课件走；20 分钟后进入 10 分钟人脑静思。</div>'+
+    '<div class="actions" style="justify-content:center"><button class="btn pri" id="btnTimer" onclick="toggleTimer()">开始</button><button class="btn" onclick="nextPhase()">下一段</button><button class="btn" onclick="resetTimer()">重置</button><button class="btn" onclick="window.open(\'course-chapter.html?ch='+esc(c.no)+'&hint=1\',\'_blank\')">打开课程页 ↗</button></div></div>'+
+    '<div class="grid3"><div class="stat"><b>20</b><span>分钟原课件</span></div><div class="stat"><b>10</b><span>分钟人脑静思</span></div><div class="stat"><b>15</b><span>分钟人机共创</span></div></div></div>'+
+    '<div class="card"><div class="kicker">GROUP ROLES</div><div class="grid2"><div><b>两人组</b><ul class="list"><li>发明大王：决定做什么、为什么</li><li>CFO：算成本、算价格、记证据</li></ul></div><div><b>四人组</b><ul class="list"><li>问题侦探：访谈与证据</li><li>原型师：动手做</li><li>测试员：对照与记录</li><li>路演官：讲给外人听</li></ul></div></div>'+
+    '<div class="actions"><button class="btn blue" onclick="randomStudent()">🎲 随机抽一位学生</button><span id="pickName" style="font-size:13px;color:var(--gold)"></span></div></div>'+
+    '<div class="card"><div class="kicker">QUICK LINKS</div><div class="actions"><button class="btn" onclick="window.open(\'icc-index.html\',\'_blank\')">ICC 模拟评审 ↗</button><button class="btn" onclick="window.open(\'index.html?scene=mylab\',\'_blank\')">我的实验室 ↗</button><button class="btn" onclick="window.open(\'index.html?scene=inspire\',\'_blank\')">灵感大厅 ↗</button></div></div>';
+  PHASE=0;LEFT=1200;RUNNING=false;paintClock();
+}
+const PHASES=[{name:'原课件 · 20 分钟',sec:1200,hint:'按原课件走；20 分钟后进入 10 分钟人脑静思。'},{name:'人脑静思 · 10 分钟',sec:600,hint:'停下 AI 与电脑，发草稿纸与笔；屏幕只留倒计时。'},{name:'人机共创 · 15 分钟',sec:900,hint:'只完成一个微挑战：一张证据卡 / 一次迭代 / 一句用户原话。'}];
+function paintClock(){const p=PHASES[PHASE];const m=Math.floor(Math.max(0,LEFT)/60),s=Math.max(0,LEFT)%60;if($('#clock'))$('#clock').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;if($('#phaseName'))$('#phaseName').textContent=p.name;if($('#phaseHint'))$('#phaseHint').textContent=p.hint;if($('#btnTimer'))$('#btnTimer').textContent=RUNNING?'暂停':'开始';}
+function toggleTimer(){RUNNING=!RUNNING;if(RUNNING){if(TIMER)clearInterval(TIMER);TIMER=setInterval(()=>{LEFT--;paintClock();if(LEFT<=0){clearInterval(TIMER);TIMER=null;RUNNING=false;beep();paintClock();}},1000);}else{clearInterval(TIMER);TIMER=null;}paintClock();}
+function nextPhase(){PHASE=(PHASE+1)%3;LEFT=PHASES[PHASE].sec;RUNNING=false;if(TIMER)clearInterval(TIMER);TIMER=null;paintClock();}
+function resetTimer(){PHASE=0;LEFT=1200;RUNNING=false;if(TIMER)clearInterval(TIMER);TIMER=null;paintClock();}
+function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.value=.15;o.start();setTimeout(()=>{o.stop();c.close();},600);}catch(e){}}
+function randomStudent(){const arr=(CLASS.students||[]).map(s=>s.nick);if(!arr.length){alert('这个班还没有学生');return;}const n=arr[Math.floor(Math.random()*arr.length)];if($('#pickName'))$('#pickName').textContent='👉 '+n;}
+function renderEvidence(){
+  const st=CLASS.students||[];
+  const totals=st.reduce((a,s)=>({projects:a.projects+s.projectCount,spring:a.spring+s.springCount,iterations:a.iterations+s.iterationCount,reviews:a.reviews+s.reviewCount}),{projects:0,spring:0,iterations:0,reviews:0});
+  $('#view').innerHTML='<div class="card"><div class="grid2"><div class="field"><label>班级</label><select onchange="pickClass(this.value)">'+CLASSES.map((x,i)=>'<option value="'+i+'"'+(x.id===CLASS.id?' selected':'')+'>'+esc(className(x))+'</option>').join('')+'</select></div><div class="field"><label>班级证据概览</label><div class="hint" style="padding-top:8px">作品 '+totals.projects+' · 春播记录 '+totals.spring+' · 迭代 '+totals.iterations+' · 评审 '+totals.reviews+'</div></div></div></div>'+
+    (st.length?st.map(s=>'<div class="student"><div class="student-h"><b>'+esc(s.nick)+'</b><span class="hint">最新评分：'+(s.latestScore!=null?Number(s.latestScore).toFixed(1):'暂缺')+'</span></div>'+
+      '<div class="student-meta"><span>作品 '+s.works+'</span><span>项目 '+s.projectCount+'</span><span>春播 '+s.springCount+'</span><span>迭代 '+s.iterationCount+'</span><span>评审 '+s.reviewCount+'</span></div>'+
+      ((s.projects||[]).length?'<div style="margin-top:6px">'+s.projects.map(p=>'<div class="project"><b>'+esc(p.title)+'</b> · 春播 '+p.springCount+' · 迭代 '+p.iterationCount+' · 评审 '+p.reviewCount+' · 最新 '+(p.latestReviewScore!=null?Number(p.latestReviewScore).toFixed(1):(p.latestScore!=null?Number(p.latestScore).toFixed(1):'暂缺'))+'</div>').join('')+'</div>':'')+
+      '<div class="actions"><button class="btn" onclick="digest(\''+esc(s.nick)+'\')">生成家长摘要</button></div></div>').join(''):'<div class="card">这个班还没有学生。</div>');
+}
+function digest(nick){
+  const s=(CLASS.students||[]).find(x=>x.nick===nick); if(!s)return;
+  const lines=['【发小明·本周成长摘要】','孩子：'+s.nick+'　班级：'+CLASS.name,'',
+    '本周项目：'+s.projectCount+' 个；春播记录：'+s.springCount+' 条；夏耕迭代：'+s.iterationCount+' 次；秋收评审：'+s.reviewCount+' 次。',
+    '最近一次评分：'+(s.latestScore!=null?Number(s.latestScore).toFixed(1):'暂缺')+'。','',
+    '建议回家只问三个问题：','1. 你今天发现了谁的一个真实麻烦？','2. 你拿什么证明它真的有用？','3. 如果重来一次，你先改哪里？','',
+    '请不要替孩子操作，也不要只问“做完了吗”。听他把一个细节讲完，就是最好的支持。'];
+  const text=lines.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>alert('家长摘要已复制，可直接粘贴到家长群。\n\n'+text)).catch(()=>alert(text));}
+  else alert(text);
+}
+boot();
+</script>
+</body>
+</html>

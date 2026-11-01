@@ -1,0 +1,20 @@
+/* A38 · 专属样式（.a38- 前缀），待开发 */
+/* A38 · 十个虚拟产品 */
+.a38-list{display:flex;flex-direction:column;gap:6px}
+.a38-row{display:grid;grid-template-columns:76px 1fr;gap:8px;align-items:center;
+  border:1px solid var(--line2);border-radius:7px;background:#0F151F;padding:7px 9px}
+.a38-th{display:flex;align-items:center;gap:5px}
+.a38-k{font-size:10.5px;color:var(--acc2);font-family:var(--mono)}
+.a38-hint{width:15px;height:15px;border-radius:50%;border:1px solid var(--line2);font-size:9px;color:var(--faint);line-height:1}
+.a38-hint:hover{border-color:var(--acc);color:var(--acc)}
+.a38-in input{width:100%;background:#0B1018;border:1px solid var(--line2);border-radius:5px;
+  padding:6px 8px;font-size:11px;color:var(--ink);margin-bottom:4px}
+.a38-in input:last-child{margin-bottom:0}
+.a38-in input::placeholder{color:#3F4B60}
+.a38-pick{display:flex;flex-direction:column;gap:5px}
+.a38-p{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:center;text-align:left;
+  border:1px solid var(--line2);border-radius:6px;background:#0F151F;padding:6px 9px;transition:.15s}
+.a38-p:hover{border-color:#3A475E}
+.a38-p.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.1)}
+.a38-p b{font-size:9.5px;color:var(--acc2);font-family:var(--mono)}
+.a38-p span{font-size:11px;color:var(--ink);line-height:1.45}

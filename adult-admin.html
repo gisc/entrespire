@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>管理后台 · SIT 创新专业大师版</title>
+<link rel="stylesheet" href="adult-ops.css">
+</head>
+<body>
+<div class="top">
+  <div class="brand"><b>SIT 管理后台</b><span>ADMIN</span></div>
+  <div class="grow"></div>
+  <span class="who" id="who"></span>
+  <a class="btn sm" href="adult-teacher.html">直播中控</a>
+  <a class="btn sm" href="adult-index.html">课程地图</a>
+  <button class="btn sm" id="logout">退出</button>
+</div>
+
+<div class="wrap">
+  <div id="loginBox" style="display:none">
+    <h1 class="h1">员工登录</h1>
+    <p class="sub">管理员可改角色、发证书；讲师只能看与发本班证书。</p>
+    <div class="panel" style="max-width:420px">
+      <div class="field"><label>员工口令</label><input id="pwd" type="password"></div>
+      <button class="btn primary" id="doLogin">进入</button>
+    </div>
+  </div>
+
+  <div id="app" style="display:none">
+    <h1 class="h1">管理后台</h1>
+    <p class="sub">班级、邀请码、学员、结业证书，都在这一页。</p>
+
+    <div class="grid g4" style="margin-bottom:14px">
+      <div class="stat"><b id="tCohorts">0</b><span>班级</span></div>
+      <div class="stat"><b id="tStudents">0</b><span>学员</span></div>
+      <div class="stat"><b id="tSubs">0</b><span>提交总数</span></div>
+      <div class="stat"><b id="tCerts">0</b><span>已发证书</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>班级</h3><span id="ovAt"></span></div>
+      <table><thead><tr><th>班级</th><th>学员</th><th>提交</th><th>证书</th><th>邀请码</th><th></th></tr></thead>
+        <tbody id="cohortRows"></tbody></table>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+      <div class="panel">
+        <div class="panel-h"><h3>新建班级</h3><span>邀请码留空自动生成</span></div>
+        <div class="field"><label>名称</label><input id="newName" placeholder="例如：SIT大师版·二期"></div>
+        <div class="grid g2">
+          <div class="field"><label>周数</label><input id="newWeeks" type="number" value="10" min="1" max="52"></div>
+          <div class="field"><label>邀请码（可留空）</label><input id="newCode" placeholder="SIT2027"></div>
+        </div>
+        <button class="btn primary" id="createBtn">创建</button>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h3>发证书</h3><span>先选班级，再点学员</span></div>
+        <p style="font-size:12px;color:var(--faint);margin:0 0 10px">
+          条件：A37–A39 至少完成 2 节，且 A40 结业卡已提交。不达标会提示还缺哪一项。
+        </p>
+        <div id="certBox" class="empty">在下面的成员表里点「发证书」</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>成员</h3><span id="memberHint">选一个班级</span></div>
+      <table><thead><tr><th>姓名</th><th>角色</th><th>已提交</th><th>最近提交</th><th>证书</th><th></th></tr></thead>
+        <tbody id="memberRows"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+const API=(location.protocol==='file:')?'http://127.0.0.1:8898/api/adult':'/api/adult';
+const TKEY='fxm_staff_token';
+let TOKEN=localStorage.getItem(TKEY)||'',me=null,current=null;
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),1900);}
+async function call(path,opt){
+  opt=opt||{};
+  const res=await fetch(API+path,{method:opt.method||'GET',headers:Object.assign({'Content-Type':'application/json'},TOKEN?{Authorization:'Bearer '+TOKEN}:{}),body:opt.body?JSON.stringify(opt.body):undefined});
+  const data=await res.json().catch(()=>({}));
+  if(res.status===401){localStorage.removeItem(TKEY);TOKEN='';showLogin();throw new Error(data.detail||'请先登录');}
+  if(!res.ok)throw new Error(data.detail||('请求失败 '+res.status));
+  return data;
+}
+function showLogin(){$('#loginBox').style.display='';$('#app').style.display='none';}
+async function boot(){
+  $('#loginBox').style.display='none';$('#app').style.display='';
+  const ov=await call('adult-admin-index.htmloverview');
+  $('#tCohorts').textContent=ov.totals.cohorts;
+  $('#tStudents').textContent=ov.totals.students;
+  $('#tSubs').textContent=ov.totals.submissions;
+  $('#tCerts').textContent=ov.totals.certificates;
+  $('#ovAt').textContent='更新于 '+new Date().toLocaleTimeString('zh-CN',{hour12:false});
+  $('#cohortRows').innerHTML=ov.cohorts.map(c=>`<tr>
+    <td>${esc(c.name)}<div style="font-size:10.5px;color:var(--faint)">${c.weeks} 周 · 起 ${esc(c.start_at||'—')}</div></td>
+    <td class="mono">${c.students}</td><td class="mono">${c.submissions}</td><td class="mono">${c.certificates}</td>
+    <td class="mono">${esc(c.invite_code)}</td>
+    <td style="white-space:nowrap"><button class="btn sm" data-mem="${c.id}">成员</button>
+      <button class="btn sm" data-rotate="${c.id}">换码</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">还没有班级</td></tr>';
+  document.querySelectorAll('[data-mem]').forEach(b=>b.onclick=()=>loadMembers(+b.dataset.mem));
+  document.querySelectorAll('[data-rotate]').forEach(b=>b.onclick=async()=>{
+    if(!confirm('换码后旧邀请码立即失效，已入班的学员不受影响。继续？'))return;
+    try{const r=await call('adult-admin-index.htmlcohorts/'+b.dataset.rotate+'/invite',{method:'POST'});toast('新邀请码：'+r.invite_code);boot();}catch(e){toast(e.message);}
+  });
+  if(ov.cohorts.length)loadMembers(ov.cohorts[0].id);
+}
+async function loadMembers(cid){
+  current=cid;
+  try{
+    const d=await call('adult-admin-index.htmlcohorts/'+cid+'/members');
+    $('#memberHint').textContent=d.cohort.name+' · 邀请码 '+d.cohort.invite_code;
+    $('#memberRows').innerHTML=d.members.map(m=>`<tr>
+      <td>${esc(m.name)}</td>
+      <td>${me&&me.role==='admin'
+        ?`<select data-role="${m.id}">${['student','teacher','admin'].map(r=>`<option value="${r}" ${m.role===r?'selected':''}>${r}</option>`).join('')}</select>`
+        :`<span class="tag">${esc(m.role)}</span>`}</td>
+      <td class="mono">${m.submitted}</td>
+      <td class="mono" style="font-size:10.5px">${esc((m.last_at||'').replace('T',' ').slice(0,16)||'—')}</td>
+      <td>${m.cert?'<span class="tag ok">已发</span>':'<span class="tag">—</span>'}</td>
+      <td style="white-space:nowrap">${m.role==='student'?`<button class="btn sm" data-cert="${m.id}">发证书</button>`:''}</td>
+    </tr>`).join('');
+    document.querySelectorAll('[data-role]').forEach(sel=>sel.onchange=async()=>{
+      try{await call('adult-admin-index.htmlmembers/'+sel.dataset.role+'/role',{method:'POST',body:{role:sel.value}});toast('角色已更新');}catch(e){toast(e.message);boot();}
+    });
+    document.querySelectorAll('[data-cert]').forEach(b=>b.onclick=async()=>{
+      try{
+        const r=await call('adult-cert.htmlissue',{method:'POST',body:{user_id:+b.dataset.cert}});
+        $('#certBox').innerHTML=`<div class="card"><h4>${r.created?'已发证':'已有证书'}</h4>
+          <div class="kv"><b>编号</b>${r.certificate.code}<br><b>验真</b><a href="adult-verify.html?code=${encodeURIComponent(r.certificate.code)}" target="_blank">打开验真页</a></div></div>`;
+        toast(r.created?'证书已生成':'该学员已有证书');
+        loadMembers(current);boot();
+      }catch(e){toast(e.message);}
+    });
+  }catch(e){toast(e.message);}
+}
+$('#doLogin').onclick=async()=>{
+  try{
+    const r=await call('adult-auth-index.htmlstaff',{method:'POST',body:{password:$('#pwd').value}});
+    TOKEN=r.token;localStorage.setItem(TKEY,TOKEN);me=r.user;
+    $('#who').textContent=r.user.name+' · '+r.user.role;
+    boot();
+  }catch(e){toast(e.message);}
+};
+$('#pwd').addEventListener('keydown',e=>{if(e.key==='Enter')$('#doLogin').click();});
+$('#logout').onclick=()=>{localStorage.removeItem(TKEY);TOKEN='';showLogin();};
+$('#createBtn').onclick=async()=>{
+  try{
+    const r=await call('adult-admin-index.htmlcohorts',{method:'POST',body:{name:$('#newName').value,weeks:+$('#newWeeks').value||10,invite_code:$('#newCode').value}});
+    toast('已创建，邀请码 '+r.cohort.invite_code);
+    $('#newName').value='';$('#newCode').value='';
+    boot();
+  }catch(e){toast(e.message);}
+};
+if(TOKEN){
+  call('/me').then(u=>{me=u.user||u;me=me.role?me:{role:'admin'};$('#who').textContent=(me.name||'')+' · '+(me.role||'');boot();}).catch(()=>showLogin());
+}else showLogin();
+})();
+</script>
+</body>
+</html>
+

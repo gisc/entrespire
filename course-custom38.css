@@ -1,0 +1,41 @@
+/* 第 38 章 · 原型路演（专属场景） */
+.c38-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(251,191,36,.22);background:radial-gradient(ellipse at 50% 40%,rgba(251,191,36,.12),transparent 66%),linear-gradient(180deg,#150F04,#080501);overflow:hidden}
+.c38-booth{position:absolute;left:8%;right:8%;bottom:24px;height:140px;border-radius:8px;background:linear-gradient(180deg,rgba(251,191,36,.1),rgba(251,191,36,.03));border:1px solid rgba(251,191,36,.25)}
+.c38-table{position:absolute;left:14%;right:14%;bottom:38px;height:16px;border-radius:4px;background:#78350F;border:1px solid #FBBF24;z-index:4}
+.c38-poster{position:absolute;left:12%;bottom:80px;width:100px;height:86px;border-radius:4px;background:#F5F0E6;border:2px solid #FBBF24;z-index:6;padding:5px;color:#1C1917;transform:rotate(-2deg)}
+.c38-poster b{font-size:7px;display:block;line-height:1.25}.c38-poster i{display:block;height:3px;background:#D6D3D1;margin-top:3px}
+.c38-proto{position:absolute;left:44%;bottom:54px;width:86px;height:60px;z-index:6}
+.c38-proto svg{width:100%;height:100%}
+.c38-presenter{position:absolute;right:18%;bottom:58px;font-size:40px;z-index:6}
+.c38-audience{position:absolute;right:6%;bottom:10px;display:flex;gap:5px;font-size:20px;z-index:5}
+.c38-timer{position:absolute;right:12%;top:16px;font-size:8px;color:var(--faint);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:4px 8px;background:rgba(8,5,1,.6);z-index:7}
+.c38-timer b{font-size:14px;color:#FDE68A}
+.c38-progress{position:absolute;left:8%;right:8%;bottom:10px;height:4px;border-radius:99px;background:rgba(255,255,255,.1);z-index:8;overflow:hidden}
+.c38-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FBBF24,#4FE0D0);transition:.2s}
+.c38-q{position:absolute;left:50%;top:18px;transform:translateX(-50%);max-width:60%;font-size:8px;color:#FDE68A;background:rgba(251,191,36,.1);border:1px dashed rgba(251,191,36,.45);border-radius:6px;padding:4px 8px;z-index:7;opacity:0;transition:.3s}
+.c38-q.on{opacity:1}
+.c38-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(253,230,138,.75);z-index:9}
+.c38-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,5,1,.6);z-index:9}
+.c38-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c38-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c38-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c38-context:hover,.c38-context.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08)}
+.c38-mods{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c38-mod{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c38-mod:hover,.c38-mod.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08);color:#FDE68A}
+.c38-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c38-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c38-act:hover,.c38-act.on{border-color:rgba(251,191,36,.55);background:rgba(251,191,36,.08);color:#FDE68A}
+.c38-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c38-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c38-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c38-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FBBF24,#4FE0D0);transition:.5s}
+.c38-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(251,191,36,.2);background:linear-gradient(180deg,#150F04,#080501);overflow:hidden}
+.c38-test .c38-stage{position:absolute;inset:8px;height:auto;border:0}
+.c38-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c38-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c38-fix:hover,.c38-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c38-bp-icon{width:150px;height:100px;margin:0 auto}
+.c38-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c38-stage,.c38-test{height:250px}.c38-context-grid,.c38-mods{grid-template-columns:1fr}.c38-poster{width:80px;height:70px}.c38-presenter{right:12%}}
+@media(max-height:800px){.c38-stage{height:286px}}

@@ -1,0 +1,42 @@
+/* 第 20 章 · 教室动线（专属场景） */
+.c20-plan{position:relative;height:300px;border-radius:16px;border:1px solid rgba(167,139,250,.22);background:linear-gradient(180deg,#0D0A1A,#07050E);overflow:hidden}
+.c20-room{position:absolute;inset:16px;border:1px dashed rgba(167,139,250,.28);border-radius:8px;background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(255,255,255,.025) 39px 40px),repeating-linear-gradient(90deg,transparent 0 49px,rgba(255,255,255,.025) 49px 50px)}
+.c20-door{position:absolute;left:20px;bottom:0;width:56px;height:12px;border-radius:4px 4px 0 0;background:#A78BFA;box-shadow:0 0 14px rgba(167,139,250,.4);z-index:5;font-size:7px;color:#1B1030;text-align:center;line-height:12px}
+.c20-zone{position:absolute;padding:5px 7px;border-radius:6px;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.08);font-size:8px;color:#DDD6FE;z-index:4}
+.c20-zone.storage{left:34px;top:34px}.c20-zone.quiet{right:34px;top:34px}.c20-zone.recycle{right:34px;bottom:34px}
+.c20-desk{position:absolute;width:42px;height:20px;border-radius:4px;background:rgba(167,139,250,.18);border:1px solid rgba(167,139,250,.35);z-index:3}
+.c20-desk span{position:absolute;left:50%;top:-11px;transform:translateX(-50%);font-size:7px;color:rgba(221,214,254,.5)}
+.c20-cabinet{position:absolute;left:44%;top:42%;width:70px;height:34px;border-radius:6px;background:linear-gradient(160deg,#7C3AED,#4C1D95);border:1px solid #C4B5FD;box-shadow:0 8px 16px rgba(0,0,0,.4);z-index:6;cursor:grab;touch-action:none}
+.c20-cabinet:before{content:"储物柜";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#EDE9FE}
+.c20-cabinet:after{content:"↔ 拖动";position:absolute;right:4px;bottom:-14px;font-size:7px;color:rgba(221,214,254,.5);white-space:nowrap}
+.c20-cabinet.dragging{cursor:grabbing;box-shadow:0 0 0 3px rgba(167,139,250,.3),0 12px 22px rgba(0,0,0,.5)}
+.c20-flow{position:absolute;inset:0;z-index:2;pointer-events:none}
+.c20-flow path{fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:7 6;opacity:.7;transition:.3s}
+.c20-flow .p1{stroke:#4FE0D0}.c20-flow .p2{stroke:#F5C451}.c20-flow .p3{stroke:#FB7185}
+.c20-plan.blocked .c20-flow .p1,.c20-plan.blocked .c20-flow .p2{stroke:#FF7A6B;stroke-width:5;opacity:1}
+.c20-plan.blocked .c20-cabinet{box-shadow:0 0 0 3px rgba(255,122,107,.4),0 0 26px rgba(255,122,107,.3)}
+.c20-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(167,139,250,.75);z-index:7}
+.c20-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(7,5,14,.65);z-index:7}
+.c20-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c20-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c20-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c20-context:hover,.c20-context.on{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.09)}
+.c20-zones{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c20-zbtn{padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:9px;text-align:left}
+.c20-zbtn b{display:block;color:var(--ink);font-size:10px}.c20-zbtn span{display:block;color:var(--faint);font-size:8px;margin-top:2px}
+.c20-zbtn:hover,.c20-zbtn.on{border-color:rgba(167,139,250,.55);background:rgba(167,139,250,.09)}
+.c20-sliders{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.c20-slider{flex:1;min-width:110px;font-size:8.5px;color:var(--faint)}
+.c20-slider input{width:100%;accent-color:#A78BFA;margin-top:3px}
+.c20-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c20-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c20-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c20-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#A78BFA,#4FE0D0);transition:.5s}
+.c20-test{position:relative;height:290px;border-radius:15px;border:1px solid rgba(167,139,250,.18);background:linear-gradient(180deg,#0D0A1A,#07050E);overflow:hidden}
+.c20-test .c20-plan{position:absolute;inset:10px;height:auto}
+.c20-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c20-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c20-fix:hover,.c20-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c20-bp-icon{width:160px;height:110px;margin:0 auto}
+.c20-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c20-plan,.c20-test{height:250px}.c20-context-grid{grid-template-columns:1fr}}

@@ -1,0 +1,25 @@
+/* A32 · 专属样式（.a32- 前缀），待开发 */
+/* A32 · AVM 机会扫描 */
+.a32-avm{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.a32-row{display:grid;grid-template-columns:150px 1fr 62px;gap:10px;align-items:center;
+  border:1px solid var(--line2);border-left-width:3px;border-radius:6px;background:#0F151F;padding:7px 11px}
+.a32-row.strong{border-left-color:#4E9F6E}
+.a32-row.weak{border-left-color:#C9A227;background:rgba(201,162,39,.05)}
+.a32-a{font-size:11.5px;color:var(--ink);font-weight:500}
+.a32-v{font-size:11px;color:var(--dim)}
+.a32-s{font-size:9.5px;color:var(--faint);text-align:right;font-family:var(--mono)}
+.a32-list{display:flex;flex-direction:column;gap:7px}
+.a32-item{border:1px solid var(--line2);border-radius:8px;background:#0F151F;padding:8px 10px}
+.a32-item.done{background:#101823;border-color:rgba(var(--acc-rgb),.25)}
+.a32-ih{display:flex;gap:10px;align-items:baseline}
+.a32-ih b{font-size:11.5px;color:var(--ink)}
+.a32-ih span{font-size:10.5px;color:var(--faint)}
+.a32-tag{display:inline-block;font-size:9px;font-family:var(--mono);padding:1px 5px;border-radius:3px;margin-top:5px}
+.a32-tag.strong{color:#9ED3B4;border:1px solid rgba(78,159,110,.4)}
+.a32-tag.weak{color:#D9C68C;border:1px solid rgba(201,162,39,.4)}
+.a32-ob{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.a32-ob button{font-size:9.5px;padding:3px 7px;border-radius:4px;border:1px solid var(--line2);color:var(--faint)}
+.a32-ob button:hover{border-color:#3A475E;color:var(--ink)}
+.a32-ob button.on{border-color:var(--acc);color:var(--acc2);background:rgba(var(--acc-rgb),.12)}
+.a32-fb{margin-top:6px;font-size:10px;color:var(--faint);padding-left:7px;border-left:2px solid var(--line2)}
+.a32-fb.good{color:#9ED3B4;border-left-color:rgba(78,159,110,.7)}

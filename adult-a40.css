@@ -1,0 +1,23 @@
+/* A40 · 专属样式（.a40- 前缀），待开发 */
+/* A40 · 路演与认证 */
+.a40-timer{display:flex;align-items:center;gap:10px;border:1px solid var(--line2);border-radius:9px;
+  background:#0D131C;padding:8px 12px;margin-bottom:11px}
+.a40-clock{font-family:var(--mono);font-size:22px;color:var(--acc);letter-spacing:1px;min-width:78px}
+.a40-script{border:1px solid var(--line2);border-radius:8px;background:#0D131C;padding:10px 12px;min-height:60px}
+.a40-script p{font-size:11.5px;color:var(--ink);line-height:1.75;margin-bottom:4px}
+.a40-script p b{color:var(--acc2);font-weight:500}
+.a40-checks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.a40-chk{display:grid;grid-template-columns:16px 1fr;gap:6px;text-align:left;border:1px solid var(--line2);
+  border-radius:7px;background:#0F151F;padding:7px 9px;transition:.15s}
+.a40-chk:hover{border-color:#3A475E}
+.a40-chk.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.09)}
+.a40-chk i{font-style:normal;font-size:11px;color:var(--faint)}
+.a40-chk.on i{color:var(--acc)}
+.a40-chk b{font-size:11px;color:var(--ink);font-weight:500}
+.a40-chk span{grid-column:2;font-size:9.5px;color:var(--faint);line-height:1.4}
+.a40-cert{}
+.a40-res{border-left:2px solid var(--line2);padding:8px 10px;border-radius:0 6px 6px 0}
+.a40-res.ok{border-left-color:#4E9F6E;background:rgba(78,159,110,.06)}
+.a40-res.warn{border-left-color:#C9A227;background:rgba(201,162,39,.06)}
+.a40-res b{font-size:12px;color:var(--ink)}
+.a40-res p{margin-top:3px}

@@ -1,0 +1,23 @@
+/* A33 · 专属样式（.a33- 前缀），待开发 */
+/* A33 · 流程改连接 */
+.a33-pick{display:flex;gap:6px;margin-bottom:10px}
+.a33-line{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:10px;padding:10px;
+  border:1px solid var(--line2);border-radius:8px;background:#0D131C}
+.a33-node{font-size:10.5px;color:var(--dim);border:1px solid var(--line2);border-radius:5px;padding:4px 8px;background:#0F151F}
+.a33-node.hot{border-color:rgba(var(--acc-rgb),.5);color:var(--acc2)}
+.a33-ar{font-style:normal;color:#2C3749;font-size:10px}
+.a33-extra{display:flex;gap:5px;flex-wrap:wrap;width:100%;margin-top:7px}
+.a33-e{font-size:9.5px;color:var(--acc2);border:1px dashed rgba(var(--acc-rgb),.35);border-radius:4px;padding:2px 6px}
+.a33-add{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap}
+.a33-lb{font-size:10px;color:var(--faint)}
+.a33-add select{background:#0B1018;border:1px solid var(--line2);border-radius:5px;color:var(--dim);font-size:10.5px;padding:5px 6px}
+.a33-why{margin-bottom:9px}
+.a33-why input{width:100%;background:#0B1018;border:1px solid var(--line2);border-radius:6px;padding:7px 10px;font-size:11px;color:var(--ink)}
+.a33-list{display:flex;flex-direction:column;gap:5px}
+.a33-row{display:grid;grid-template-columns:56px 1fr 1fr 16px;gap:7px;align-items:center;
+  border:1px solid var(--line2);border-radius:6px;background:#0F151F;padding:6px 9px}
+.a33-row b{font-size:9.5px;color:var(--acc2);font-family:var(--mono)}
+.a33-row span{font-size:10.5px;color:var(--ink)}
+.a33-row em{font-style:normal;font-size:9.5px;color:var(--faint)}
+.a33-row button{color:var(--faint);font-size:11px}
+.a33-empty{border:1px dashed var(--line2);border-radius:8px;padding:16px;text-align:center;font-size:11px;color:var(--faint)}

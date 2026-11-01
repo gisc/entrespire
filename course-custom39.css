@@ -1,0 +1,38 @@
+/* 第 39 章 · AI 伙伴（专属场景） */
+.c39-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(139,92,246,.24);background:linear-gradient(180deg,#0C0718,#05030A);overflow:hidden}
+.c39-chat{position:absolute;left:6%;right:6%;top:16px;bottom:16px;border-radius:12px;border:1px solid rgba(139,92,246,.28);background:rgba(8,4,16,.8);overflow:hidden}
+.c39-bar{height:26px;background:rgba(139,92,246,.12);border-bottom:1px solid rgba(139,92,246,.2);display:flex;align-items:center;gap:6px;padding:0 10px;font-size:8px;color:#DDD6FE}
+.c39-bar i{width:7px;height:7px;border-radius:50%;background:#8B5CF6}
+.c39-bar b{font-size:8px;font-weight:600;margin-left:4px}.c39-bar span{margin-left:auto;color:var(--faint);font-size:7px}
+.c39-msgs{position:absolute;left:10px;right:10px;top:34px;bottom:10px;display:flex;flex-direction:column;gap:6px;overflow:auto}
+.c39-msg{max-width:82%;padding:6px 9px;border-radius:9px;font-size:8.5px;line-height:1.45;color:#E9D5FF;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.22)}
+.c39-msg.ai{align-self:flex-start}.c39-msg.me{align-self:flex-end;background:rgba(79,224,208,.1);border-color:rgba(79,224,208,.25);color:#CCFBF1}
+.c39-msg b{display:block;font-size:7px;color:#C4B5FD;margin-bottom:2px;letter-spacing:.08em}
+.c39-src{display:inline-block;margin-top:3px;font-size:6.5px;border:1px solid rgba(139,92,246,.4);border-radius:3px;padding:1px 4px;color:#A78BFA}
+.c39-src.warn{border-color:rgba(255,122,107,.5);color:#FCA5A5}
+.c39-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(196,181,253,.75);z-index:9}
+.c39-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(5,3,10,.6);z-index:9}
+.c39-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c39-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c39-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c39-context:hover,.c39-context.on{border-color:rgba(139,92,246,.55);background:rgba(139,92,246,.08)}
+.c39-suggestions{display:flex;flex-direction:column;gap:4px}
+.c39-sug{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left;line-height:1.4}
+.c39-sug:hover,.c39-sug.on{border-color:rgba(139,92,246,.55);background:rgba(139,92,246,.09)}
+.c39-sug.done{opacity:.45}
+.c39-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c39-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c39-act:hover,.c39-act.on{border-color:rgba(139,92,246,.55);background:rgba(139,92,246,.08);color:#DDD6FE}
+.c39-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c39-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c39-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c39-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8B5CF6,#4FE0D0);transition:.5s}
+.c39-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(139,92,246,.2);background:linear-gradient(180deg,#0C0718,#05030A);overflow:hidden}
+.c39-test .c39-stage{position:absolute;inset:8px;height:auto;border:0}
+.c39-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c39-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c39-fix:hover,.c39-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c39-bp-icon{width:150px;height:100px;margin:0 auto}
+.c39-bp-icon svg{width:100%;height:100%}
+@media(max-width:900px){.c39-stage,.c39-test{height:250px}.c39-context-grid{grid-template-columns:1fr}.c39-msg{max-width:92%}}
+@media(max-height:800px){.c39-stage{height:286px}}

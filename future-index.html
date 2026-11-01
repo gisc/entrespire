@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>创新者号 · 未来观测站 | 发小明 Genesis</title>
+<meta name="theme-color" content="#04070f">
+<link rel="stylesheet" href="future-style.css?v=20261028g">
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="hud">
+  <a class="brand" href="../" title="返回发小明首页">
+    <span class="brand-orb">✦</span>
+    <span class="brand-txt">GENESIS<small>FUTURE DECK · 创新者号</small></span>
+  </a>
+  <div class="hud-live"><i class="live-dot"></i><span>LIVE</span><b id="clock">--:--:--</b><span id="date">—</span></div>
+  <div class="hud-actions">
+    <a href="../" class="hud-btn ghost">返回首页</a>
+    <button class="hud-btn" id="btnRefresh" type="button">刷新数据 ↻</button>
+    <button class="hud-btn" id="btnBig" type="button">A+ 大字</button>
+    <button class="hud-btn" id="btnFull" type="button">全屏 ⛶</button>
+  </div>
+</header>
+
+<main class="deck">
+  <section class="panel hero" id="panelHero">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="kicker"><span>INNOVATOR'S DECK</span><i></i><em>创新者号 · 未来观测站</em></div>
+    <h1>创新者，<br><span>正在引领世界潮流</span></h1>
+    <p class="hero-sub">站内实时数据 × 全球创新信号 × 未来科技雷达</p>
+    <div class="index-row">
+      <div class="gauge">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="gauge-bg" cx="60" cy="60" r="48"></circle>
+          <circle class="gauge-arc" id="indexArc" cx="60" cy="60" r="48"></circle>
+          <circle class="gauge-dot" id="indexDot" cx="60" cy="12" r="3"></circle>
+        </svg>
+        <div class="gauge-num"><b id="indexVal">—</b><span>INDEX</span></div>
+      </div>
+      <div class="index-copy"><b id="indexState">正在接入站内数据…</b><span id="indexNote">实时统计 + 环境脉冲</span></div>
+    </div>
+    <div class="stats-grid" id="stats"></div>
+    <div class="module-line" id="moduleLine"></div>
+    <div class="worldclocks" id="worldclocks"></div>
+  </section>
+
+  <section class="panel globe-panel">
+    <div class="panel-head"><span>GLOBAL PULSE</span><b>全球创新脉冲</b><em>24H · LIVE</em></div>
+    <div class="globe-wrap" id="globeWrap">
+      <svg id="globe" viewBox="0 0 620 620" aria-label="全球创新脉冲"></svg>
+      <div class="globe-hud" id="globeHud">
+        <small>GLOBAL SOURCE NETWORK</small>
+        <b id="globeTotal">—</b>
+        <span>24H SIGNALS</span>
+        <em id="globeSources">正在连接…</em>
+      </div>
+      <div class="globe-latest"><span>LATEST</span><b id="globeLatest">正在接收全球信号…</b></div>
+      <div class="globe-tip" id="globeTip"></div>
+      <div class="globe-status"><i></i><span id="globeStatus">连接全球节点…</span></div>
+    </div>
+    <div class="globe-legend"><span><i class="dot gold"></i>节点大小 = 信号量</span><span><i class="dot teal"></i>颜色 = 类型</span><span><i class="line"></i>点击节点筛选</span></div>
+  </section>
+
+  <section class="panel radar-panel">
+    <div class="panel-head"><span>FUTURE RADAR</span><b>未来科技雷达</b><em>SCANNING · 趋势指数</em></div>
+    <div class="radar-wrap">
+      <canvas id="radar" width="620" height="620" aria-label="未来科技雷达"></canvas>
+      <div class="radar-node n1">AI</div><div class="radar-node n2">量子</div><div class="radar-node n3">机器人</div>
+      <div class="radar-node n4">生物</div><div class="radar-node n5">能源</div><div class="radar-node n6">教育</div>
+    </div>
+    <div class="radar-legend" id="radarLegend"></div>
+  </section>
+
+  <section class="panel tide-panel">
+    <div class="panel-head"><span>INNOVATION TIDE</span><b>今日创新潮汐</b><em id="tideMeta">—</em></div>
+    <canvas id="tide" width="900" height="300" aria-label="创新潮汐曲线"></canvas>
+    <div class="tide-legend"><span><i class="lg gold"></i>实时事件</span><span><i class="lg teal"></i>环境脉冲</span><span id="tideHint">最近 24 小时</span></div>
+  </section>
+
+  <section class="panel signal-panel">
+    <div class="signal-top">
+      <div class="panel-head"><span>DAILY SIGNALS</span><b>全球创新信号</b><button id="btnSignalsNext" type="button">换一批 ↻</button></div>
+      <div class="signal-filters" id="signalFilters"></div>
+      <button class="scope" id="signalScope" type="button" hidden></button>
+      <div class="signal-list" id="signalList"><div class="loading">正在接收全球信号…</div></div>
+      <div class="signal-meta"><span id="signalMeta">RSS · 6 源</span><span id="signalSync">SYNC —</span></div>
+    </div>
+    <div class="works-block">
+      <div class="works-head"><span>PUBLIC WORKS</span><b>学院公开作品</b><em id="worksCount">—</em></div>
+      <div class="work-card" id="workCard"><div class="loading">正在取画廊钥匙…</div></div>
+    </div>
+  </section>
+
+  <section class="panel constellation">
+    <div class="panel-head"><span>CURRICULUM CONSTELLATION</span><b>课程星座</b><em>40 章 · 8 航线 · 260 幕</em></div>
+    <div class="constellation-map" id="constellation"></div>
+  </section>
+</main>
+
+<footer class="ticker">
+  <div class="ticker-label"><i></i> LIVE FEED</div>
+  <div class="ticker-view"><div class="ticker-track" id="tickerTrack"></div></div>
+  <div class="ticker-sync" id="tickerSync">SYNC —</div>
+</footer>
+
+<script src="future-data.js?v=20261028g"></script>
+<script src="future-app.js?v=20261028g"></script>
+</body>
+</html>
+

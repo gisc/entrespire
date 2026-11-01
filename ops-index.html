@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学校运营台 · 发小明创新学院</title>
+<style>
+:root{--bg:#070b14;--card:#101728;--line:rgba(255,255,255,.1);--gold:#f2c14e;--dim:#9aa3bd;--faint:#6e7690;--ok:#39d98a;--bad:#ff6b6b;--blue:#7fb2ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 560px at 10% -10%,rgba(109,141,255,.15),transparent 60%),var(--bg);color:#e9edf6;font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding:20px 14px 50px}
+.wrap{max-width:1280px;margin:0 auto}h1{font-family:"Songti SC",serif;font-size:30px;margin:0 0 4px}.sub{font-size:13px;color:var(--dim);margin-bottom:16px}
+.card{background:linear-gradient(180deg,rgba(18,26,44,.96),rgba(10,15,28,.96));border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--dim);margin-bottom:10px}
+input,select,textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);color:#e9edf6;padding:10px 12px;font-family:inherit;font-size:14px;outline:none}textarea{min-height:110px;resize:vertical;line-height:1.7}input:focus,textarea:focus,select:focus{border-color:rgba(242,193,78,.6)}
+.btn{border:1px solid var(--line);border-radius:8px;padding:9px 14px;background:rgba(255,255,255,.04);color:#e9edf6;font-size:13px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px}.btn:hover{border-color:rgba(242,193,78,.6)}.btn.pri{background:linear-gradient(120deg,#f2c14e,#ffd97a);border-color:#f2c14e;color:#1a1405;font-weight:800}.btn.blue{background:linear-gradient(120deg,#5a8fe8,#7fb2ff);border-color:#7fb2ff;color:#081426;font-weight:800}.btn.bad{border-color:rgba(255,107,107,.5);color:#ffc2c2}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.top .who{font-size:13px;color:var(--dim)}.top .who b{color:var(--gold)}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:14px;align-items:start}
+.school{border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:8px;background:rgba(255,255,255,.025);cursor:pointer}.school.on{border-color:rgba(242,193,78,.65);background:rgba(242,193,78,.08)}.school b{display:block;font-size:15px}.school span{font-size:11.5px;color:var(--faint)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.full{grid-column:1/-1}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.025)}.stat b{display:block;font-size:26px;color:var(--gold);font-family:"Songti SC",serif}.stat span{font-size:11px;color:var(--faint)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--faint);font-weight:600;font-size:11px}code{color:#ffe3a6;font-size:12px;word-break:break-all}
+.pill{display:inline-block;font-size:10px;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--faint)}.pill.ok{color:#baf5d8;border-color:rgba(57,217,138,.4)}.pill.bad{color:#ffc2c2;border-color:rgba(255,107,107,.4)}.pill.gold{color:#ffe3a6;border-color:rgba(242,193,78,.4)}
+.hint{font-size:11.5px;color:var(--faint);line-height:1.8}.msg{font-size:12px;min-height:18px;margin-top:8px;color:var(--bad)}.login{max-width:420px;margin:9vh auto}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+<script src="assets-tc-page.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1>学校运营台</h1><div class="sub">学校 → 班级 → 老师 / 学生。销售、学校管理员、主站管理员，各自只看自己该看的。章节排期仍由机构管理台统一设置。</div></div>
+    <div class="actions" style="margin:0"><span class="who" id="who">—</span><a class="btn" href="index.html">主站 ↗</a><button class="btn" onclick="hardExit()" title="退出">✕</button></div>
+  </div>
+
+  <div class="card login" id="loginBox">
+    <div class="field"><label>账号（主站账号）</label><input id="lgNick" autocomplete="username"></div>
+    <div class="field"><label>密码</label><input id="lgPwd" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn pri" style="width:100%" onclick="doLogin()">进入学校运营台</button>
+    <div class="msg" id="lgMsg"></div>
+    <div class="hint" style="margin-top:12px">销售账号（sales）、学校管理员、主站管理员可进入。普通老师请用 <a href="teacher-index.html" style="color:var(--gold)">教师工作台</a>。</div>
+  </div>
+
+  <div id="dash" style="display:none">
+    <div class="card" id="noSchool" style="display:none">
+      <div style="font-size:17px;font-weight:800;margin-bottom:6px">还没有学校</div>
+      <div class="hint">先建一所学校，再按班级批量建班。销售建校后自动归自己；主站管理员可以指派销售负责人。</div>
+      <div class="actions"><button class="btn pri" onclick="showSchoolForm()">＋ 新建学校</button></div>
+    </div>
+
+    <div id="schoolForm" class="card" style="display:none">
+      <div class="grid2">
+        <div class="field full"><label>学校名称</label><input id="scName" placeholder="如：上海实验中学"></div>
+        <div class="field"><label>城市</label><input id="scCity" placeholder="上海"></div>
+        <div class="field"><label>联系人 / 电话</label><input id="scContact" placeholder="张主任 138…"></div>
+        <div class="field" id="ownerField"><label>销售负责人昵称（主站管理员可填）</label><input id="scOwner" placeholder="留空则归当前管理员"></div>
+        <div class="field full"><label>备注</label><input id="scNote" placeholder="合同/学期/特殊要求"></div>
+      </div>
+      <div class="actions"><button class="btn pri" onclick="saveSchool()">保存学校</button><button class="btn" onclick="hideSchoolForm()">取消</button></div>
+      <div class="msg" id="scMsg"></div>
+    </div>
+
+    <div class="layout" id="layout" style="display:none">
+      <div class="card" style="margin:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px">
+          <b>我的学校</b><button class="btn sm pri" id="newSchoolBtn" onclick="showSchoolForm()">＋</button>
+        </div>
+        <div id="schoolList"></div>
+      </div>
+      <div id="schoolMain"></div>
+    </div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let TOKEN=localStorage.getItem('iv3_token')||'', ME=null, SCHOOLS=[], CUR=null, CLASSES=[], ROLE='';
+function hdr(){return TOKEN?{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}:{'Content-Type':'application/json'};}
+async function api(path,opts){opts=opts||{};opts.headers=Object.assign(hdr(),opts.headers||{});const r=await fetch('/api/'+path,opts);let d={};try{d=await r.json();}catch(e){}if(r.status===401){TOKEN='';localStorage.removeItem('iv3_token');showLogin('登录已过期，请重新登录');throw new Error('未登录');}if(!r.ok)throw new Error(d.error||('HTTP '+r.status));return d;}
+function showLogin(msg){$('#loginBox').style.display='block';$('#dash').style.display='none';if(msg)$('#lgMsg').textContent=msg;}
+function hardExit(){location.href='index.html';}
+async function doLogin(){const nick=$('#lgNick').value.trim(),pwd=$('#lgPwd').value;$('#lgMsg').textContent='';try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nick,pwd})});const d=await r.json();if(!r.ok)throw new Error(d.error||'登录失败');TOKEN=d.token;localStorage.setItem('iv3_token',TOKEN);boot();}catch(e){$('#lgMsg').textContent=e.message;}}
+async function boot(){
+  if(!TOKEN){showLogin('');return;}
+  try{
+    const me=await fetch('/api/me',{headers:hdr()});if(!me.ok)throw new Error('未登录');ME=await me.json();
+    ROLE=ME.role||'user';
+    const allowed=!!ME.admin || ROLE==='sales' || (Array.isArray(ME.schoolAdminOf)&&ME.schoolAdminOf.length);
+    if(!allowed){showLogin('这个账号不是销售/学校管理员/主站管理员。老师请去教师工作台。');return;}
+    $('#loginBox').style.display='none';$('#dash').style.display='block';
+    $('#who').innerHTML='<b>'+esc(ME.nick)+'</b> · '+(ME.admin?'主站管理员':ROLE==='sales'?'销售':'学校管理员');
+    $('#ownerField').style.display=ME.admin?'flex':'none';
+    $('#newSchoolBtn').style.display=(ME.admin||ROLE==='sales')?'inline-flex':'none';
+    await loadSchools();
+  }catch(e){showLogin(e.message);}
+}
+async function loadSchools(){
+  try{const d=await api('ops-index.htmlschools');SCHOOLS=d.schools||[];}catch(e){SCHOOLS=[];}
+  if(!SCHOOLS.length){$('#noSchool').style.display='block';$('#layout').style.display='none';$('#newSchoolBtn').style.display='none';return;}
+  $('#noSchool').style.display='none';$('#layout').style.display='grid';
+  if(!CUR||!SCHOOLS.find(s=>s.id===CUR.id))CUR=SCHOOLS[0];
+  renderSchools();await loadClasses();
+}
+function renderSchools(){
+  $('#schoolList').innerHTML=SCHOOLS.map(s=>'<div class="school'+(CUR&&CUR.id===s.id?' on':'')+'" onclick="pickSchool(\''+s.id+'\')"><b>'+esc(s.name)+'</b><span>'+esc(s.city||'')+' · '+s.classes+' 班 · '+s.students+' 人</span></div>').join('');
+}
+function pickSchool(id){CUR=SCHOOLS.find(s=>s.id===id)||CUR;renderSchools();loadClasses();}
+async function loadClasses(){
+  if(!CUR)return;
+  try{const d=await api('ops-index.htmlclasses?school='+encodeURIComponent(CUR.id));CLASSES=d.classes||[];CUR=d.school||CUR;}catch(e){CLASSES=[];}
+  renderMain();
+}
+function canManageSchool(){return !!ME&&(ME.admin||ROLE==='sales');}
+function renderMain(){
+  if(!CUR)return;
+  const s=CUR;
+  $('#schoolMain').innerHTML=
+    '<div class="card"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start"><div><div style="font-size:22px;font-weight:900">'+esc(s.name)+'</div><div class="hint">'+esc(s.city||'')+' · 销售负责人：'+esc(s.salesOwner||'—')+' · 学校管理员：'+esc(s.adminNick||'未设置')+'</div></div><div class="actions" style="margin:0">'+
+      (canManageSchool()?'<button class="btn" onclick="editSchool()">编辑学校</button>':'')+
+      '<button class="btn" onclick="assignAdmin()">设置学校管理员</button>'+
+      '<button class="btn" onclick="exportSchool()">导出全校码</button></div></div>'+
+      '<div class="grid3" style="margin-top:12px"><div class="stat"><b>'+s.classes+'</b><span>班级</span></div><div class="stat"><b>'+s.students+'</b><span>学生名额</span></div><div class="stat"><b>'+s.bound+'</b><span>已绑定老师</span></div></div></div>'+
+    '<div class="card"><div style="font-size:16px;font-weight:800;margin-bottom:8px">批量建班</div>'+
+      '<div class="hint" style="margin-bottom:10px">每行一个班：<code>班级名称,老师姓名,老师账号,学生人数</code>。老师账号可留空，老师用老师码自行绑定。</div>'+
+      '<textarea id="bulkText" placeholder="五年级3班,张老师,zhanglaoshi,40&#10;五年级4班,王老师,wanglaoshi,38"></textarea>'+
+      '<div class="grid3" style="margin-top:10px"><div class="field"><label>每人创作币</label><input id="bulkPoints" type="number" min="1" value="20000"></div><div class="field"><label>有效期（天，0=永久）</label><input id="bulkDays" type="number" min="0" value="120"></div><div class="field"><label>学生码形式</label><select id="bulkMode"><option value="per_student">一人一码（推荐）</option><option value="one_code">一码全班</option></select></div></div>'+
+      '<div class="actions"><button class="btn pri" id="bulkBtn" onclick="bulkCreate()">按行批量建班</button><span class="hint">一次最多 100 个班、20000 个学生码</span></div><div class="msg" id="bulkMsg"></div></div>'+
+    '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><b style="font-size:16px">班级列表</b><span class="hint">共 '+CLASSES.length+' 个班</span></div>'+
+      '<div style="overflow:auto"><table><thead><tr><th>班级</th><th>老师</th><th>老师码</th><th>绑定</th><th>学生码</th><th>已用/容量</th><th>有效期</th><th>操作</th></tr></thead><tbody>'+
+      (CLASSES.length?CLASSES.map(c=>'<tr><td><b>'+esc(c.name)+'</b><div class="hint">'+esc(c.id)+'</div></td><td>'+esc(c.teacherName||'—')+'<div class="hint">'+esc(c.teacherAccount||'')+'</div></td><td><code>'+esc(c.teacherCode||'—')+'</code></td><td>'+(c.teacherBound?'<span class="pill ok">已绑定 '+(c.teacherNick||'')+'</span>':'<span class="pill">未绑定</span>')+'</td><td>'+(c.studentCodes!=null?c.studentCodes:(c.codes-1))+'</td><td>'+(c.studentUsed!=null?c.studentUsed:c.used)+' / '+(c.studentCapacity!=null?c.studentCapacity:c.capacity)+'</td><td>'+(c.expiresAt?new Date(c.expiresAt).toLocaleDateString('zh-CN'):'永久')+'</td><td>'+(c.revoked?'<span class="pill bad">已作废</span>':'<button class="btn bad" onclick="revokeClass(\''+c.id+'\')">作废</button>')+'</td></tr>').join(''):'<tr><td colspan="8" class="hint">还没有班级，用上面的批量建班。</td></tr>')+
+      '</tbody></table></div></div>';
+}
+function showSchoolForm(){$('#schoolForm').style.display='block';$('#noSchool').style.display='none';}
+function hideSchoolForm(){$('#schoolForm').style.display='none';if(!SCHOOLS.length)$('#noSchool').style.display='block';}
+async function saveSchool(){
+  const body={name:$('#scName').value,city:$('#scCity').value,contact:$('#scContact').value,note:$('#scNote').value,salesOwner:$('#scOwner').value};
+  if(!body.name.trim()){$('#scMsg').textContent='请填写学校名称';return;}
+  try{const d=await api('ops-index.htmlschool',{method:'POST',body:JSON.stringify(body)});$('#scMsg').textContent='';hideSchoolForm();CUR=d.school;await loadSchools();}
+  catch(e){$('#scMsg').textContent=e.message;}
+}
+async function editSchool(){
+  const name=prompt('学校名称',CUR.name||'');if(name===null)return;
+  const city=prompt('城市',CUR.city||'');if(city===null)return;
+  const contact=prompt('联系人/电话',CUR.contact||'');if(contact===null)return;
+  const owner=ME.admin?prompt('销售负责人昵称',CUR.salesOwner||''):CUR.salesOwner;
+  if(owner===null)return;
+  try{const d=await api('ops-index.htmlschool',{method:'POST',body:JSON.stringify({id:CUR.id,name,city,contact,salesOwner:owner})});CUR=d.school;await loadSchools();}
+  catch(e){alert(e.message);}
+}
+async function assignAdmin(){
+  const nick=prompt('学校管理员账号昵称（需要先注册主站账号）',CUR.adminNick||'');
+  if(nick===null)return;
+  try{const d=await api('ops-index.htmlschool/admin',{method:'POST',body:JSON.stringify({schoolId:CUR.id,nick:nick.trim()})});CUR=d.school;await loadSchools();alert('已设置学校管理员：'+nick);}
+  catch(e){alert(e.message);}
+}
+async function bulkCreate(){
+  const text=$('#bulkText').value.trim();if(!text){$('#bulkMsg').textContent='请先粘贴班级行';return;}
+  const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+  const classes=[];
+  for(const line of lines){
+    const p=line.split(/[,\t，]/).map(x=>x.trim());
+    if(!p[0]||/^班级/.test(p[0]))continue;
+    classes.push({name:p[0],teacherName:p[1]||'',teacherAccount:p[2]||'',studentCount:parseInt(p[3],10)||40});
+  }
+  if(!classes.length){$('#bulkMsg').textContent='没有解析到班级，请用：班级名称,老师姓名,老师账号,学生人数';return;}
+  const btn=$('#bulkBtn');btn.disabled=true;btn.textContent='建班中…';$('#bulkMsg').textContent='';
+  try{
+    const d=await api('ops-index.htmlclasses/bulk',{method:'POST',body:JSON.stringify({schoolId:CUR.id,classes,mode:$('#bulkMode').value,points:+$('#bulkPoints').value||20000,days:+$('#bulkDays').value||0})});
+    $('#bulkMsg').style.color='var(--ok)';$('#bulkMsg').textContent='已建 '+d.created.length+' 个班，老师码和学生码已生成。';
+    await loadSchools();
+  }catch(e){$('#bulkMsg').style.color='var(--bad)';$('#bulkMsg').textContent=e.message;}
+  finally{btn.disabled=false;btn.textContent='按行批量建班';}
+}
+async function revokeClass(id){
+  if(!confirm('作废这个班的全部未使用码？已兑换创作币不会收回。'))return;
+  try{await api('ops-index.htmlclass/revoke',{method:'POST',body:JSON.stringify({batchId:id})});await loadClasses();}
+  catch(e){alert(e.message);}
+}
+async function exportSchool(){
+  try{
+    const r=await fetch('/api/ops/export?school='+encodeURIComponent(CUR.id),{headers:hdr()});
+    if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'导出失败');}
+    const blob=await r.blob();const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='学校兑换码_'+CUR.name+'.txt';a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){alert(e.message);}
+}
+boot();
+</script>
+</body>
+</html>

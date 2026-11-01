@@ -1,0 +1,142 @@
+/* A28 · 属性关联：实战与伪相关 */
+
+/* ---------- 1 先猜：双曲线 + 案例条 ---------- */
+.a28-cpanel{padding:12px 14px 10px}
+.a28-lg{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:10px;color:var(--dim);margin:2px 0 2px}
+.a28-lg i{width:12px;height:2px;border-radius:1px;display:inline-block}
+.a28-lg i:nth-of-type(2){margin-left:8px}
+.a28-lg span{margin-left:auto;font-family:var(--mono);font-size:8.5px;color:var(--faint);letter-spacing:.04em}
+.a28-chart{width:100%;height:auto;display:block;margin:4px 0 0}
+.a28-out:empty{display:none}
+.a28-teaser{border:1px dashed var(--line2);border-radius:9px;padding:14px 16px;text-align:center;
+  font-size:11px;color:var(--faint);letter-spacing:.02em}
+.a28-teaser[hidden]{display:none}
+.a28-out .panel{margin-top:2px}
+.a28-out .panel p{max-width:760px}
+.a28-bridge[hidden]{display:none}
+.a28-bridge{display:grid;grid-template-columns:196px minmax(0,1fr);gap:14px;align-items:center;margin-top:10px;
+  border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:10px 14px 10px 10px}
+.a28-bridge>img{width:100%;height:104px;object-fit:cover;object-position:50% 22%;border-radius:7px;
+  border:1px solid var(--line2);display:block}
+.a28-bridge-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
+.a28-bridge-h b{font-size:12px;color:var(--ink);font-weight:600}
+.a28-bridge-h span{font-family:var(--mono);font-size:9px;color:var(--faint);letter-spacing:.04em}
+.a28-bridge p{font-size:11px;line-height:1.75;color:var(--faint)}
+.a28-bridge p b{color:var(--dim);font-weight:600}
+
+/* ---------- 3 真伪判断台 ---------- */
+.a28-bbench{padding:11px 12px;overflow:auto}
+.a28-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start;grid-auto-rows:auto}
+.a28-card{display:flex;flex-direction:column;border:1px solid var(--line2);border-radius:8px;background:#0F151F;
+  padding:8px 9px 9px;transition:.16s;min-width:0}
+.a28-card.done{background:#101823;border-color:rgba(var(--acc-rgb),.26)}
+.a28-top{display:grid;grid-template-columns:18px minmax(0,1fr) 12px;gap:5px;align-items:start;margin-bottom:7px}
+.a28-no{font-family:var(--mono);font-size:9px;color:var(--faint);padding-top:3px}
+.a28-card.done .a28-no{color:var(--acc)}
+.a28-p{font-size:11.2px;line-height:1.45;color:var(--ink)}
+.a28-badge{font-size:9.5px;line-height:1.6;text-align:right}
+.a28-badge.ok{color:var(--ok)}
+.a28-badge.diff{color:#D9B36A}
+.a28-r{display:flex;gap:5px}
+.a28-rb{flex:1;padding:3px 0;border-radius:5px;border:1px solid var(--line2);font-size:10px;color:var(--faint);transition:.15s;white-space:nowrap}
+.a28-rb:hover{border-color:#3A475E;color:var(--ink)}
+.a28-rb.on{font-weight:600}
+.a28-rb.on.ok{background:#4E9F6E;border-color:#4E9F6E;color:#08120C}
+.a28-rb.on.pseudo{background:#C75660;border-color:#C75660;color:#fff}
+.a28-rb.on.cond{background:#C9A227;border-color:#C9A227;color:#0A0D12}
+.a28-rs{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:6px;padding-top:5px;border-top:1px dashed rgba(42,53,71,.8)}
+.a28-rwait{font-size:9.5px;color:#3F4A5C;line-height:1.5}
+.a28-rl{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--faint);margin-right:1px}
+.a28-rc{padding:1px 7px;border-radius:4px;border:1px solid var(--line2);background:#0C121A;font-size:9.5px;color:var(--faint);transition:.14s;line-height:1.5}
+.a28-rc:hover{border-color:#3A475E;color:var(--ink)}
+.a28-rc.on{border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.14);color:var(--acc2)}
+
+/* 解析区：固定在判断台底部，不随网格滚动 */
+.a28-read{flex:none;border-top:1px solid var(--line);background:#0C121A;padding:7px 14px 8px;min-height:72px}
+.a28-read-h{display:flex;align-items:center;gap:8px;font-size:9.5px;color:var(--faint);margin-bottom:3px}
+.a28-read-h b{font-family:var(--mono);color:var(--acc);font-weight:500;letter-spacing:.06em}
+.a28-read-h i{font-style:normal;font-size:9.5px}
+.a28-ok{color:var(--ok)}
+.a28-diff{color:#D9B36A}
+.a28-read p{font-size:10.5px;line-height:1.62;color:var(--dim)}
+.a28-read p.a28-adv{margin-top:3px;color:#D9C68C}
+.a28-read p.a28-adv b{color:var(--acc2);font-weight:600}
+.a28-read p.a28-wait{color:var(--faint)}
+.a28-empty{font-size:10.5px;line-height:1.7;color:var(--faint);padding:4px 0}
+
+/* ---------- 4 实战台：三条自检 + 解锁条 ---------- */
+/* 4 实战台：输入区 */
+.a28-mine .field input{padding:11px}
+.a28-mine textarea{min-height:108px}
+
+.a28-selfs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.a28-self{border:1px solid var(--line2);border-radius:9px;background:#0F151F;padding:11px 12px 12px;transition:.16s;min-width:0}
+.a28-self.has{border-color:rgba(var(--acc-rgb),.28)}
+.a28-self.ok{border-color:rgba(78,159,110,.38);background:rgba(78,159,110,.05)}
+.a28-self.no{border-color:rgba(199,86,96,.38);background:rgba(199,86,96,.05)}
+.a28-q{display:grid;grid-template-columns:16px minmax(0,1fr);gap:6px;align-items:start}
+.a28-q i{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--faint);padding-top:1px}
+.a28-self.ok .a28-q i{color:var(--ok)}
+.a28-self.no .a28-q i{color:#E39AA1}
+.a28-q b{display:block;font-size:12px;color:var(--ink);font-weight:600;line-height:1.4}
+.a28-q span{display:block;font-size:10.5px;color:var(--faint);line-height:1.5;margin-top:2px}
+.a28-yn{display:flex;gap:6px;margin-top:9px}
+.a28-yn button{flex:1;padding:4px 0;border-radius:5px;border:1px solid #33415A;background:#0C121A;
+  font-size:10px;color:var(--dim);transition:.15s}
+.a28-yn button:hover{border-color:#3A475E;color:var(--ink)}
+.a28-y.on{background:#4E9F6E;border-color:#4E9F6E;color:#08120C;font-weight:600}
+.a28-n.on{background:#C75660;border-color:#C75660;color:#fff;font-weight:600}
+.a28-why{margin-top:7px;font-size:10px;line-height:1.6;color:var(--faint);min-height:16px}
+.a28-why.ok{color:#9ED3B4}
+.a28-why.no{color:#E7B7BC}
+
+.a28-lock{margin-top:12px;border:1px solid var(--line);border-radius:9px;background:#0C121A;padding:11px 14px 12px;transition:.2s}
+.a28-lock.on{border-color:rgba(78,159,110,.4);background:rgba(78,159,110,.06)}
+.a28-lock-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px}
+.a28-lock-h b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--faint);font-weight:500}
+.a28-lock.on .a28-lock-h b{color:var(--ok)}
+.a28-lock-h span{font-family:var(--mono);font-size:9.5px;color:var(--dim)}
+.a28-bar{height:3px;border-radius:2px;background:#1A2230;overflow:hidden}
+.a28-bar i{display:block;height:100%;background:var(--acc);transition:width .4s var(--ease)}
+.a28-lock.on .a28-bar i{background:var(--ok)}
+.a28-lock p{margin-top:6px;font-size:11px;line-height:1.6;color:var(--faint)}
+.a28-lock.on p{color:#9ED3B4}
+
+/* ---------- 5 两问 ---------- */
+.a28-qbox .opt{padding:6px 10px}
+.a28-qbox .opts{gap:5px}
+.a28-qbox .panel{padding:12px 14px}
+.a28-qbox .opt span{font-size:11px}
+.a28-qbox .opt b{font-size:12px}
+.a28-altbox{flex-direction:row;align-items:center;gap:9px}
+.a28-altbox label{white-space:nowrap;font-size:10px}
+.a28-altbox input{font-size:12px;padding:7px 10px}
+
+@media(max-width:900px){
+  .a28-grid{grid-template-columns:1fr}
+  .a28-chk2 .opts{grid-template-columns:1fr}
+  .a28-bridge{grid-template-columns:1fr}
+  .a28-bridge>img{height:150px}
+  .a28-selfs{grid-template-columns:1fr}
+}
+
+/* 2 概念：压高度，1366 一屏放得下 */
+.a28-cpt .panel{padding:12px 14px}
+.a28-cpt .small{line-height:1.65}
+.a28-cpt .stack{gap:8px}
+.a28-chk2 .opts{grid-template-columns:1fr 1fr;gap:8px}
+
+/* 矮屏（1366×768）：判断台压紧，八条一屏放得下 */
+@media(max-height:820px){
+  .a28-read{min-height:46px;padding:5px 12px 6px}
+  .a28-read p{font-size:9.5px;line-height:1.5}
+  .a28-bbench{padding:6px 9px}
+  .a28-grid{gap:2px}
+  .a28-card{padding:4px 8px 5px}
+  .a28-top{margin-bottom:2px}
+  .a28-p{font-size:10.8px;line-height:1.35}
+  .a28-rb{padding:0;font-size:9px;line-height:1.7}
+  .a28-rs{margin-top:2px;padding-top:2px}
+  .a28-rc{padding:0 6px;font-size:9px;line-height:1.5}
+  .a28-rl{font-size:8px}
+}

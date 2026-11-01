@@ -1,0 +1,46 @@
+/* 第 22 章 · 安全边界（专属场景） */
+.c22-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(249,115,22,.22);background:linear-gradient(180deg,#170C07,#0A0604);overflow:hidden}
+.c22-floor{position:absolute;left:6%;right:6%;bottom:24px;height:150px;border-radius:10px;background:linear-gradient(180deg,rgba(249,115,22,.08),rgba(249,115,22,.02));border:1px solid rgba(249,115,22,.25)}
+.c22-wall{position:absolute;left:6%;right:6%;top:22px;height:110px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 44px,rgba(255,255,255,.05) 44px 45px);border-bottom:1px solid rgba(249,115,22,.2)}
+.c22-hazard{position:absolute;width:38px;height:38px;border-radius:50%;border:2px solid #FB923C;background:rgba(251,146,60,.16);display:flex;align-items:center;justify-content:center;font-size:16px;z-index:5;cursor:pointer;animation:c22pulse 1.8s ease-in-out infinite}
+.c22-hazard:hover,.c22-hazard.on{background:rgba(255,122,107,.28);border-color:#FF7A6B;box-shadow:0 0 20px rgba(255,122,107,.4)}
+.c22-hazard.fixed{opacity:.3;border-color:#4FE0D0;background:rgba(79,224,208,.12);animation:none}
+.c22-hazard:after{content:attr(data-label);position:absolute;left:50%;top:42px;transform:translateX(-50%);font-size:7px;color:var(--faint);white-space:nowrap;background:rgba(5,5,5,.65);padding:2px 5px;border-radius:4px}
+.c22-mat{position:absolute;left:18%;bottom:40px;width:100px;height:22px;border-radius:4px;background:repeating-linear-gradient(45deg,#4FE0D0 0 5px,rgba(79,224,208,.2) 5px 10px);opacity:0;transition:.3s;z-index:3}
+.c22-mat.on{opacity:.8}
+.c22-corner{position:absolute;left:44%;top:92px;width:36px;height:36px;border-left:5px solid #4FE0D0;border-top:5px solid #4FE0D0;border-radius:8px 0 0 0;opacity:0;transition:.3s;z-index:4}
+.c22-corner.on{opacity:1}
+.c22-rail{position:absolute;right:12%;bottom:58px;width:80px;height:38px;border-top:4px solid #4FE0D0;border-left:3px solid #4FE0D0;border-right:3px solid #4FE0D0;opacity:0;transition:.3s;z-index:4}
+.c22-rail.on{opacity:1}
+.c22-light{position:absolute;right:16%;top:38px;font-size:24px;opacity:0;transition:.3s;z-index:6}
+.c22-light.on{opacity:1;animation:c22pulse 1.2s ease-in-out infinite}
+.c22-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(251,146,60,.75);z-index:8}
+.c22-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,5,3,.6);z-index:8}
+.c22-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c22-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c22-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c22-context:hover,.c22-context.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09)}
+.c22-risks{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c22-risk{padding:7px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c22-risk:hover,.c22-risk.on{border-color:rgba(255,122,107,.55);background:rgba(255,122,107,.08);color:#FFB3A8}
+.c22-risk.fixed{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c22-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c22-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c22-act:hover,.c22-act.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09);color:#FDBA74}
+.c22-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c22-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c22-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c22-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FF7A6B,#4FE0D0);transition:.5s}
+.c22-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(249,115,22,.2);background:linear-gradient(180deg,#170C07,#0A0604);overflow:hidden}
+.c22-test .c22-stage{position:absolute;inset:8px;height:auto;border:0}
+.c22-test.slip .c22-hazard{animation:c22shake .4s ease 3}
+.c22-test.pass .c22-hazard{animation:none}
+.c22-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c22-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c22-fix:hover,.c22-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c22-bp-icon{width:150px;height:100px;margin:0 auto}
+.c22-bp-icon svg{width:100%;height:100%}
+@keyframes c22pulse{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+@keyframes c22shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media(max-width:900px){.c22-stage,.c22-test{height:250px}.c22-context-grid,.c22-risks{grid-template-columns:1fr}}
+@media(max-height:800px){.c22-stage{height:286px}}

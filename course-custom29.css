@@ -1,0 +1,39 @@
+/* 第 29 章 · 包装系统（专属场景） */
+.c29-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(20,184,166,.22);background:radial-gradient(ellipse at 50% 55%,rgba(20,184,166,.08),transparent 62%),linear-gradient(180deg,#041413,#030908);overflow:hidden}
+.c29-link{position:absolute;inset:0;z-index:2;pointer-events:none}
+.c29-link path{fill:none;stroke:rgba(45,212,191,.4);stroke-width:2;stroke-dasharray:6 6}
+.c29-link path.main{stroke:rgba(45,212,191,.7);stroke-width:3}
+.c29-flow{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.c29-flow i{position:absolute;width:6px;height:6px;border-radius:50%;background:#2DD4BF;box-shadow:0 0 8px #2DD4BF;animation:c29flow 2.4s linear infinite}
+.c29-node{position:absolute;width:74px;height:56px;border-radius:10px;border:1px solid rgba(45,212,191,.35);background:rgba(4,20,19,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;z-index:5;cursor:pointer;transition:.2s}
+.c29-node b{font-size:10px;color:#99F6E4}.c29-node span{font-size:7px;color:var(--faint)}
+.c29-node:hover,.c29-node.on{border-color:#2DD4BF;background:rgba(20,184,166,.15);box-shadow:0 0 22px rgba(45,212,191,.25)}
+.c29-node.fixed{border-color:#4FE0D0;box-shadow:0 0 18px rgba(79,224,208,.25)}
+.c29-loop{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:90px;text-align:center;font-size:8px;color:var(--faint);border:1px dashed rgba(251,191,36,.45);border-radius:50%;height:90px;display:flex;align-items:center;justify-content:center;z-index:6;opacity:.35;transition:.3s}
+.c29-loop.on{opacity:1;border-color:#FBBF24;color:#FDE68A;box-shadow:0 0 26px rgba(251,191,36,.2)}
+.c29-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(94,234,212,.75);z-index:9}
+.c29-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(3,9,8,.6);z-index:9}
+.c29-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c29-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c29-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c29-context:hover,.c29-context.on{border-color:rgba(45,212,191,.55);background:rgba(45,212,191,.08)}
+.c29-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c29-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c29-feat:hover,.c29-feat.on{border-color:rgba(45,212,191,.55);background:rgba(45,212,191,.08);color:#99F6E4}
+.c29-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c29-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c29-act:hover,.c29-act.on{border-color:rgba(45,212,191,.55);background:rgba(45,212,191,.08);color:#99F6E4}
+.c29-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c29-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c29-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c29-meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#14B8A6,#4FE0D0);transition:.5s}
+.c29-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(20,184,166,.2);background:linear-gradient(180deg,#041413,#030908);overflow:hidden}
+.c29-test .c29-stage{position:absolute;inset:8px;height:auto;border:0}
+.c29-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c29-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c29-fix:hover,.c29-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c29-bp-icon{width:160px;height:100px;margin:0 auto}
+.c29-bp-icon svg{width:100%;height:100%}
+@keyframes c29flow{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(120px,40px);opacity:0}}
+@media(max-width:900px){.c29-stage,.c29-test{height:250px}.c29-context-grid,.c29-feats{grid-template-columns:1fr}.c29-node{width:64px;height:50px}}
+@media(max-height:800px){.c29-stage{height:286px}}

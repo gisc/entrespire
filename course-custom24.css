@@ -1,0 +1,48 @@
+/* 第 24 章 · 能源管家（专属场景） */
+.c24-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(234,179,8,.22);background:linear-gradient(180deg,#141003,#0A0802);overflow:hidden}
+.c24-sun{position:absolute;left:12%;top:18px;width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#FEF08A,#EAB308 60%,rgba(234,179,8,.15));box-shadow:0 0 34px rgba(234,179,8,.45);z-index:3}
+.c24-sun:after{content:"";position:absolute;inset:-14px;border:1px dashed rgba(234,179,8,.4);border-radius:50%;animation:c24spin 18s linear infinite}
+.c24-panel{position:absolute;left:20%;top:96px;width:92px;height:54px;transform:skewY(-8deg);background:repeating-linear-gradient(90deg,#1E3A8A 0 22px,#0F1F4A 22px 24px);border:2px solid #60A5FA;border-radius:4px;z-index:4;box-shadow:0 8px 16px rgba(0,0,0,.35)}
+.c24-battery{position:absolute;left:46%;top:88px;width:64px;height:78px;border:3px solid #A3E635;border-radius:8px;background:rgba(163,230,53,.06);z-index:4}
+.c24-battery:before{content:"";position:absolute;left:50%;top:-9px;transform:translateX(-50%);width:22px;height:6px;border-radius:3px;background:#A3E635}
+.c24-battery i{position:absolute;left:5px;right:5px;bottom:5px;height:40%;border-radius:4px;background:linear-gradient(180deg,#A3E635,#4D7C0F);transition:.4s}
+.c24-battery span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:10px;color:#ECFCCB;z-index:2}
+.c24-device{position:absolute;right:12%;top:84px;width:88px;height:92px;border:2px solid #FDE68A;border-radius:10px;background:rgba(253,230,138,.06);z-index:4;display:flex;align-items:center;justify-content:center;font-size:30px}
+.c24-device.on{box-shadow:0 0 22px rgba(253,230,138,.35);background:rgba(253,230,138,.12)}
+.c24-line{position:absolute;left:28%;right:20%;top:122px;height:2px;background:repeating-linear-gradient(90deg,#EAB308 0 8px,transparent 8px 16px);z-index:2;opacity:.65}
+.c24-flow{position:absolute;left:28%;right:20%;top:118px;height:10px;z-index:5;pointer-events:none;overflow:hidden}
+.c24-flow i{position:absolute;top:3px;width:6px;height:6px;border-radius:50%;background:#FEF08A;box-shadow:0 0 8px #EAB308;animation:c24flow 1.8s linear infinite}
+.c24-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(250,204,21,.75);z-index:9}
+.c24-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(8,6,2,.6);z-index:9}
+.c24-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c24-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c24-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c24-context:hover,.c24-context.on{border-color:rgba(234,179,8,.55);background:rgba(234,179,8,.08)}
+.c24-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c24-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c24-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c24-meter .bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#EAB308,#4FE0D0);transition:.5s}
+.c24-feats{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.c24-feat{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c24-feat:hover,.c24-feat.on{border-color:rgba(234,179,8,.55);background:rgba(234,179,8,.08);color:#FEF08A}
+.c24-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c24-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c24-act:hover,.c24-act.on{border-color:rgba(234,179,8,.55);background:rgba(234,179,8,.08);color:#FEF08A}
+.c24-sliders{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.c24-slider{flex:1;min-width:100px;font-size:8.5px;color:var(--faint)}
+.c24-slider input{width:100%;accent-color:#EAB308;margin-top:3px}
+.c24-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(234,179,8,.2);background:linear-gradient(180deg,#141003,#0A0802);overflow:hidden}
+.c24-test .c24-stage{position:absolute;inset:8px;height:auto;border:0}
+.c24-test.dark .c24-sun{opacity:.15;box-shadow:none}
+.c24-test.fail .c24-device{animation:c24flicker .5s ease 4}
+.c24-test.pass .c24-device{box-shadow:0 0 26px rgba(79,224,208,.4)}
+.c24-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c24-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c24-fix:hover,.c24-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c24-bp-icon{width:150px;height:100px;margin:0 auto}
+.c24-bp-icon svg{width:100%;height:100%}
+@keyframes c24spin{to{transform:rotate(360deg)}}
+@keyframes c24flow{0%{transform:translateX(0);opacity:0}20%{opacity:1}100%{transform:translateX(260px);opacity:0}}
+@keyframes c24flicker{0%,100%{opacity:1}50%{opacity:.25}}
+@media(max-width:900px){.c24-stage,.c24-test{height:250px}.c24-context-grid,.c24-feats{grid-template-columns:1fr}.c24-panel{left:16%}.c24-battery{left:42%}.c24-device{right:8%}}
+@media(max-height:800px){.c24-stage{height:286px}}

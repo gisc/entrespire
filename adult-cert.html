@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>结业证书 · SIT 创新专业大师版</title>
+<link rel="stylesheet" href="adult-ops.css">
+<style>
+.cert{width:min(860px,100%);aspect-ratio:1.414/1;background:#F7F4EC;color:#1B2230;
+  border-radius:6px;padding:0;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.cert-in{position:absolute;inset:14px;border:1px solid #C7B98E;padding:34px 44px;display:flex;flex-direction:column}
+.cert-in:before{content:"";position:absolute;inset:6px;border:1px solid rgba(199,185,142,.5)}
+.cert .k{font-size:10px;letter-spacing:.32em;color:#8A7C57}
+.cert h1{font-size:30px;margin:14px 0 2px;letter-spacing:.04em;font-weight:600}
+.cert .en{font-size:10px;letter-spacing:.22em;color:#8A7C57;margin-bottom:26px}
+.cert .to{font-size:11px;color:#6B6350}
+.cert .name{font-size:34px;font-weight:600;margin:6px 0 4px;letter-spacing:.06em}
+.cert .line{height:1px;background:#C7B98E;margin:14px 0 12px;width:64%}
+.cert .body{font-size:12.5px;line-height:2;color:#3A4252;max-width:78%}
+.cert .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between}
+.cert .code{font-family:var(--mono);font-size:10px;color:#6B6350;letter-spacing:.08em}
+.cert .seal{width:92px;height:92px;border:1.5px solid #A8832C;border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;color:#A8832C;font-size:9px;letter-spacing:.12em;line-height:1.5;transform:rotate(-8deg)}
+.cert .seal b{font-size:13px;letter-spacing:.1em}
+@media(max-width:700px){.cert-in{padding:22px 24px}.cert h1{font-size:22px}.cert .name{font-size:26px}.cert .body{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand"><b>SIT 结业证书</b><span>CERTIFICATE</span></div>
+  <div class="grow"></div>
+  <span class="who" id="who"></span>
+  <a class="btn sm" href="adult-index.html">课程地图</a>
+  <button class="btn sm" id="logout" style="display:none">退出</button>
+</div>
+
+<div class="wrap">
+  <div id="loginBox" style="display:none">
+    <h1 class="h1">先用邀请码登录</h1>
+    <p class="sub">证书只发给本人。登录后系统会自动算你够不够结业条件。</p>
+    <div class="panel" style="max-width:420px">
+      <div class="field"><label>邀请码</label><input id="code" placeholder="SIT2026"></div>
+      <div class="field"><label>姓名</label><input id="name" placeholder="与报名时一致"></div>
+      <button class="btn primary" id="doLogin">登录</button>
+    </div>
+  </div>
+
+  <div id="app" style="display:none">
+    <h1 class="h1">结业证书</h1>
+    <p class="sub" id="sub">—</p>
+    <div id="status" class="panel"></div>
+    <div id="holder" style="display:none;max-width:860px;margin:0 auto">
+      <div id="certBox"></div>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn primary" id="download">下载 PNG</button>
+        <a class="btn" id="verifyLink" href="#" target="_blank">打开验真页</a>
+        <button class="btn" id="copyCode">复制编号</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+'use strict';
+const API=(location.protocol==='file:')?'http://127.0.0.1:8898/api/adult':'/api/adult';
+const TKEY='fxm_adult_token';
+let TOKEN=localStorage.getItem(TKEY)||'',data=null;
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?'':s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),1900);}
+async function call(path,opt){
+  opt=opt||{};
+  const res=await fetch(API+path,{method:opt.method||'GET',headers:Object.assign({'Content-Type':'application/json'},TOKEN?{Authorization:'Bearer '+TOKEN}:{}),body:opt.body?JSON.stringify(opt.body):undefined});
+  const d=await res.json().catch(()=>({}));
+  if(res.status===401){localStorage.removeItem(TKEY);TOKEN='';showLogin();throw new Error(d.detail||'请先登录');}
+  if(!res.ok)throw new Error(d.detail||('请求失败 '+res.status));
+  return d;
+}
+function showLogin(){$('#loginBox').style.display='';$('#app').style.display='none';$('#logout').style.display='none';}
+async function boot(){
+  $('#loginBox').style.display='none';$('#app').style.display='';$('#logout').style.display='';
+  data=await call('adult-cert.htmlmine');
+  $('#who').textContent=data.student.name+' · '+data.cohort.name;
+  $('#sub').textContent=data.course+'　·　'+data.cohort.name;
+  const e=data.eligibility;
+  $('#status').innerHTML=`<div class="panel-h"><h3>结业条件</h3><span>${e.passed?'已达标':'未达标'}</span></div>`+
+    e.rules.map(r=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span class="tag ${r.ok?'ok':'bad'}">${r.ok?'✓':'·'}</span>
+      <span style="font-size:12.5px;color:var(--dim)">${esc(r.label)}</span></div>`).join('')+
+    `<div style="font-size:11.5px;color:var(--faint);margin-top:8px">已提交 ${e.lessons_done} 节</div>`;
+  if(data.certificate){render(data.certificate);}
+  else if(e.passed){
+    $('#status').innerHTML+=`<div style="margin-top:12px"><button class="btn primary" id="claim">领取证书</button></div>`;
+    $('#claim').onclick=async()=>{
+      try{const r=await call('adult-cert.htmlclaim',{method:'POST'});render(r.certificate);toast('证书已生成');}
+      catch(err){toast(err.message);}
+    };
+  }else{
+    $('#status').innerHTML+=`<div style="margin-top:12px;font-size:12px;color:var(--faint)">把 A37–A39 里再完成 ${Math.max(0,2-e.project_done)} 节，并提交 A40 结业卡，就能领证。</div>`;
+  }
+}
+function render(cert){
+  $('#holder').style.display='';
+  const d=new Date(cert.issued_at);
+  const date=d.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'});
+  $('#certBox').innerHTML=`<div class="cert" id="certCanvas">
+    <div class="cert-in">
+      <div class="k">发小明 · SIT 创新学院</div>
+      <h1>结业证书</h1>
+      <div class="en">SIT SYSTEMATIC INVENTIVE THINKING · PROFESSIONAL MASTER</div>
+      <div class="to">兹证明</div>
+      <div class="name">${esc(data.student.name)}</div>
+      <div class="line"></div>
+      <div class="body">已完成《${esc(data.course)}》全部 40 节课程与毕业项目，<br>
+        掌握减法、乘法、除法、一专多能、属性关联五个工具，<br>
+        并通过市场与执行双重过滤，产出可评审的创新方案。</div>
+      <div class="foot">
+        <div>
+          <div class="code">证书编号　${esc(cert.code)}</div>
+          <div class="code" style="margin-top:4px">发证日期　${date}</div>
+          <div class="code" style="margin-top:4px">验真　genesis.aicai.site/adult/verify.html</div>
+        </div>
+        <div class="seal"><b>SIT</b><span>创新学院</span><span>GENESIS</span></div>
+      </div>
+    </div>
+  </div>`;
+  $('#verifyLink').href='adult-verify.html?code='+encodeURIComponent(cert.code);
+  $('#download').onclick=()=>download();
+  $('#copyCode').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(cert.code);toast('编号已复制');};
+}
+function download(){
+  // 用 SVG foreignObject 把 DOM 证书转成 PNG（无外部依赖）
+  const node=$('#certCanvas');
+  const w=860,h=Math.round(860/1.414);
+  const css=[...document.querySelectorAll('style')].map(s=>s.textContent).join('\n');
+  const html=new XMLSerializer().serializeToString(node);
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+    <foreignObject width="100%" height="100%">
+      <div xmlns="http://www.w3.org/1999/xhtml">${html}<style>${css}</style></div>
+    </foreignObject></svg>`;
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas');c.width=w*2;c.height=h*2;
+    const ctx=c.getContext('2d');ctx.fillStyle='#080B11';ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    const a=document.createElement('a');
+    a.download='SIT结业证书-'+data.student.name+'.png';
+    a.href=c.toDataURL('image/png');a.click();
+  };
+  img.onerror=()=>toast('导出失败，请用浏览器打印为 PDF');
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+$('#doLogin').onclick=async()=>{
+  try{
+    const res=await fetch(API+'adult-auth-index.htmlinvite',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({code:$('#code').value,name:$('#name').value})});
+    const d=await res.json();
+    if(!res.ok)throw new Error(d.detail||'登录失败');
+    TOKEN=d.token;localStorage.setItem(TKEY,TOKEN);
+    $('#who').textContent=d.user.name+' · '+d.cohort.name;
+    boot();
+  }catch(e){toast(e.message);}
+};
+$('#logout').onclick=()=>{localStorage.removeItem(TKEY);TOKEN='';showLogin();};
+if(TOKEN)boot().catch(()=>showLogin());else showLogin();
+})();
+</script>
+</body>
+</html>
+

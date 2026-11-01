@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><script src="qrcode.min.js"></script><script src="seeds.js"></script><script src="sim-shim.js"></script><script src="i18n-dict.js"></script><script src="i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>世界创新港 · 发小明在线课堂</title>
+<meta name="theme-color" content="#060A18">
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060A18;--bg2:#0B122B;--ink:#F7F2E6;--dim:#A3ABC2;--faint:#6E7690;
+  --gold:#F5C451;--gold2:#FFE3A6;--teal:#4FE0D0;--coral:#FF7A6B;--violet:#A78BFA;--green:#8BD17C;
+  --line:rgba(245,196,81,.16);--line2:rgba(255,255,255,.08);
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --ease:cubic-bezier(.22,.8,.28,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(245,196,81,.28)}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:rgba(245,196,81,.22);border-radius:6px}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--sans)}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(900px 620px at 12% -8%,rgba(245,196,81,.13),transparent 62%),
+  radial-gradient(900px 600px at 92% 4%,rgba(79,224,208,.10),transparent 62%),
+  radial-gradient(1100px 720px at 50% 108%,rgba(167,139,250,.10),transparent 64%),var(--bg)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.55;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{width:min(1240px,calc(100% - 48px));margin:0 auto;position:relative;z-index:2}
+
+/* ---- nav ---- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;height:72px;display:flex;align-items:center;
+  background:linear-gradient(180deg,rgba(6,10,24,.9),rgba(6,10,24,.55) 70%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav .wrap{display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.06em;font-size:14px}
+.brand svg{width:26px;height:26px;flex:none}
+.brand small{display:block;font-size:10px;letter-spacing:.28em;color:var(--gold);font-weight:500;margin-top:2px}
+.nav-spacer{flex:1}
+.nav-link{font-size:13px;color:var(--dim);padding:9px 14px;border-radius:99px;border:1px solid transparent;transition:.25s}
+.nav-link:hover{color:var(--ink);border-color:var(--line2);background:rgba(255,255,255,.04)}
+.nav-live{font-size:12px;color:var(--gold);border:1px solid var(--line);background:rgba(245,196,81,.07);padding:8px 14px;border-radius:99px;display:flex;align-items:center;gap:7px}
+.nav-live i{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35;transform:scale(.8)}}
+
+/* ---- hero ---- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 0 0;overflow:hidden}
+.hero-copy{position:relative;z-index:4;padding-bottom:clamp(180px,30vh,330px)}
+.kicker{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.36em;color:var(--gold);font-weight:600;text-transform:uppercase}
+.kicker::before{content:"";width:42px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(58px,10.4vw,148px);line-height:.98;letter-spacing:.02em;margin:26px 0 0}
+.hero h1 .g{background:linear-gradient(115deg,var(--gold2),var(--gold) 48%,#E79A3C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{display:flex;align-items:center;gap:18px;margin-top:26px;font-size:clamp(15px,1.5vw,20px);color:var(--ink);font-weight:500;letter-spacing:.04em}
+.hero-sub .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.7}
+.hero-sub em{font-style:normal;color:var(--gold)}
+.hero-lead{max-width:600px;margin-top:22px;color:var(--dim);font-size:clamp(14px,1.15vw,16.5px);line-height:2;letter-spacing:.02em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:99px;border:1px solid var(--line2);
+  background:rgba(255,255,255,.03);color:var(--ink);font-size:14.5px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:.3s var(--ease)}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06)}
+.btn.gold{background:linear-gradient(115deg,var(--gold2),var(--gold));border-color:transparent;color:#241A05;box-shadow:0 12px 36px -12px rgba(245,196,81,.65)}
+.btn.gold:hover{box-shadow:0 18px 46px -12px rgba(245,196,81,.8)}
+.btn svg{width:16px;height:16px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:46px;border-top:1px solid rgba(255,255,255,.08);padding-top:20px;max-width:640px}
+.hstat{padding-right:34px;margin-right:34px;border-right:1px solid rgba(255,255,255,.08)}
+.hstat:last-child{border:0;margin:0;padding:0}
+.hstat b{display:block;font-family:var(--serif);font-size:26px;color:var(--gold);line-height:1.2}
+.hstat span{font-size:11px;color:var(--faint);letter-spacing:.12em}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--faint);font-size:10px;letter-spacing:.3em}
+.scroll-cue i{width:1px;height:34px;background:linear-gradient(180deg,var(--gold),transparent);animation:cue 2.2s infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top;opacity:0}40%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);transform-origin:bottom;opacity:0}}
+
+/* ---- harbor ---- */
+.harbor{position:absolute;left:0;right:0;bottom:0;height:clamp(280px,46vh,500px);z-index:2;pointer-events:none}
+.harbor svg{width:100%;height:100%;display:block}
+.beam{transform-origin:1198px 236px;animation:sweep 9s ease-in-out infinite alternate;opacity:.55}
+@keyframes sweep{0%{transform:rotate(-13deg)}100%{transform:rotate(15deg)}}
+.wave{animation:drift 14s linear infinite}
+.wave.b{animation-duration:21s;animation-direction:reverse}
+@keyframes drift{to{transform:translateX(-90px)}}
+.win{animation:flicker 5s infinite}
+.win:nth-child(3n){animation-delay:1.4s}.win:nth-child(3n+1){animation-delay:2.7s}
+@keyframes flicker{0%,92%,100%{opacity:.9}95%{opacity:.25}}
+.hero-fade{position:absolute;left:0;right:0;bottom:0;height:140px;z-index:3;background:linear-gradient(180deg,transparent,var(--bg))}
+
+/* ---- manifesto ---- */
+.manifesto{padding:clamp(60px,8vw,110px) 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.mani-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden}
+.mani{background:linear-gradient(180deg,rgba(16,23,48,.92),rgba(8,13,30,.92));padding:30px 26px 32px;position:relative;overflow:hidden}
+.mani::after{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:.4s}
+.mani:hover::after{opacity:1}
+.mani b{font-family:var(--serif);font-size:28px;color:var(--gold);display:block;margin-bottom:12px}
+.mani h4{font-size:15px;margin-bottom:8px;letter-spacing:.04em}
+.mani p{font-size:12.5px;line-height:1.9;color:var(--dim)}
+.mani-kicker{font-size:10px;letter-spacing:.24em;color:var(--faint);margin-bottom:14px;display:block}
+
+/* ---- section ---- */
+.section{padding:clamp(70px,9vw,130px) 0;position:relative}
+.sec-head{max-width:720px;margin-bottom:clamp(36px,5vw,62px)}
+.sec-head .kicker{margin-bottom:18px}
+.sec-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,3.7vw,50px);line-height:1.24;letter-spacing:.02em}
+.sec-head h2 em{font-style:normal;color:var(--gold)}
+.sec-head p{margin-top:16px;color:var(--dim);font-size:14.5px;line-height:2;max-width:620px}
+.sec-head .aside{font-size:12px;color:var(--faint);margin-top:14px;letter-spacing:.06em}
+
+/* ---- route ---- */
+.month{position:relative;margin-bottom:clamp(46px,6vw,80px);scroll-margin-top:90px}
+.month:last-child{margin-bottom:0}
+.month-head{display:flex;align-items:flex-end;gap:20px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mnum{font-family:var(--serif);font-size:clamp(42px,5vw,66px);line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(245,196,81,.42);font-weight:700;flex:none}
+.month[data-c="teal"] .mnum{-webkit-text-stroke-color:rgba(79,224,208,.45)}
+.month[data-c="coral"] .mnum{-webkit-text-stroke-color:rgba(255,122,107,.45)}
+.month-head h3{font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);letter-spacing:.04em;line-height:1.2}
+.month-head p{color:var(--dim);font-size:13px;margin-top:5px}
+.mrange{margin-left:auto;font-size:11px;letter-spacing:.16em;color:var(--faint);white-space:nowrap;padding-bottom:4px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.lesson{position:relative;display:flex;flex-direction:column;min-height:272px;padding:22px 20px 18px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.09);background:linear-gradient(165deg,rgba(18,26,52,.92),rgba(8,13,29,.96));
+  overflow:hidden;transition:transform .45s var(--ease),border-color .35s,box-shadow .35s;will-change:transform}
+.lesson::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 200px at 20% -10%,var(--ac,rgba(245,196,81,.16)),transparent 70%);opacity:0;transition:.45s}
+.lesson:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2);box-shadow:0 26px 60px -30px rgba(0,0,0,.9)}
+.lesson:hover::before{opacity:1}
+.lesson.live{border-color:rgba(245,196,81,.45);box-shadow:0 0 0 1px rgba(245,196,81,.1),0 24px 60px -30px rgba(245,196,81,.35)}
+.lesson.live::after{content:"";position:absolute;inset:-1px;border-radius:17px;background:linear-gradient(120deg,rgba(245,196,81,.5),transparent 35%,transparent 65%,rgba(79,224,208,.35));opacity:.32;pointer-events:none;mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);mask-composite:exclude;-webkit-mask-composite:xor;padding:1px}
+.lesson.soon{opacity:.72}
+.lesson.soon:hover{opacity:.95}
+.l-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;position:relative;z-index:1}
+.l-no{font-family:var(--serif);font-size:15px;letter-spacing:.12em;color:var(--gold);font-weight:700}
+.month[data-c="teal"] .l-no{color:var(--teal)}
+.month[data-c="coral"] .l-no{color:var(--coral)}
+.l-status{font-size:9.5px;letter-spacing:.16em;padding:5px 9px;border-radius:99px;border:1px solid rgba(255,255,255,.14);color:var(--faint)}
+.live .l-status{color:#251A05;background:linear-gradient(115deg,var(--gold2),var(--gold));border-color:transparent;font-weight:700}
+.lesson h4{position:relative;z-index:1;font-size:16.5px;line-height:1.55;font-weight:700;letter-spacing:.01em;margin-bottom:10px}
+.lesson p{position:relative;z-index:1;font-size:12.5px;line-height:1.85;color:var(--dim);flex:1}
+.l-tags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 14px;position:relative;z-index:1}
+.l-tags span{font-size:10px;color:var(--faint);border:1px solid rgba(255,255,255,.09);padding:3px 7px;border-radius:5px;line-height:1.4}
+.live .l-tags span{color:var(--gold2);border-color:rgba(245,196,81,.28);background:rgba(245,196,81,.06)}
+.l-foot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--faint);border-top:1px solid rgba(255,255,255,.06);padding-top:12px;position:relative;z-index:1}
+.l-go{color:var(--gold);font-weight:600;letter-spacing:.04em}
+.soon .l-go{color:var(--faint);font-weight:400}
+.lock{width:13px;height:13px;display:inline-block;vertical-align:-2px;margin-right:5px;opacity:.7}
+.lesson .l-hover{position:absolute;right:16px;bottom:54px;font-size:34px;opacity:.08;transition:.4s;z-index:0}
+.lesson:hover .l-hover{opacity:.18;transform:scale(1.08) rotate(-6deg)}
+
+/* ---- quote band ---- */
+
+/* ---- full-year roadmap 13-40 ---- */
+.plan-section{padding-top:clamp(20px,3vw,40px)}
+.plan-phases{display:flex;flex-direction:column;gap:20px}
+.plan-phase{border:1px solid rgba(255,255,255,.08);border-radius:18px;background:linear-gradient(165deg,rgba(14,21,44,.72),rgba(7,11,26,.85));padding:20px 22px 18px}
+.plan-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.plan-head span{font-size:9.5px;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:5px}
+.plan-head h3{font-family:var(--serif);font-size:clamp(18px,1.8vw,23px);letter-spacing:.03em;line-height:1.3}
+.plan-head em{font-style:normal;font-size:10px;letter-spacing:.1em;color:var(--faint);white-space:nowrap;padding-bottom:2px}
+.plan-list{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.plan-item{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:9px;border:1px dashed rgba(255,255,255,.1);background:rgba(255,255,255,.018);transition:.2s}
+.plan-item:hover{border-color:rgba(245,196,81,.28);background:rgba(245,196,81,.035)}
+.plan-item .pn{font-family:var(--serif);font-size:13px;color:var(--gold);width:24px;flex:none;line-height:1.5;opacity:.8}
+.plan-item .pt{flex:1;min-width:0}
+.plan-item .pt b{display:block;font-size:12px;line-height:1.55;font-weight:500;color:var(--ink)}
+.plan-item .pt span{display:block;font-size:9.5px;line-height:1.5;color:var(--faint);margin-top:2px}
+.plan-item .ps{font-size:8px;letter-spacing:.1em;color:var(--faint);border:1px solid rgba(255,255,255,.1);padding:2px 5px;border-radius:99px;flex:none;margin-top:1px}
+.plan-note{margin-top:16px;font-size:10.5px;color:var(--faint);line-height:1.8;display:flex;gap:8px;align-items:flex-start}
+.plan-note::before{content:"※";color:var(--gold);flex:none}
+@media (max-width:900px){.plan-list{grid-template-columns:1fr}}
+@media (max-width:720px){.plan-phase{padding:16px}.plan-head{flex-wrap:wrap;gap:6px}}
+
+.quote-band{padding:clamp(50px,7vw,90px) 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:radial-gradient(700px 300px at 50% 50%,rgba(245,196,81,.06),transparent 70%)}
+.quote-band blockquote{font-family:var(--serif);font-size:clamp(22px,3vw,38px);line-height:1.7;text-align:center;letter-spacing:.04em;max-width:900px;margin:0 auto}
+.quote-band blockquote em{font-style:normal;color:var(--gold)}
+.quote-band .from{text-align:center;margin-top:18px;font-size:11px;letter-spacing:.24em;color:var(--faint)}
+
+/* ---- how ---- */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.how{position:relative;padding:30px 26px 28px;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:linear-gradient(170deg,rgba(17,24,49,.85),rgba(7,11,26,.9));overflow:hidden}
+.how::after{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,var(--hc,rgba(245,196,81,.16)),transparent 70%)}
+.how .hi{font-size:26px;margin-bottom:18px;display:block}
+.how h4{font-size:16px;margin-bottom:10px;letter-spacing:.04em}
+.how p{font-size:13px;line-height:1.95;color:var(--dim)}
+.how .hnote{margin-top:16px;font-size:11px;color:var(--faint);border-top:1px dashed rgba(255,255,255,.09);padding-top:12px}
+
+/* ---- footer ---- */
+footer{padding:56px 0 40px;border-top:1px solid rgba(255,255,255,.07)}
+.foot-row{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.foot-brand{font-family:var(--serif);font-size:18px;letter-spacing:.08em}
+.foot-brand small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.28em;color:var(--gold);margin-top:7px}
+.foot-note{font-size:12px;color:var(--faint);line-height:2;max-width:420px}
+.foot-links{display:flex;gap:18px;font-size:12px;color:var(--dim)}
+.foot-links a:hover{color:var(--gold)}
+.copyright{margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:var(--faint);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ---- reveal ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+@media (max-width:1080px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .mani-grid{grid-template-columns:repeat(2,1fr)}
+  .how-grid{grid-template-columns:1fr}
+  .hero-copy{padding-bottom:260px}
+}
+@media (max-width:720px){
+  .wrap{width:calc(100% - 32px)}
+  .nav{height:60px}
+  .nav .wrap{gap:8px}
+  .nav-live{display:none}
+  .brand{font-size:11.5px;letter-spacing:.02em;white-space:nowrap}
+  .brand svg{width:22px;height:22px}
+  .brand small{display:none}
+  .nav-link{font-size:10.5px;padding:7px 9px;white-space:nowrap}
+  .hero{padding:88px 0 40px;min-height:auto;display:block}
+  .hero-copy{padding-bottom:16px}
+  .kicker{font-size:8.5px;letter-spacing:.2em}
+  .hero h1{font-size:clamp(42px,13vw,64px);margin-top:18px}
+  .hero-sub{flex-wrap:wrap;gap:6px 10px;font-size:12px;margin-top:18px}
+  .hero-lead{font-size:12.5px;line-height:1.9;margin-top:16px}
+  .hero-cta{margin-top:24px;flex-direction:column}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px 0;margin-top:28px;padding-top:16px}
+  .hstat{border-right:0;padding:0;margin:0}
+  .hstat b{font-size:20px}
+  .hstat span{font-size:9.5px}
+  .harbor{display:none}
+  .scroll-cue{display:none}
+  .manifesto{padding:46px 0}
+  .section{padding:60px 0}
+  .cards{grid-template-columns:1fr}
+  .mani-grid{grid-template-columns:1fr}
+  .month-head{flex-wrap:wrap;align-items:center;gap:10px 14px}
+  .mrange{margin-left:0;width:100%;padding-left:0}
+  .lesson{min-height:0}
+  .quote-band blockquote{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<script src="assets-tc-page.js" defer></script>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="aurora"></div>
+<div class="grain"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html?scene=map">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M16 2l2.9 8.6L28 13l-7.1 5.3L23 27l-7-4.8L9 27l2.1-8.7L4 13l9.1-2.4L16 2z" stroke="#F5C451" stroke-width="1.3" fill="rgba(245,196,81,.08)"/>
+        <circle cx="16" cy="15" r="2.2" fill="#F5C451"/>
+      </svg>
+      <span>发小明 · 世界创新港<small>GENESIS ONLINE ACADEMY</small></span>
+    </a>
+    <div class="nav-spacer"></div>
+    <span class="nav-live"><i></i>为中国培养从0到1的人才</span>
+    <a class="nav-link" href="index.html?scene=map">返回学院地图</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-copy">
+      <div class="kicker">WORLD INNOVATION PORT · 第一季</div>
+      <h1>世界<span class="g">创新港</span></h1>
+      <div class="hero-sub"><span>发小明在线课堂</span><span class="dot"></span><span>第一季 12 章 · 全年 40 章</span><span class="dot"></span><em>为中国培养从0到1的人才</em></div>
+      <p class="hero-lead">把课堂变成一座港口：每一次观察都是一艘进港的船，每一个问题都是一条待开的航线。老师不必播放 PPT，孩子跟着屏幕一起发现、想象、设计、表达。</p>
+      <div class="hero-cta">
+        <a class="btn gold" href="course-lesson-01.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          进入第 01 章 · 现在开始
+        </a>
+        <a class="btn" href="#route">查看课程航线
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <a class="btn" href="teacher-index.html" style="border-color:rgba(242,193,78,.55);color:#f2c14e">老师登录</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><b>12</b><span>章 · 第一季</span></div>
+        <div class="hstat"><b>40</b><span>章 · 全年航线</span></div>
+        <div class="hstat"><b>0</b><span>张 PPT · 网页互动</span></div>
+        <div class="hstat"><b>7–13</b><span>岁 · 混龄可调</span></div>
+      </div>
+    </div>
+
+    <div class="harbor" aria-hidden="true">
+      <svg viewBox="0 0 1440 500" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B122B" stop-opacity="0"/><stop offset="1" stop-color="#060A18" stop-opacity=".9"/></linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C1A33"/><stop offset="1" stop-color="#050912"/></linearGradient>
+          <linearGradient id="goldL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE3A6"/><stop offset="1" stop-color="#D89A2E"/></linearGradient>
+          <linearGradient id="beamG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE3A6" stop-opacity=".55"/><stop offset="1" stop-color="#FFE3A6" stop-opacity="0"/></linearGradient>
+          <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5C451" stop-opacity=".5"/><stop offset="1" stop-color="#F5C451" stop-opacity="0"/></linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1440" height="500" fill="url(#skyG)"/>
+
+        <!-- distant city -->
+        <g opacity=".55" fill="#0A1430">
+          <rect x="40" y="300" width="60" height="130"/><rect x="108" y="330" width="42" height="100"/>
+          <rect x="160" y="280" width="34" height="150"/><rect x="204" y="322" width="70" height="108"/>
+          <rect x="286" y="342" width="46" height="88"/><rect x="470" y="320" width="52" height="110"/>
+          <rect x="530" y="348" width="38" height="82"/><rect x="900" y="300" width="54" height="130"/>
+          <rect x="962" y="336" width="40" height="94"/><rect x="1250" y="310" width="58" height="120"/>
+          <rect x="1316" y="342" width="46" height="88"/>
+        </g>
+        <g fill="#F5C451" opacity=".55">
+          <rect class="win" x="52" y="316" width="5" height="5"/><rect class="win" x="66" y="332" width="5" height="5"/><rect class="win" x="80" y="318" width="5" height="5"/>
+          <rect class="win" x="118" y="346" width="4" height="4"/><rect class="win" x="132" y="362" width="4" height="4"/>
+          <rect class="win" x="170" y="296" width="4" height="4"/><rect class="win" x="180" y="330" width="4" height="4"/>
+          <rect class="win" x="218" y="340" width="4" height="4"/><rect class="win" x="240" y="356" width="4" height="4"/>
+          <rect class="win" x="484" y="336" width="4" height="4"/><rect class="win" x="506" y="352" width="4" height="4"/>
+          <rect class="win" x="912" y="318" width="5" height="5"/><rect class="win" x="934" y="342" width="5" height="5"/>
+          <rect class="win" x="1264" y="328" width="5" height="5"/><rect class="win" x="1282" y="350" width="5" height="5"/>
+        </g>
+
+        <!-- cranes -->
+        <g stroke="#16233F" stroke-width="1.4" fill="none" opacity=".9">
+          <path d="M350 430V250h8v180M354 258h-95M354 258h86M260 258v42M440 258v30M354 258l-40-34M354 258l42-34"/>
+          <path d="M1040 434V268h7v166M1044 276h-78M1044 276h70M966 276v32M1114 276v26M1044 276l-34-28M1044 276l36-28"/>
+        </g>
+
+        <!-- container ship -->
+        <g>
+          <path d="M520 436h340l-26 34H546z" fill="#0A1428"/>
+          <rect x="548" y="406" width="52" height="30" fill="#1B2A4A"/><rect x="604" y="406" width="52" height="30" fill="#243B63"/>
+          <rect x="660" y="406" width="52" height="30" fill="#1B2A4A"/><rect x="716" y="406" width="52" height="30" fill="#243B63"/>
+          <rect x="772" y="406" width="52" height="30" fill="#1B2A4A"/>
+          <rect x="548" y="380" width="52" height="24" fill="#F5C451" opacity=".9"/><rect x="604" y="380" width="52" height="24" fill="#4FE0D0" opacity=".75"/>
+          <rect x="660" y="380" width="52" height="24" fill="#FF7A6B" opacity=".8"/><rect x="716" y="380" width="52" height="24" fill="#F5C451" opacity=".9"/>
+          <rect x="772" y="380" width="52" height="24" fill="#A78BFA" opacity=".75"/>
+          <rect x="580" y="356" width="52" height="22" fill="#4FE0D0" opacity=".55"/><rect x="636" y="356" width="52" height="22" fill="#F5C451" opacity=".65"/>
+          <rect x="692" y="356" width="52" height="22" fill="#FF7A6B" opacity=".55"/>
+          <rect x="830" y="360" width="16" height="76" fill="#0E1A31"/><rect x="828" y="354" width="20" height="8" fill="#F5C451" opacity=".7"/>
+        </g>
+
+        <!-- water -->
+        <rect x="0" y="452" width="1440" height="48" fill="url(#water)"/>
+        <g class="wave" stroke="#2B4A7A" stroke-width="1" fill="none" opacity=".55">
+          <path d="M-100 470q45-10 90 0t90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0 90 0"/>
+        </g>
+        <g class="wave b" stroke="#3C6A9E" stroke-width="1" fill="none" opacity=".35">
+          <path d="M-100 486q55-12 110 0t110 0 110 0 110 0 110 0 110 0 110 0 110 0 110 0 110 0 110 0 110 0 110 0"/>
+        </g>
+        <rect x="1128" y="452" width="150" height="48" fill="url(#refl)" opacity=".55"/>
+
+        <!-- lighthouse -->
+        <g>
+          <path d="M1160 452l10-190h44l10 190z" fill="#0E1A31" stroke="#25395E" stroke-width="1.2"/>
+          <path d="M1174 300h36M1170 340h44M1166 382h52M1163 420h58" stroke="#F5C451" stroke-width="2" opacity=".55"/>
+          <rect x="1178" y="212" width="30" height="34" rx="3" fill="#12203C" stroke="#F5C451" stroke-opacity=".5"/>
+          <rect x="1186" y="220" width="14" height="18" fill="#FFE3A6" opacity=".9"/>
+          <path d="M1173 212h40l-6-14h-28z" fill="#0E1A31" stroke="#25395E"/>
+          <path d="M1193 198v-20" stroke="#F5C451" stroke-width="1.4"/>
+          <circle cx="1193" cy="174" r="3" fill="#F5C451"/>
+          <path d="M1186 226l-28 26h28z" fill="#F5C451" opacity=".18"/>
+          <g class="beam"><path d="M1198 236L1440 96v290z" fill="url(#beamG)"/></g>
+          <path d="M1150 452h86l12 12h-110z" fill="#0A1428"/>
+        </g>
+
+        <!-- dock edge -->
+        <path d="M0 448h520M870 448h300" stroke="#1C2C4A" stroke-width="3"/>
+        <g fill="#F5C451" opacity=".5">
+          <circle cx="120" cy="448" r="2"/><circle cx="260" cy="448" r="2"/><circle cx="420" cy="448" r="2"/><circle cx="920" cy="448" r="2"/><circle cx="1060" cy="448" r="2"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-fade"></div>
+    <div class="scroll-cue"><i></i>SCROLL</div>
+  </section>
+
+  <section class="manifesto">
+    <div class="wrap">
+      <div class="mani-grid reveal">
+        <div class="mani"><span class="mani-kicker">EVERY CLASS</span><b>01</b><h4>一个挑战</h4><p>孩子不是被动听课，而是带着任务进入课堂。</p></div>
+        <div class="mani"><span class="mani-kicker">EVERY CLASS</span><b>02</b><h4>一件成果</h4><p>一张创意卡、一幅设计图、一个模型，或一段演示。</p></div>
+        <div class="mani"><span class="mani-kicker">EVERY CLASS</span><b>03</b><h4>一次表达</h4><p>让孩子讲清楚：我为什么这样设计。</p></div>
+        <div class="mani"><span class="mani-kicker">EVERY CLASS</span><b>04</b><h4>一份记录</h4><p>作品、照片、创意和改进过程，逐渐成为成长档案。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="route">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">THE ROUTE · 第一季课程航线</div>
+        <h2>第一季 12 章，<em>从好奇走向创造</em></h2>
+        <p>三个月的航线，从发现一个不方便，到做出第一件真正能运行的作品。每一章都为下一章铺路，最后一课把所学装上一辆小车。</p>
+        <div class="aside">建议按顺序推进 · 每章可拆成多次课 · 第 1–12 章已启用访问密码 · 老师按课堂节奏把握</div>
+      </div>
+
+      <div class="month reveal" data-c="gold" id="m1">
+        <div class="month-head">
+          <span class="mnum">01</span>
+          <div><h3>创新启蒙</h3><p>发现世界的另一种可能</p></div>
+          <span class="mrange">MONTH 01 · 第 1–4 章</span>
+        </div>
+        <div class="cards">
+          <a class="lesson live" href="course-lesson-01.html" style="--ac:rgba(245,196,81,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 01</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>世界为什么不能换一种方式？</h4>
+            <p>打破“本来就是这样”，从一支铅笔开始，发现生活中可以改变的地方。</p>
+            <div class="l-tags"><span>发现力</span><span>想象力</span><span>表达力</span></div>
+            <div class="l-foot"><span>8 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">✏️</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=2" style="--ac:rgba(245,196,81,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 02</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>生活中的问题侦探</h4>
+            <p>把模糊的抱怨，变成可以观察、可以调查的具体问题。</p>
+            <div class="l-tags"><span>发现力</span><span>批判性思维力</span></div>
+            <div class="l-foot"><span>8 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🔍</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=3" style="--ac:rgba(245,196,81,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 03</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>一个问题，一百种想法</h4>
+            <p>用 SIT 五工具（减法/合并/乘法/除法/依赖）长出不同方向。</p>
+            <div class="l-tags"><span>SIT 五工具</span><span>发散力</span></div>
+            <div class="l-foot"><span>6 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">💡</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=4" style="--ac:rgba(245,196,81,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 04</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>我的第一件创意作品</h4>
+            <p>从设计图到原型：用 SIT 一专多能让一个部件做两件事，再测试改进。</p>
+            <div class="l-tags"><span>SIT 一专多能</span><span>实践力</span><span>改进力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🛠️</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="month reveal" data-c="teal" id="m2">
+        <div class="month-head">
+          <span class="mnum">02</span>
+          <div><h3>奇思妙想</h3><p>让想象变成设计方案</p></div>
+          <span class="mrange">MONTH 02 · 第 5–8 章</span>
+        </div>
+        <div class="cards">
+          <a class="lesson live" href="course-chapter.html?ch=5" style="--ac:rgba(79,224,208,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 05</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>如果物品拥有超能力</h4>
+            <p>用 SIT 减法拿掉一个部件，再用一专多能让它多做一件事。</p>
+            <div class="l-tags"><span>想象力</span><span>设计力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🎒</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=6" style="--ac:rgba(79,224,208,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 06</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>给未来设计一件产品</h4>
+            <p>从使用者出发，做一件真的有人需要的东西。</p>
+            <div class="l-tags"><span>设计力</span><span>表达力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🔭</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=7" style="--ac:rgba(79,224,208,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 07</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>创意PK：哪个方案更好？</h4>
+            <p>学会比较功能、成本、安全与可改进性，而不是抢答。</p>
+            <div class="l-tags"><span>批判性思维力</span><span>设计力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">⚖️</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=8" style="--ac:rgba(79,224,208,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 08</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>让别人看懂我的创意</h4>
+            <p>把想法整理成一份别人看得懂、听得明白的提案。</p>
+            <div class="l-tags"><span>表达力</span></div>
+            <div class="l-foot"><span>6 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🗣️</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="month reveal" data-c="coral" id="m3">
+        <div class="month-head">
+          <span class="mnum">03</span>
+          <div><h3>结构与机械</h3><p>让东西动起来</p></div>
+          <span class="mrange">MONTH 03 · 第 9–12 章</span>
+        </div>
+        <div class="cards">
+          <a class="lesson live" href="course-chapter.html?ch=9" style="--ac:rgba(255,122,107,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 09</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>为什么有的东西站得稳？</h4>
+            <p>在倒塌与重建中，理解支撑、底座和结构形状。</p>
+            <div class="l-tags"><span>实践力</span><span>改进力</span></div>
+            <div class="l-foot"><span>6 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🏗️</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=10" style="--ac:rgba(255,122,107,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 10</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>杠杆的力量</h4>
+            <p>找到那个支点，理解省力背后的结构。</p>
+            <div class="l-tags"><span>实践力</span><span>批判性思维力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">⚙️</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=11" style="--ac:rgba(255,122,107,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 11</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>轮子改变世界</h4>
+            <p>滚动、摩擦与一辆能跑起来的小车。</p>
+            <div class="l-tags"><span>设计力</span><span>改进力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🛞</span>
+          </a>
+          <a class="lesson live" href="course-chapter.html?ch=12" style="--ac:rgba(255,122,107,.2)">
+            <div class="l-top"><span class="l-no">CHAPTER 12</span><span class="l-status">🔒 密码进入</span></div>
+            <h4>我的第一个工程任务</h4>
+            <p>把一杯水安全运到终点：拆系统、测试、诊断、改进。</p>
+            <div class="l-tags"><span>实践力</span><span>改进力</span><span>表达力</span></div>
+            <div class="l-foot"><span>7 幕互动 · 可拆成多次课</span><span class="l-go">进入本章 →</span></div>
+            <span class="l-hover">🏁</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section plan-section" id="plan">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">FULL YEAR · 全年航线</div>
+        <h2>第 13–40 章，<em>把创造走成一条路</em></h2>
+        <p>第一季 12 章建立创新基本功；后续 28 章把 SIT 五工具带进自然、生活、社会、数字与年度项目，主题完全避开前 12 章。</p>
+        <div class="aside">第 13–40 章按 SIT 进阶路线编排 · 将按教学节奏逐步开发</div>
+      </div>
+      <div class="plan-phases" id="planPhases"></div>
+      <div class="plan-note">第 1–12 章已全部开放；第 13–40 章为 SIT 进阶与年度项目。</div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="wrap reveal">
+      <blockquote>“先多想，再选择；<br><em>先尝试，再改进。</em>”</blockquote>
+      <div class="from">发小明创新口诀 · 第一季</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">HOW IT WORKS · 怎么上课</div>
+        <h2>老师打开网页，<em>课堂就开始了</em></h2>
+        <p>不是把 PPT 搬到浏览器，而是把“讲解—练习—表达—成果”做进同一条课堂动线。老师负责引导和追问，屏幕负责呈现、互动和记录。</p>
+      </div>
+      <div class="how-grid">
+        <div class="how reveal d1" style="--hc:rgba(245,196,81,.18)">
+          <span class="hi">🧑‍🏫</span>
+          <h4>老师：打开即上课</h4>
+          <p>每一幕都有建议时长、关键提问和常见困难。按 <b>→</b> 翻页，按 <b>T</b> 打开教师指引，按 <b>F</b> 全屏，不必另做 PPT。</p>
+          <div class="hnote">支持投影、触控一体机、平板与笔记本</div>
+        </div>
+        <div class="how reveal d2" style="--hc:rgba(79,224,208,.18)">
+          <span class="hi">🧒</span>
+          <h4>孩子：动手也动脑</h4>
+          <p>点一点、投一票、画一画、上台讲。观察、想象、选择、表达，每一个环节都让孩子真正参与，而不是坐着看。</p>
+          <div class="hnote">每章至少 3 次全班互动 + 1 次个人成果</div>
+        </div>
+        <div class="how reveal d3" style="--hc:rgba(167,139,250,.18)">
+          <span class="hi">🎒</span>
+          <h4>课堂：留下成果</h4>
+          <p>创新提案、设计图、发布会记录和“问题发现者”徽章都可以下载，归入孩子的个人创新成长档案。</p>
+          <div class="hnote">第 01 章成果：我的第一个创新提案</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-brand">发小明 · 世界创新港<small>GENESIS INVENTION ACADEMY</small></div>
+      <div class="foot-note">让每个孩子都拥有创造的能力。<br>看见问题的眼睛、独立思考的大脑、动手创造的双手，以及把想法讲清楚的能力。</div>
+      <div class="foot-links"><a href="index.html?scene=map">学院地图</a><a href="course-lesson-01.html">第 01 章</a><a href="#route">课程航线</a><a href="teacher-index.html">教师工作台</a><a href="course-admin.html">机构管理</a></div>
+    </div>
+    <div class="copyright"><span>© 2026 发小明 Genesis 创新学院 · 世界创新港在线课堂</span><span>建议使用 Chrome / Edge · 全屏上课效果最佳</span></div>
+  </div>
+</footer>
+
+<script>
+/* 星空 */
+(function(){
+  const cv=document.getElementById('stars'),ctx=cv.getContext('2d');
+  let w=0,h=0,dpr=Math.min(2,window.devicePixelRatio||1),stars=[],shoot=null,last=0;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize(){w=innerWidth;h=innerHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars=Array.from({length:Math.min(170,Math.round(w*h/12000))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+.25,a:Math.random(),s:Math.random()*.018+.004,p:Math.random()*6.28}))}
+  resize();addEventListener('resize',resize);
+  function loop(t){
+    ctx.clearRect(0,0,w,h);
+    for(const s of stars){s.a+=s.s;const al=.18+.55*Math.abs(Math.sin(s.a));
+      ctx.fillStyle='rgba(247,242,230,'+al.toFixed(3)+')';ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.29);ctx.fill();}
+    if(!reduce && t-last>7200 && !shoot){last=t;shoot={x:Math.random()*w*.6+w*.2,y:Math.random()*h*.3,l:0,sp:7+Math.random()*5}}
+    if(shoot){shoot.l+=shoot.sp;shoot.x+=shoot.sp*.78;shoot.y+=shoot.sp*.3;
+      const g=ctx.createLinearGradient(shoot.x-70,shoot.y-26,shoot.x,shoot.y);
+      g.addColorStop(0,'rgba(255,227,166,0)');g.addColorStop(1,'rgba(255,227,166,.75)');
+      ctx.strokeStyle=g;ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(shoot.x-70,shoot.y-26);ctx.lineTo(shoot.x,shoot.y);ctx.stroke();
+      if(shoot.l>260)shoot=null;}
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* 全年 13–40 章路线 */
+const PLAN=[
+  {n:13,t:'声音的形状：让看不见的声音被看见',f:'SIT 减法 · 属性关联'},
+  {n:14,t:'光的路线：反射、遮挡与导光',f:'SIT 除法 · 属性关联'},
+  {n:15,t:'水的旅程：收集、过滤、循环',f:'SIT 一专多能 · 盒内思考'},
+  {n:16,t:'空气的力量：风、压差与飞行',f:'SIT 乘法 · 属性关联'},
+  {n:17,t:'包装的第二次生命：少即是多',f:'SIT 减法 · 除法'},
+  {n:18,t:'衣服的新工作：穿、装、玩',f:'SIT 一专多能 · 乘法'},
+  {n:19,t:'厨房里的发明：工具的多任务',f:'SIT 一专多能 · 属性关联'},
+  {n:20,t:'教室动线：让空间少走一步',f:'SIT 除法 · 盒内思考'},
+  {n:21,t:'无障碍设计师：让更多人用得上',f:'SIT 属性关联 · 一专多能'},
+  {n:22,t:'安全边界：把风险变成设计条件',f:'SIT 减法 · 属性关联'},
+  {n:23,t:'垃圾的新工作：废弃物多任务',f:'SIT 一专多能 · 乘法'},
+  {n:24,t:'能源管家：让每一度电多做一件事',f:'SIT 一专多能 · 属性关联'},
+  {n:25,t:'数据侦探：把杂乱信息变成线索',f:'SIT 除法 · 属性关联'},
+  {n:26,t:'传感器剧场：让环境自己会反应',f:'SIT 属性关联 · 一专多能'},
+  {n:27,t:'界面魔法：让人一看就会用',f:'SIT 除法 · 属性关联'},
+  {n:28,t:'游戏化发明：把任务变成一场游戏',f:'SIT 乘法 · 一专多能'},
+  {n:29,t:'包装系统：从一只盒子到一条链',f:'SIT 系统 · 除法'},
+  {n:30,t:'城市小系统：一个改变会牵动谁？',f:'SIT 系统 · 盒内思考'},
+  {n:31,t:'预算实验室：在限制里做选择',f:'SIT 减法 · 属性关联'},
+  {n:32,t:'团队发明：让不同的人接上力',f:'SIT 一专多能 · 除法'},
+  {n:33,t:'原型冲刺：从草图到可测试模型',f:'SIT 综合 · 快速迭代'},
+  {n:34,t:'失败迭代：用测试数据改一版',f:'SIT 综合 · 证据改进'},
+  {n:35,t:'极端用户：为最不方便的人设计',f:'SIT 盒内思考 · 属性关联'},
+  {n:36,t:'系统思维：把作品放进真实系统',f:'SIT 系统 · 连锁反应'},
+  {n:37,t:'年度项目立项：选题与证据',f:'问题 · 证据 · 计划'},
+  {n:38,t:'年度项目原型：把想法做成系统',f:'设计 · 制作 · 测试'},
+  {n:39,t:'AI 搭档：让机器帮你验证一个假设',f:'AI · 验证 · 判断'},
+  {n:40,t:'年度创新成果展：从作品到影响力',f:'作品 · 交流 · 档案'}
+];
+const PHASES=[
+  {label:'第一学期 · 后半程',title:'SIT 五工具：从自然到日常',range:'第 13–20 章',from:13,to:20},
+  {label:'第二学期 · 社会与数字',title:'SIT 五工具：从社会到数字',range:'第 21–28 章',from:21,to:28},
+  {label:'第二学期 · 系统与团队',title:'系统、预算与协作',range:'第 29–32 章',from:29,to:32},
+  {label:'第二学期 · 项目工坊',title:'原型、迭代与极端用户',range:'第 33–36 章',from:33,to:36},
+  {label:'第二学期 · 年度项目',title:'年度项目与成果展',range:'第 37–40 章',from:37,to:40}
+];
+(function renderPlan(){
+  const box=document.getElementById('planPhases'); if(!box) return;
+  box.innerHTML=PHASES.map(p=>{
+    const items=PLAN.filter(x=>x.n>=p.from&&x.n<=p.to);
+    return '<div class="plan-phase reveal"><div class="plan-head"><div><span>'+p.label+'</span><h3>'+p.title+'</h3></div><em>'+p.range+'</em></div><div class="plan-list">'+
+      items.map(x=>x.n>=13&&x.n<=40?'<a class="plan-item live" href="course-chapter.html?ch='+x.n+'" style="border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.07)"><span class="pn">'+x.n+'</span><span class="pt"><b>'+x.t+'</b><span>'+x.f+'</span></span><em class="ps" style="color:#38BDF8">进入 →</em></a>':'<div class="plan-item"><span class="pn">'+x.n+'</span><span class="pt"><b>'+x.t+'</b><span>'+x.f+'</span></span><em class="ps">规划中</em></div>').join('')+
+      '</div></div>';
+  }).join('');
+})();
+
+/* 滚动显现 */
+(function(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+/* 卡片轻微跟随 */
+(function(){
+  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(!fine)return;
+  document.querySelectorAll('.lesson').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform='translateY(-6px) rotateX('+(-y*3).toFixed(2)+'deg) rotateY('+(x*3).toFixed(2)+'deg)';
+    });
+    card.addEventListener('pointerleave',()=>{card.style.transform=''});
+  });
+})();
+</script>
+</body>
+</html>
+

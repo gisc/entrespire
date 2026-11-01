@@ -1,0 +1,45 @@
+/* 第 19 章 · 厨房里的发明（专属场景） */
+.c19-stage{position:relative;height:300px;border-radius:18px;border:1px solid rgba(251,146,60,.2);background:radial-gradient(ellipse at 50% 62%,rgba(251,146,60,.1),transparent 62%),linear-gradient(180deg,#170D08,#0A0705);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c19-stove{position:absolute;left:8%;right:8%;bottom:28px;height:82px;border-radius:10px;background:linear-gradient(180deg,#3A2418,#1B110B);border:1px solid rgba(251,146,60,.25)}
+.c19-stove:before{content:"";position:absolute;left:12%;right:12%;top:10px;height:8px;border-radius:99px;background:rgba(251,146,60,.35);box-shadow:0 0 18px rgba(251,146,60,.4)}
+.c19-pot{position:absolute;left:50%;bottom:82px;transform:translateX(-50%);width:140px;height:90px;z-index:3}
+.c19-pot svg{width:100%;height:100%}
+.c19-steam{position:absolute;left:50%;bottom:176px;transform:translateX(-50%);display:flex;gap:8px;z-index:4}
+.c19-steam i{display:block;width:10px;height:10px;border-radius:50%;background:rgba(255,237,213,.22);filter:blur(3px);animation:c19steam 2.2s ease-in-out infinite}
+.c19-steam i:nth-child(2){animation-delay:.5s}.c19-steam i:nth-child(3){animation-delay:1s}
+.c19-tool{position:absolute;right:17%;bottom:120px;width:150px;height:60px;z-index:5;transform-origin:80% 50%;transition:.3s}
+.c19-tool svg{width:100%;height:100%;filter:drop-shadow(0 8px 12px rgba(0,0,0,.4))}
+.c19-drops{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.c19-drops i{position:absolute;top:-8px;width:4px;height:8px;border-radius:50%;background:rgba(125,211,252,.7);animation:c19drop 1.2s linear infinite}
+.c19-label{position:absolute;left:14px;top:12px;font-size:8px;letter-spacing:.16em;color:rgba(251,146,60,.75)}
+.c19-tip{position:absolute;right:14px;top:12px;font-size:8px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:rgba(10,7,5,.6)}
+.c19-context-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}
+.c19-context{padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--dim);text-align:left;font-size:9.5px;line-height:1.5}
+.c19-context b{display:block;color:var(--ink);font-size:10px;margin-bottom:2px}
+.c19-context:hover,.c19-context.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09)}
+.c19-parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c19-part{padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:9px;text-align:left}
+.c19-part b{display:block;color:var(--ink);font-size:10px}.c19-part span{display:block;color:var(--faint);font-size:8px;margin-top:2px}
+.c19-part:hover,.c19-part.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09)}
+.c19-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.c19-act{padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px}
+.c19-act:hover,.c19-act.on{border-color:rgba(251,146,60,.55);background:rgba(251,146,60,.09);color:#FDBA74}
+.c19-sliders{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.c19-slider{flex:1;min-width:100px;font-size:8.5px;color:var(--faint)}
+.c19-slider input{width:100%;accent-color:#FB923C;margin-top:3px}
+.c19-meters{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.c19-meter{display:flex;align-items:center;gap:6px;font-size:8.5px;color:var(--faint)}
+.c19-meter .bar{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.c19-meter .bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#FB923C,#4FE0D0);transition:.5s}
+.c19-test{position:relative;height:280px;border-radius:15px;border:1px solid rgba(251,146,60,.18);background:linear-gradient(180deg,#170D08,#0A0705);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c19-test.fail{box-shadow:inset 0 0 60px rgba(255,122,107,.12)}
+.c19-test.pass{box-shadow:inset 0 0 60px rgba(79,224,208,.1)}
+.c19-fixes{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
+.c19-fix{padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--dim);font-size:8.5px;text-align:left}
+.c19-fix:hover,.c19-fix.on{border-color:rgba(79,224,208,.55);background:rgba(79,224,208,.08);color:var(--teal)}
+.c19-bp-icon{width:140px;height:100px;margin:0 auto}
+.c19-bp-icon svg{width:100%;height:100%}
+@keyframes c19steam{0%,100%{transform:translateY(0) scale(.7);opacity:.2}50%{transform:translateY(-26px) scale(1.1);opacity:.6}}
+@keyframes c19drop{0%{transform:translateY(0);opacity:0}20%{opacity:.7}100%{transform:translateY(220px);opacity:0}}
+@media(max-width:900px){.c19-stage,.c19-test{height:250px}.c19-context-grid,.c19-parts{grid-template-columns:1fr}.c19-tool{right:8%;width:110px}}
+@media(max-height:800px){.c19-stage{height:286px}}
