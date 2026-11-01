@@ -50,6 +50,7 @@
     out = out.replace(/第\s*(\d+)\s*节/g, 'Lesson $1');
     out = out.replace(/(\d+)\s*节/g, '$1 lessons');
     out = out.replace(/(\d+)\s*章/g, '$1 chapters');
+    out = out.replace(/(\d+)\s*页/g, '$1 pages');
     out = out.replace(/(\d+)\s*分/g, '$1 min');
     out = out.replace(/(\d+)\s*条/g, '$1 items');
     out = out.replace(/(\d+)\s*源/g, '$1 sources');
@@ -175,7 +176,7 @@
       if(v && /[一-鿿]/.test(v)){ var nv = tr(v); if(nv!==v) el.value = nv; }
     });
   }
-  function sweep(root){ injectCss(); fixImages(root); walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
+  function sweep(root){ injectCss(); fixImages(root); try{ (root.querySelectorAll?root.querySelectorAll('#rs-body .sc'):[]).forEach(function(el){ el.textContent = el.textContent.replace(/分/g,'pts'); }); }catch(e){} walkElements(root); walkText(root); walkAttrs(root); walkValues(root); if(document.documentElement) { var t=tr(document.title||''); if(t!==document.title) document.title=t; } }
   var scheduled=false;
   var mo = new MutationObserver(function(muts){
     if(scheduled) return; scheduled=true;
